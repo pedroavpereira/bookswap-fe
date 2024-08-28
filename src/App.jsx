@@ -1,23 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import * as Pages from "./pages";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Pages.HomePage />} />
-        <Route path="/chat" element={<Pages.Chat />} />
-        <Route path="/collection" element={<Pages.Collection />} />
-        <Route path="/collection/add" element={<Pages.CollectionAdd />} />
-        <Route path="/login" element={<Pages.Login />} />
-        <Route path="/offering" element={<Pages.Offering />} />
-        <Route path="/profile" element={<Pages.Profile />} />
-        <Route path="/register" element={<Pages.Register />} />
-        <Route path="/search" element={<Pages.Search />} />
-        <Route path="/swap" element={<Pages.Swap />} />
-        <Route path="/swaphistory" element={<Pages.SwapHistory />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route index element={<Pages.HomePage />} />
+      <Route path="/login" element={<Pages.Login />} />
+      <Route path="/signup" element={<Pages.Register />} />
+      <Route path="/search" element={<Pages.Search />} />
+      <Route path="/chat" element={<Pages.Chat />} />
+      <Route path="/swap">
+        <Route index element={<Pages.Swap />} />
+        <Route index element={<Pages.SwapHistory />} />
+      </Route>
+      <Route path="/offering" element={<Pages.Offering />} />
+      <Route path="/collection">
+        <Route index element={<Pages.Collection />} />
+        <Route index element={<Pages.CollectionAdd />} />
+      </Route>
+    </Routes>
   );
 }
 
