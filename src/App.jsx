@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import * as Pages from "./pages";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Pages.HomePage />} />
+        <Route path="/chat" element={<Pages.Chat />} />
+        <Route path="/collection" element={<Pages.Collection />} />
+        <Route path="/collection/add" element={<Pages.CollectionAdd />} />
+        <Route path="/login" element={<Pages.Login />} />
+        <Route path="/offering" element={<Pages.Offering />} />
+        <Route path="/profile" element={<Pages.Profile />} />
+        <Route path="/register" element={<Pages.Register />} />
+        <Route path="/search" element={<Pages.Search />} />
+        <Route path="/swap" element={<Pages.Swap />} />
+        <Route path="/swaphistory" element={<Pages.SwapHistory />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
