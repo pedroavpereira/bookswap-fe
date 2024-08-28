@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import axios from "axios";
 import { registerUser } from "../../redux/actions/userActions";
 
@@ -11,9 +12,7 @@ const Register = () => {
   const [postcode, setPostcode] = useState("");
 
   const dispatch = useDispatch();
-
-  const userRegister = useSelector((state) => state.user);
-  const { loading, error, userInfo } = userRegister;
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const convertPostcodeToLatLng = async (postcode) => {
     try {
@@ -35,7 +34,7 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const { lat, lng } = await convertPostcodeToLatLng(postcode);
-    dispatch(
+    const resultAction = await dispatch(
       registerUser({
         email,
         password,
@@ -45,13 +44,18 @@ const Register = () => {
         lng,
       })
     );
-  };
 
-  useEffect(() => {
-    if (userInfo) {
-      console.log("Registration successful!", userInfo);
+    // Check if registration was successful and redirect
+    if (registerUser.fulfilled.match(resultAction)) {
+      const response = resultAction.payload;
+      if (response.success) {
+        console.log("Registration successful!", response);
+        navigate("/login"); // Redirect to the login page after successful registration
+      }
+    } else {
+      console.error("Registration failed:", resultAction.error.message);
     }
-  }, [userInfo]);
+  };
 
   return (
     <div className="register-container">
@@ -88,9 +92,6 @@ const Register = () => {
         />
         <button type="submit">Register</button>
       </form>
-      {loading && <p>Loading...</p>}
-      {error && <p className="error-message">{error}</p>}
-      {userInfo && <p className="success-message">Registration successful!</p>}
     </div>
   );
 };

@@ -45,7 +45,7 @@ const Login = () => {
         {error && <div className="error-message">{error}</div>}
       </form>
       <p>
-        <a href="/register">Register here</a>
+        <a href="/signup">Register here</a>
       </p>
     </div>
   );
