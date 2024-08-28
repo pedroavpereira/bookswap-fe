@@ -15,7 +15,6 @@ const Register = () => {
   const userRegister = useSelector((state) => state.user);
   const { loading, error, userInfo } = userRegister;
 
-  // Function to convert postcode to lat and lng using Postcodes.io API
   const convertPostcodeToLatLng = async (postcode) => {
     try {
       const response = await axios.get(
@@ -29,13 +28,13 @@ const Register = () => {
       }
     } catch (error) {
       console.error("Error converting postcode:", error);
-      return { lat: 0, lng: 0 }; // Default values if there's an error
+      return { lat: 0, lng: 0 };
     }
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const { lat, lng } = await convertPostcodeToLatLng(postcode); // Convert postcode asynchronously
+    const { lat, lng } = await convertPostcodeToLatLng(postcode);
     dispatch(
       registerUser({
         email,
@@ -48,7 +47,6 @@ const Register = () => {
     );
   };
 
-  // UseEffect to log a message when registration is successful
   useEffect(() => {
     if (userInfo) {
       console.log("Registration successful!", userInfo);
@@ -56,7 +54,7 @@ const Register = () => {
   }, [userInfo]);
 
   return (
-    <div>
+    <div className="register-container">
       <form onSubmit={submitHandler}>
         <input
           type="text"
@@ -91,8 +89,8 @@ const Register = () => {
         <button type="submit">Register</button>
       </form>
       {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {userInfo && <p>Registration successful!</p>}
+      {error && <p className="error-message">{error}</p>}
+      {userInfo && <p className="success-message">Registration successful!</p>}
     </div>
   );
 };

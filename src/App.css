@@ -85,3 +85,147 @@
   color: white;
   background-color: red;
 }
+
+
+/* General container for the login form */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; /* Centers vertically in the viewport */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Styling the form itself */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff; /* White background */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 300px; /* Fixed width for consistency */
+}
+
+/* Styling input fields */
+.login-container input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button styling */
+.login-container button {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: #333; /* Dark button */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Button hover effect */
+.login-container button:hover {
+  background-color: #555; /* Lighter shade on hover */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+/* Link styling */
+.login-container p {
+  margin-top: 1rem;
+}
+
+.login-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+
+/* General container for the register form */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; /* Centers vertically in the viewport */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Styling the form itself */
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff; /* White background */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 300px; /* Fixed width for consistency */
+}
+
+/* Styling input fields */
+.register-container input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button styling */
+.register-container button {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: #333; /* Dark button */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Button hover effect */
+.register-container button:hover {
+  background-color: #555; /* Lighter shade on hover */
+}
+
+/* Loading and error message styling */
+.register-container p {
+  margin-top: 1rem;
+  color: #333;
+}
+
+.register-container p.error-message {
+  color: red;
+}
+
+.register-container p.success-message {
+  color: green;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .register-container form {
+    width: 90%; /* Adjust width for smaller screens */
+    padding: 1rem; /* Reduce padding */
+  }
+}
+
