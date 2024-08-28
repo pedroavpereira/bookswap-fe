@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { loginUser } from "../../redux/actions/loginActions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  // Provide a default object to avoid destructuring undefined
-  const { loading = false, error = null } = useSelector(
-    (state) => state.login || {}
-  );
+  const { loading, error } = useSelector((state) => state.login || {});
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+    const resultAction = await dispatch(loginUser({ email, password }));
+
+    // Check if the login was successful
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate("/"); // Redirect to homepage
+    }
   };
 
   return (
