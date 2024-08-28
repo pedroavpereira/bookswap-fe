@@ -1,42 +1,87 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.spinner-background {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  background-color: #f8f9fa;
+  opacity: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.spinner {
+  width: 100px;
+  padding: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: cyan;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: spinner-Frames 1s infinite linear;
+}
+@keyframes spinner-Frames {
   to {
-    transform: rotate(360deg);
+    transform: rotate(1turn);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.homepage-background {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 5rem;
 }
 
-.card {
-  padding: 2em;
+.homepage-headers-container {
+  position: absolute;
+  top: 15rem;
 }
 
-.read-the-docs {
-  color: #888;
+.homepage-header {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.homepage-subheader {
+  font-size: 2rem;
+}
+
+.searchform {
+  display: flex;
+  width: 100%;
+  max-width: 50rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.searchform-input {
+  padding: 0.5rem 0.7rem;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+}
+
+.searchform-title-input {
+  flex: 2;
+}
+
+.searchform-postcode-input {
+  flex: 1;
+  max-width: 10rem;
+}
+
+.searchform-submit-button {
+  color: white;
+  background-color: red;
 }
