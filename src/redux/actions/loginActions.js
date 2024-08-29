@@ -10,7 +10,7 @@ import {
   userLogout,
 } from '../reducers/userReducer';  // Updated import
 
-const API_URL = '/api';
+// Removed API_URL constant, relying on Vite's proxy
 
 // Login action
 export const loginUser = createAsyncThunk(
@@ -21,7 +21,7 @@ export const loginUser = createAsyncThunk(
       dispatch(userLoginRequest());
 
       // Make a POST request to login the user
-      const { data } = await axios.post(`${API_URL}/login`, userData, {
+      const { data } = await axios.post('/api/login', userData, {  // Updated to use relative path
         headers: {
           'Content-Type': 'application/json',
         },
@@ -64,7 +64,7 @@ export const validateToken = createAsyncThunk(
       dispatch(userValidateRequest());
 
       // Make a GET request to validate the token
-      const { data } = await axios.get(`${API_URL}/validate-token`, {
+      const { data } = await axios.get('/api/validate-token', {  // Updated to use relative path
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,4 +99,3 @@ export const logoutUser = () => (dispatch) => {
   // Dispatch logout action
   dispatch(userLogout());
 };
-
