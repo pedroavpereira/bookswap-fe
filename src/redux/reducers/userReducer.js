@@ -27,3 +27,7 @@ const userSlice = createSlice({
 export const { userRegisterRequest, userRegisterSuccess, userRegisterFail } = userSlice.actions;
 
 export default userSlice.reducer;
+
+
+
+
