@@ -104,8 +104,6 @@ function CollectionsProvider({ children }) {
     }
   }
 
-  console.log("collections State", collections);
-
   return (
     <CollectionsContext.Provider
       value={{ collections, isLoading, createCollection, deleteCollection }}
