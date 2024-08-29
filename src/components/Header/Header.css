@@ -1,0 +1,45 @@
+/* Header.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #fff; /* Background color for the header */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #006400; /* Dark green color for the logo text */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px; /* Space between navigation links */
+  }
+  
+  .navbar li {
+    margin: 0;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: #333; /* Default link color */
+    font-size: 16px;
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .navbar a:hover {
+    color: #006400; /* Dark green color on hover */
+  }
+  
+  .navbar a.active {
+    color: #006400; /* Dark green color for active link */
+    font-weight: bold; /* Emphasize the active link */
+  }
+  
