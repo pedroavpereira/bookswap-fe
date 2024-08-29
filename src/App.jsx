@@ -10,14 +10,14 @@ function App() {
       <Route path="/signup" element={<Pages.Register />} />
       <Route path="/search" element={<Pages.Search />} />
       <Route path="/chat" element={<Pages.Chat />} />
+      <Route path="/offering" element={<Pages.Offering />} />
       <Route path="/swap">
         <Route index element={<Pages.Swap />} />
-        <Route index element={<Pages.SwapHistory />} />
+        <Route path="history" element={<Pages.SwapHistory />} />
       </Route>
-      <Route path="/offering" element={<Pages.Offering />} />
       <Route path="/collection">
         <Route index element={<Pages.Collection />} />
-        <Route index element={<Pages.CollectionAdd />} />
+        <Route path="add" element={<Pages.CollectionAdd />} />
       </Route>
     </Routes>
   );
