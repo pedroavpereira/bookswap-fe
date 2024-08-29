@@ -86,7 +86,6 @@
   background-color: red;
 }
 
-
 /* General container for the login form */
 .login-container {
   display: flex;
@@ -263,3 +262,6 @@
   margin: 0.2rem;
   align-self: start;
 }
+
+
+
