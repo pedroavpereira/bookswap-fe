@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   userLoginRequest,
   userLoginSuccess,
@@ -8,22 +8,25 @@ import {
   userValidateSuccess,
   userValidateFail,
   userLogout,
-} from '../reducers/userReducer';  // Updated import
+} from "../reducers/userReducer"; // Updated import
 
 // Removed API_URL constant, relying on Vite's proxy
 
+const API_URL = "http://54.75.137.47:5000";
+
 // Login action
 export const loginUser = createAsyncThunk(
-  'user/login',
+  "user/login",
   async (userData, { dispatch, rejectWithValue }) => {
     try {
       // Dispatch login request action
       dispatch(userLoginRequest());
 
       // Make a POST request to login the user
-      const { data } = await axios.post('/api/login', userData, {  // Updated to use relative path
+      const { data } = await axios.post(`${API_URL}/login`, userData, {
+        // Updated to use relative path
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
@@ -34,16 +37,18 @@ export const loginUser = createAsyncThunk(
       dispatch(validateToken(data.token));
 
       // Store the token explicitly (if not already handled in userLoginSuccess)
-      localStorage.setItem('token', data.token);
+      localStorage.setItem("token", data.token);
 
       return data;
     } catch (error) {
       // Dispatch login fail action with the error message
-      dispatch(userLoginFail(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      ));
+      dispatch(
+        userLoginFail(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        )
+      );
 
       // Return a rejected promise with the error message
       return rejectWithValue(
@@ -57,16 +62,17 @@ export const loginUser = createAsyncThunk(
 
 // Validate token action
 export const validateToken = createAsyncThunk(
-  'user/validateToken',
+  "user/validateToken",
   async (token, { dispatch, rejectWithValue }) => {
     try {
       // Dispatch user validation request action
       dispatch(userValidateRequest());
 
       // Make a GET request to validate the token
-      const { data } = await axios.get('/api/validate-token', {  // Updated to use relative path
+      const { data } = await axios.get(`${API_URL}/validate-token`, {
+        // Updated to use relative path
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: localStorage.getItem("token"),
         },
       });
 
@@ -76,11 +82,13 @@ export const validateToken = createAsyncThunk(
       return data;
     } catch (error) {
       // Dispatch user validation fail action
-      dispatch(userValidateFail(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      ));
+      dispatch(
+        userValidateFail(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        )
+      );
 
       return rejectWithValue(
         error.response && error.response.data.message
@@ -94,7 +102,7 @@ export const validateToken = createAsyncThunk(
 // Logout action
 export const logoutUser = () => (dispatch) => {
   // Remove token from local storage
-  localStorage.removeItem('token');
+  localStorage.removeItem("token");
 
   // Dispatch logout action
   dispatch(userLogout());
