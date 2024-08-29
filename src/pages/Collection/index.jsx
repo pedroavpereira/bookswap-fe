@@ -1,32 +1,68 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBookCollection } from '../../redux/actions/fetchBookCollectionAction'; // Adjust the path to your actual actions file
+import { useCollections } from "../../contexts/CollectionsContext";
+import { useState } from "react";
+
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
+import CollectionAddForm from "../../components/CollectionAddForm";
+
+import FullPageSpinner from "../../components/FullPageSpinner";
+// import BookList from "../../components/BookList";
+import { Col, Container, Row } from "react-bootstrap";
+import CollectionCard from "../../components/CollectionCard";
 
 const Collection = () => {
-  const dispatch = useDispatch();
+  const { collections, isLoading, createCollection, deleteCollection } =
+    useCollections();
+  const [showModal, setShowModal] = useState(false);
 
-  // Selectors to get data from Redux store (update paths and state as needed)
-  const books = useSelector((state) => state.bookCollection.books);
-  const loading = useSelector((state) => state.bookCollection.loading);
-  const error = useSelector((state) => state.bookCollection.error);
+  function handleOpen() {
+    setShowModal(true);
+  }
 
-  // Use useEffect to dispatch the fetchBookCollection thunk when the component mounts
-  useEffect(() => {
-    dispatch(fetchBookCollection());
-  }, [dispatch]); // Dependency array includes dispatch to avoid warnings
+  function handleClose() {
+    setShowModal(false);
+  }
+
+  console.log(collections);
+
+  if (isLoading) return <FullPageSpinner />;
 
   return (
-    <div>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {!loading && !error && (
-        <ul>
-          {books.map((book) => (
-            <li key={book.id}>{book.title}</li>  // Adjust based on your data structure
+    <>
+      <Container>
+        {isLoading && <FullPageSpinner />}
+        <Row>
+          <Col xs={10}>
+            <h1>Your Collection</h1>
+          </Col>
+          <Col className="d-flex justify-content-center align-items-center">
+            <Button variant="outline-secondary" onClick={handleOpen}>
+              Add new Book
+            </Button>
+          </Col>
+        </Row>
+
+        <div className="collection-card-row">
+          {collections.map((col) => (
+            <CollectionCard
+              key={col.collection_id}
+              collection={col}
+              onClick={deleteCollection}
+            />
           ))}
-        </ul>
-      )}
-    </div>
+        </div>
+
+        <Modal show={showModal} onHide={handleClose} animation={false} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Add new book to collection</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CollectionAddForm onSubmit={createCollection} />
+          </Modal.Body>
+        </Modal>
+      </Container>
+    </>
   );
 };
 
