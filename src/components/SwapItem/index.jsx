@@ -1,4 +1,4 @@
-function SwapItem() {
+function SwapItem({ swap }) {
   return <div>SwapItem</div>;
 }
 
