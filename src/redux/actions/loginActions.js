@@ -8,7 +8,7 @@ import {
   userValidateSuccess,
   userValidateFail,
   userLogout,
-} from '../reducers/loginReducer';  
+} from '../reducers/userReducer';  // Updated import
 
 const API_URL = '/api';
 
@@ -99,7 +99,4 @@ export const logoutUser = () => (dispatch) => {
   // Dispatch logout action
   dispatch(userLogout());
 };
-
-
-
 
