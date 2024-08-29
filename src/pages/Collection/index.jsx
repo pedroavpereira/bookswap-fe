@@ -9,6 +9,7 @@ import CollectionAddForm from "../../components/CollectionAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
 // import BookList from "../../components/BookList";
 import { Col, Container, Row } from "react-bootstrap";
+import CollectionCard from "../../components/CollectionCard";
 
 const Collection = () => {
   const { collections, isLoading, createCollection, deleteCollection } =
@@ -25,6 +26,8 @@ const Collection = () => {
 
   console.log(collections);
 
+  if (isLoading) return <FullPageSpinner />;
+
   return (
     <>
       <Container>
@@ -39,6 +42,16 @@ const Collection = () => {
             </Button>
           </Col>
         </Row>
+
+        <div className="collection-card-row">
+          {collections.map((col) => (
+            <CollectionCard
+              key={col.collection_id}
+              collection={col}
+              onClick={deleteCollection}
+            />
+          ))}
+        </div>
 
         <Modal show={showModal} onHide={handleClose} animation={false} centered>
           <Modal.Header closeButton>

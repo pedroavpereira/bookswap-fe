@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
+import BookSearch from "../BookSearch";
 
 const deliveryOptions = [
   "Door Pickup",
@@ -12,10 +13,24 @@ const deliveryOptions = [
 
 function CollectionAddForm({ onSubmit }) {
   const [isbn, setIsbn] = useState("");
+  const [bookSelected, setBookSelected] = useState(null);
   const [condition, setCondition] = useState("mint");
   const [delivery_preference, setDelivery_preference] = useState([]);
   const [isbnChecked, setIsbnChecked] = useState(false);
   const [isbnError, setIsbnError] = useState(false);
+
+  function handleBookSelected(selected) {
+    console.log(selected?.volumeInfo?.industryIdentifiers);
+
+    const isbns = selected?.volumeInfo?.industryIdentifiers;
+    const isbn13 = isbns?.find((el) => el.type === "ISBN_13");
+
+    if (isbn13?.identifier) {
+      setIsbn(isbn13?.identifier);
+    }
+
+    setBookSelected(selected);
+  }
 
   async function checkIsbn() {
     try {
@@ -47,6 +62,19 @@ function CollectionAddForm({ onSubmit }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
+        <Row>
+          <Form.Label>
+            Book Title:{" "}
+            <span className="text-danger">
+              {isbnError && "Please enter a correct ISBN"}
+            </span>
+          </Form.Label>
+          <BookSearch
+            setChecked={setIsbnChecked}
+            selected={bookSelected}
+            setSelected={handleBookSelected}
+          />
+        </Row>
         <Row className="mb-2">
           <Col>
             <Form.Label>

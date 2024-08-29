@@ -7,7 +7,7 @@ const API_URL = "http://54.75.137.47:3000";
 
 function CollectionsProvider({ children }) {
   const [collections, setCollections] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //Fetch collections
   useEffect(
