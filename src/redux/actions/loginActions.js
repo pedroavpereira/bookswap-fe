@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   userLoginRequest,
   userLoginSuccess,
@@ -10,12 +10,13 @@ import {
   userLogout,
 } from '../reducers/userReducer';
 
-// Define the base URL for API calls
 const API_BASE_URL = 'http://54.75.137.47:5000';
+
+
 
 // Login action
 export const loginUser = createAsyncThunk(
-  'user/login',
+  "user/login",
   async (userData, { dispatch, rejectWithValue }) => {
     try {
       dispatch(userLoginRequest());
@@ -51,14 +52,14 @@ export const loginUser = createAsyncThunk(
 
 // Validate token action
 export const validateToken = createAsyncThunk(
-  'user/validateToken',
+  "user/validateToken",
   async (token, { dispatch, rejectWithValue }) => {
     try {
       dispatch(userValidateRequest());
 
       const { data } = await axios.get(`${API_BASE_URL}/validate-token`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: localStorage.getItem("token"),
         },
       });
 
