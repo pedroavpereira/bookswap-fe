@@ -12,6 +12,8 @@ import {
 
 // Removed API_URL constant, relying on Vite's proxy
 
+const API_URL = "http://54.75.137.47:5000";
+
 // Login action
 export const loginUser = createAsyncThunk(
   "user/login",
@@ -21,7 +23,7 @@ export const loginUser = createAsyncThunk(
       dispatch(userLoginRequest());
 
       // Make a POST request to login the user
-      const { data } = await axios.post("/api/login", userData, {
+      const { data } = await axios.post(`${API_URL}/login`, userData, {
         // Updated to use relative path
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +69,7 @@ export const validateToken = createAsyncThunk(
       dispatch(userValidateRequest());
 
       // Make a GET request to validate the token
-      const { data } = await axios.get("/api/validate-token", {
+      const { data } = await axios.get(`${API_URL}/validate-token`, {
         // Updated to use relative path
         headers: {
           Authorization: localStorage.getItem("token"),
