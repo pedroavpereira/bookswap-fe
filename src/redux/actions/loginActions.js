@@ -21,14 +21,15 @@ export const loginUser = createAsyncThunk(
       dispatch(userLoginRequest());
 
       // Make a POST request to login the user
-      const { data } = await axios.post('/api/login', userData, {  // Updated to use relative path
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const { data } = await axios.post('/api/login', userData, {
+        headers: { 'Content-Type': 'application/json' },
       });
+      console.log("Login API Response:", data);
+      
 
       // Dispatch login success action with user data and token
       dispatch(userLoginSuccess({ user: data.user, token: data.token }));
+
 
       // Automatically validate user after login
       dispatch(validateToken(data.token));

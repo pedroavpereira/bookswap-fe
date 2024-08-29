@@ -37,12 +37,12 @@ const userSlice = createSlice({
     },
     userLoginSuccess(state, action) {
       state.loading = false;
-      state.userInfo = action.payload.user;  // Assuming action.payload contains user data
-      state.token = action.payload.token;    // Assuming action.payload contains the token
-
-      // Save token to local storage
+      state.userInfo = action.payload.user;
+      state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
-    },
+    }
+    ,
+    
     userLoginFail(state, action) {
       state.loading = false;
       state.error = action.payload;
