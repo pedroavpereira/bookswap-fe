@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/index";
+import Footer from "./components/Footer/index";
 import * as Pages from "./pages";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="add" element={<Pages.CollectionAdd />} />
         </Route>
       </Routes>
+      <Footer />
     </>
   );
 }
