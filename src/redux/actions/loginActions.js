@@ -27,21 +27,25 @@ export const loginUser = createAsyncThunk(
         },
       });
 
-      // Dispatch login success action
+      // Dispatch login success action with user data and token
       dispatch(userLoginSuccess({ user: data.user, token: data.token }));
 
       // Automatically validate user after login
       dispatch(validateToken(data.token));
 
+      // Store the token explicitly (if not already handled in userLoginSuccess)
+      localStorage.setItem('token', data.token);
+
       return data;
     } catch (error) {
-      // Dispatch login fail action
+      // Dispatch login fail action with the error message
       dispatch(userLoginFail(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message
       ));
 
+      // Return a rejected promise with the error message
       return rejectWithValue(
         error.response && error.response.data.message
           ? error.response.data.message
@@ -95,5 +99,4 @@ export const logoutUser = () => (dispatch) => {
   // Dispatch logout action
   dispatch(userLogout());
 };
-
 
