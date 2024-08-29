@@ -40,9 +40,8 @@ const userSlice = createSlice({
       state.userInfo = action.payload.user;
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
-    }
-    ,
-    
+      localStorage.setItem("userInfo", JSON.stringify(action.payload.user));
+    },
     userLoginFail(state, action) {
       state.loading = false;
       state.error = action.payload;
