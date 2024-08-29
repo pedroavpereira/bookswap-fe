@@ -1,0 +1,12 @@
+/* Footer.css */
+
+.footer {
+    background-color: #1f3a5b; /* Navy blue background color */
+    color: #ffffff; /* White text color */
+    text-align: center;
+    padding: 15px 0; /* Vertical padding */
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+  
