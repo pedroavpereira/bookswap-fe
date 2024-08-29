@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 import userReducer from './userReducer';
-import loginReducer from './loginReducer';
+import fetchBookCollectionReducer from './fetchBookCollectionReducer';
+ 
 
 const rootReducer = combineReducers({
   user: userReducer,
-  login: loginReducer,   
+  fetchBookCollection: fetchBookCollectionReducer
 });
 
 export default rootReducer;
