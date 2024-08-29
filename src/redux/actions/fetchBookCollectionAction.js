@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Base URL for API requests
-const API_URL = 'http://localhost:3000'; // Replace with your actual API URL if different
+const API_URL = 'http://54.75.137.47:3000'; // Replace with your actual API URL if different
 
 // Async thunk to fetch the user's book collection
 export const fetchBookCollection = createAsyncThunk(
