@@ -1,6 +1,5 @@
-// src/components/MapComponent/index.jsx
-
 import React, { useCallback, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -9,8 +8,8 @@ import {
 } from "@react-google-maps/api";
 import { useBookSwap } from "../../contexts/BookSwapContext";
 
-const MapComponent = () => {
-  const { currentUser, obfuscatedLocations, setSelectedUser } = useBookSwap();
+const MapComponent = ({ latitude, longitude }) => {
+  const { obfuscatedLocations, setSelectedUser } = useBookSwap();
   const [map, setMap] = useState(null);
 
   const { isLoaded, loadError } = useJsApiLoader({
@@ -23,36 +22,33 @@ const MapComponent = () => {
     border: "1px solid #ccc",
   };
 
-  const center = currentUser
-    ? { lat: currentUser.latitude, lng: currentUser.longitude }
-    : { lat: 0, lng: 0 };
+  const center =
+    latitude !== undefined && longitude !== undefined
+      ? { lat: latitude, lng: longitude }
+      : { lat: 0, lng: 0 };
 
   const onLoad = useCallback((map) => {
     setMap(map);
   }, []);
 
   useEffect(() => {
-    if (map && currentUser) {
-      const newCenter = {
-        lat: currentUser.latitude,
-        lng: currentUser.longitude,
-      };
+    if (map && latitude !== undefined && longitude !== undefined) {
+      const newCenter = { lat: latitude, lng: longitude };
       map.setCenter(newCenter);
       map.setZoom(15); // Set a closer zoom level
       console.log("Map centered at:", newCenter);
     }
-  }, [map, currentUser]);
+  }, [map, latitude, longitude]);
 
   useEffect(() => {
-    console.log("Current user location:", currentUser);
     console.log("Obfuscated locations:", obfuscatedLocations);
-  }, [currentUser, obfuscatedLocations]);
+  }, [obfuscatedLocations]);
 
   if (loadError) {
     return <div>Error loading maps: {loadError.message}</div>;
   }
 
-  if (!isLoaded || !currentUser) {
+  if (!isLoaded) {
     return <div>Loading maps...</div>;
   }
 
@@ -64,14 +60,15 @@ const MapComponent = () => {
         zoom={15}
         onLoad={onLoad}
       >
-        {obfuscatedLocations.current && (
+        {/* Only display markers and circles if latitude and longitude are provided */}
+        {latitude !== undefined && longitude !== undefined && (
           <>
             <Marker
-              position={obfuscatedLocations.current}
+              position={center}
               icon="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
             />
             <Circle
-              center={obfuscatedLocations.current}
+              center={center}
               radius={500}
               options={{
                 fillColor: "blue",
@@ -109,17 +106,29 @@ const MapComponent = () => {
       </GoogleMap>
       <div>
         <p>
-          Current User: Lat {currentUser?.latitude.toFixed(4)}, Lng{" "}
-          {currentUser?.longitude.toFixed(4)}
+          Provided Location: Lat{" "}
+          {latitude !== undefined ? latitude.toFixed(4) : "N/A"}, Lng{" "}
+          {longitude !== undefined ? longitude.toFixed(4) : "N/A"}
         </p>
         <p>
           Obfuscated Current Location: Lat{" "}
-          {obfuscatedLocations.current?.lat.toFixed(4)}, Lng{" "}
-          {obfuscatedLocations.current?.lng.toFixed(4)}
+          {obfuscatedLocations.current?.lat !== undefined
+            ? obfuscatedLocations.current.lat.toFixed(4)
+            : "N/A"}
+          , Lng{" "}
+          {obfuscatedLocations.current?.lng !== undefined
+            ? obfuscatedLocations.current.lng.toFixed(4)
+            : "N/A"}
         </p>
       </div>
     </div>
   );
+};
+
+// PropTypes validation
+MapComponent.propTypes = {
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
 };
 
 export default MapComponent;
