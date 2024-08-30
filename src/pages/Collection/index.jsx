@@ -16,6 +16,12 @@ const Collection = () => {
     useCollections();
   const [showModal, setShowModal] = useState(false);
 
+  function handleCreateCollection(data) {
+    console.log("handleCreation");
+    setShowModal(false);
+    createCollection(data);
+  }
+
   function handleOpen() {
     setShowModal(true);
   }
@@ -23,8 +29,6 @@ const Collection = () => {
   function handleClose() {
     setShowModal(false);
   }
-
-  console.log(collections);
 
   if (isLoading) return <FullPageSpinner />;
 
@@ -58,7 +62,7 @@ const Collection = () => {
             <Modal.Title>Add new book to collection</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CollectionAddForm onSubmit={createCollection} />
+            <CollectionAddForm onSubmit={handleCreateCollection} />
           </Modal.Body>
         </Modal>
       </Container>
