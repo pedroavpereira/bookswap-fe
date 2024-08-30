@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import axios from "axios";
 import { registerUser } from "../../redux/actions/userActions";
+import logo from '../../assets/logo.png'
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -60,6 +61,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <form onSubmit={submitHandler} >
+        <img src={logo}/>
         <input
           type="text"
           placeholder="First Name"
