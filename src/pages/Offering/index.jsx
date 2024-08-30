@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MapComponent from "../../components/MapComponent";
 import "./OfferingPage.css";
+import { API_URL } from "../../utils/constants";
 
-// Mock data based on the provided structure
+// Mock data based on the provided structure for fallback
 const mockData = {
-  collection_id: 5,
-  book_id: 4,
+  collection_id: 4,
+  book_id: 3,
   user_id: 1,
   condition: "mint",
   delivery_preference: ["hand-off"],
   book: {
-    book_id: 4,
-    title: "War and Peace",
-    authors: ["graf Leo Tolstoy", "Louise Maude"],
+    book_id: 3,
+    title: "Crime and Punishment",
+    authors: ["Fyodor Dostoyevsky"],
     categories: ["Fiction"],
     lang: "en",
-    isbn: "9780192833983",
+    isbn: "9780140449136",
     image:
-      "http://books.google.com/books/content?id=9nxfsPujsYoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+      "http://books.google.com/books/content?id=SYu-4-oO3h8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
   },
   user: {
     first_name: "test",
@@ -30,81 +31,57 @@ const mockData = {
 
 const OfferingPage = () => {
   const { collection_id } = useParams(); // Extract collection_id from URL params
-  const navigate = useNavigate();
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Use Vite environment variable for the API base URL
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  // Hardcoded API URL for fetching data
+  const apiUrl = API_URL;
 
   useEffect(() => {
     // Early return if no collection_id is provided
     if (!collection_id) {
       setError("No collection_id provided");
-      navigate("/");
       return;
     }
 
-    // Check if we're using mock data or real API data
-    const useMockData = true; // Set this to false to use real API data
-
     const fetchCollectionData = async () => {
-      if (useMockData) {
-        // Use mock data
-        setTimeout(() => {
-          if (parseInt(collection_id) === mockData.collection_id) {
-            setBookData(mockData);
-            setUserData(mockData.user);
-            setLoading(false);
-          } else {
-            setError("Collection not found");
-            setLoading(false);
-          }
-        }, 1000); // Simulate network delay
-      } else {
-        // Fetch data from the API
-        const authToken = localStorage.getItem("authToken");
+      try {
+        // Fetch real data from the API
+        const response = await fetch(
+          `${apiUrl}/collections/id/${collection_id}`
+        );
 
-        // Redirect to login if no auth token is found
-        if (!authToken) {
-          navigate("/login");
-          return;
+        if (!response.ok) {
+          throw new Error("Failed to fetch collection data");
         }
 
-        try {
-          const response = await fetch(
-            `${apiUrl}/collections/id/${collection_id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${authToken}`,
-              },
-            }
-          );
+        const data = await response.json();
 
-          // Check for a failed response
-          if (!response.ok) {
-            if (response.status === 401) {
-              navigate("/login");
-            } else {
-              throw new Error("Failed to fetch collection data");
-            }
-          }
-
-          const data = await response.json();
+        // Ensure data matches the requested collection_id
+        if (data && data.collection_id === parseInt(collection_id)) {
           setBookData(data);
           setUserData(data.user);
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
+        } else {
+          setError("Collection not found");
         }
+      } catch (error) {
+        console.error("Error fetching data from API, using mock data:", error);
+        // Fallback to mock data if fetch fails
+        if (parseInt(collection_id) === mockData.collection_id) {
+          setBookData(mockData);
+          setUserData(mockData.user);
+        } else {
+          setError("Collection not found");
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCollectionData();
-  }, [collection_id, apiUrl, navigate]);
+  }, [collection_id, apiUrl]);
 
   // Render loading state
   if (loading) return <p>Loading...</p>;

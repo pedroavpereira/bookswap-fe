@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header/index";
-import Footer from "./components/Footer/index";
-import * as Pages from "./pages";
-import CollectionsProvider from "./contexts/CollectionsContext";
-import SwapsProvider from "./contexts/SwapsContext";
-import { BookSwapProvider } from "./contexts/BookSwapContext";
+import Header from "./components/Header/index"; // Ensure correct path
+import Footer from "./components/Footer/index"; // Ensure correct path
+import * as Pages from "./pages"; // Ensure all components are correctly exported from this index.js file
+import CollectionsProvider from "./contexts/CollectionsContext"; // Ensure correct path
+import SwapsProvider from "./contexts/SwapsContext"; // Ensure correct path
+import { BookSwapProvider } from "./contexts/BookSwapContext"; // Ensure correct path
+
 function App() {
   return (
     <>
