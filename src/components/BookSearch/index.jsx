@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
-function BookSearch({ selected, setSelected, setChecked }) {
+function BookSearch({ selected, setSelected, onTyping }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(null);
@@ -66,7 +66,7 @@ function BookSearch({ selected, setSelected, setChecked }) {
       <Form.Control
         value={query}
         onChange={(e) => {
-          setChecked(false);
+          onTyping();
           setSelected(null);
           setQuery(e.target.value);
         }}

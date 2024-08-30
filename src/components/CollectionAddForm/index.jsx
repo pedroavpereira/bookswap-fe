@@ -19,6 +19,11 @@ function CollectionAddForm({ onSubmit }) {
   const [isbnChecked, setIsbnChecked] = useState(false);
   const [isbnError, setIsbnError] = useState(false);
 
+  function handleReset() {
+    setIsbn("");
+    setIsbnChecked(false);
+  }
+
   function handleBookSelected(selected) {
     console.log(selected?.volumeInfo?.industryIdentifiers);
 
@@ -70,7 +75,7 @@ function CollectionAddForm({ onSubmit }) {
             </span>
           </Form.Label>
           <BookSearch
-            setChecked={setIsbnChecked}
+            onTyping={handleReset}
             selected={bookSelected}
             setSelected={handleBookSelected}
           />
