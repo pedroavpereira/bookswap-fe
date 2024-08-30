@@ -1,48 +1,22 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MapComponent from "../../components/MapComponent";
 import "./OfferingPage.css";
 import { API_URL } from "../../utils/constants";
 
-// Mock data based on the provided structure for fallback
-const mockData = {
-  collection_id: 4,
-  book_id: 3,
-  user_id: 1,
-  condition: "mint",
-  delivery_preference: ["hand-off"],
-  book: {
-    book_id: 3,
-    title: "Crime and Punishment",
-    authors: ["Fyodor Dostoyevsky"],
-    categories: ["Fiction"],
-    lang: "en",
-    isbn: "9780140449136",
-    image:
-      "http://books.google.com/books/content?id=SYu-4-oO3h8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-  },
-  user: {
-    first_name: "test",
-    last_name: "etst",
-    lat: 52.404387,
-    lng: -1.515175,
-  },
-};
-
 const OfferingPage = () => {
+  const navigate = useNavigate();
   const { collection_id } = useParams(); // Extract collection_id from URL params
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Hardcoded API URL for fetching data
-  const apiUrl = API_URL;
-
   useEffect(() => {
     // Early return if no collection_id is provided
     if (!collection_id) {
       setError("No collection_id provided");
+      navigate("/");
       return;
     }
 
@@ -50,7 +24,7 @@ const OfferingPage = () => {
       try {
         // Fetch real data from the API
         const response = await fetch(
-          `${apiUrl}/collections/id/${collection_id}`
+          `${API_URL}/collections/id/${collection_id}`
         );
 
         if (!response.ok) {
@@ -68,20 +42,14 @@ const OfferingPage = () => {
         }
       } catch (error) {
         console.error("Error fetching data from API, using mock data:", error);
-        // Fallback to mock data if fetch fails
-        if (parseInt(collection_id) === mockData.collection_id) {
-          setBookData(mockData);
-          setUserData(mockData.user);
-        } else {
-          setError("Collection not found");
-        }
+        navigate("/");
       } finally {
         setLoading(false);
       }
     };
 
     fetchCollectionData();
-  }, [collection_id, apiUrl]);
+  }, [collection_id, navigate]);
 
   // Render loading state
   if (loading) return <p>Loading...</p>;
@@ -119,7 +87,6 @@ const OfferingPage = () => {
               <MapComponent latitude={userData.lat} longitude={userData.lng} />
             )}
           </div>
-          <p>Collection ID: {collection_id}</p>
           <button className="request-swap-button">Request Swap</button>
         </>
       ) : (

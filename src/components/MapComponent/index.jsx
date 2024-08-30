@@ -63,10 +63,6 @@ const MapComponent = ({ latitude, longitude }) => {
         {/* Only display markers and circles if latitude and longitude are provided */}
         {latitude !== undefined && longitude !== undefined && (
           <>
-            <Marker
-              position={center}
-              icon="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-            />
             <Circle
               center={center}
               radius={500}
@@ -104,23 +100,6 @@ const MapComponent = ({ latitude, longitude }) => {
             )
         )}
       </GoogleMap>
-      <div>
-        <p>
-          Provided Location: Lat{" "}
-          {latitude !== undefined ? latitude.toFixed(4) : "N/A"}, Lng{" "}
-          {longitude !== undefined ? longitude.toFixed(4) : "N/A"}
-        </p>
-        <p>
-          Obfuscated Current Location: Lat{" "}
-          {obfuscatedLocations.current?.lat !== undefined
-            ? obfuscatedLocations.current.lat.toFixed(4)
-            : "N/A"}
-          , Lng{" "}
-          {obfuscatedLocations.current?.lng !== undefined
-            ? obfuscatedLocations.current.lng.toFixed(4)
-            : "N/A"}
-        </p>
-      </div>
     </div>
   );
 };
