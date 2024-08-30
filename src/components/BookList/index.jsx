@@ -47,7 +47,6 @@ const mockRequest = [
 ];
 
 function BookList({ collections }) {
-  console.log(collections);
   return (
     <div className="bookList-container">
       {collections.map((col) => (
