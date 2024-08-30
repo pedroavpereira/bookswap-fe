@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .spinner-background {
@@ -273,7 +274,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("./assets/影像.png") no-repeat center center /cover;
+  background: url("./assets/影像.png") no-repeat center center / cover;
   z-index: -1;
 }
 
@@ -287,7 +288,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("./assets/影像.png") no-repeat center center /cover;
+  background: url("./assets/影像.png") no-repeat center center / cover;
   z-index: -1;
 }
 
@@ -332,4 +333,32 @@
 .search-book-result-information p {
   font-weight: bold;
   margin: 0;
+}
+
+.wishtable-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wishtable-image img {
+  width: 5rem;
+}
+
+.wishlist-table-content {
+  vertical-align: middle;
+}
+
+.wishlist-table-title {
+  font-size: 1.2rem;
+}
+
+.wishlist-table-radius {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.wishlist-table-action {
+  font-size: 1.5rem;
+  color: red;
 }

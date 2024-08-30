@@ -3,6 +3,7 @@ import { Badge, Card } from "react-bootstrap";
 import { HiTrash } from "react-icons/hi2";
 
 function WishListCard({ wish, onDelete }) {
+  console.log(wish);
   function handleDelete() {
     onDelete(wish.wishlist_id);
   }

@@ -8,12 +8,16 @@ import FullPageSpinner from "../../components/FullPageSpinner";
 import WishListCard from "../../components/WishListCard";
 
 import { API_URL } from "../../utils/constants";
+import WishlistTable from "../../components/WishlistTable";
 
 const WishList = () => {
   const navigate = useNavigate();
   const [wishlists, setWishLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
+  // console.log("wishlistPage");
+  // console.log(wishlists);
 
   useEffect(
     function () {
@@ -33,8 +37,9 @@ const WishList = () => {
             },
           };
 
-          const response = await fetch(`${API_URL}/wishlist/mine`, options);
+          const response = await fetch(`${API_URL}/wishlists/mine`, options);
 
+          console.log(response);
           if (response.status !== 200) return null;
 
           const data = await response.json();
@@ -86,6 +91,7 @@ const WishList = () => {
       console.log(err);
     } finally {
       setIsLoading(false);
+      setShowModal(false);
     }
   }
 
@@ -132,15 +138,16 @@ const WishList = () => {
           </Col>
         </Row>
 
-        <div className="collection-card-row">
+        <WishlistTable wishs={wishlists} onDelete={deleteWishlist} />
+        {/* <div className="collection-card-row">
           {wishlists.map((wish) => (
             <WishListCard
               key={wish.wishlist_id}
-              collection={wish}
+              wish={wish}
               onDelete={deleteWishlist}
             />
           ))}
-        </div>
+        </div> */}
 
         <Modal show={showModal} onHide={handleClose} animation={false} centered>
           <Modal.Header closeButton>

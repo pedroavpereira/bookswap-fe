@@ -28,7 +28,7 @@ function SwapsProvider({ children }) {
         };
         try {
           setIsLoading(true);
-          const response = await fetch(`${API_URL}/swaps/mine`, options);
+          const response = await fetch(`${API_URL}/swaps/`, options);
 
           if (response.status !== 200) return null;
 
