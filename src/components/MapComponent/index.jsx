@@ -36,13 +36,13 @@ const MapComponent = ({ latitude, longitude }) => {
       const newCenter = { lat: latitude, lng: longitude };
       map.setCenter(newCenter);
       map.setZoom(15); // Set a closer zoom level
-      console.log("Map centered at:", newCenter);
+      // console.log("Map centered at:", newCenter);
     }
   }, [map, latitude, longitude]);
 
-  useEffect(() => {
-    console.log("Obfuscated locations:", obfuscatedLocations);
-  }, [obfuscatedLocations]);
+  // useEffect(() => {
+  //   console.log("Obfuscated locations:", obfuscatedLocations);
+  // }, [obfuscatedLocations]);
 
   if (loadError) {
     return <div>Error loading maps: {loadError.message}</div>;
