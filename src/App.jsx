@@ -17,6 +17,7 @@ function App() {
           <Route path="/search" element={<Pages.Search />} />
           <Route path="/chat" element={<Pages.Chat />} />
           <Route path="/offering" element={<Pages.Offering />} />
+          <Route path="/wishlist" element={<Pages.WishList />} />
           <Route path="/swap">
             <Route index element={<Pages.Swap />} />
             <Route path="history" element={<Pages.SwapHistory />} />

@@ -7,4 +7,5 @@ export { default as Swap } from "./Swap";
 export { default as SwapHistory } from "./SwapHistory";
 export { default as Offering } from "./Offering";
 export { default as Collection } from "./Collection";
+export { default as WishList } from "./WishList";
 export { default as CollectionAdd } from "./CollectionAdd";
