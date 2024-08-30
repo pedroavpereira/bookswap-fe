@@ -7,9 +7,9 @@ function WishlistTable({ wishs, onDelete }) {
     <Table>
       <thead>
         <tr className="text">
-          <th className="text-center">Image</th>
+          <th className="text-center">Book</th>
 
-          <th>Name</th>
+          <th>Title</th>
 
           <th className="text-center">Radius</th>
           <th className="text-center">Actions</th>
