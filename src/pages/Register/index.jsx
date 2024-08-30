@@ -1,18 +1,28 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import axios from "axios";
-import { registerUser } from "../../redux/actions/userActions";
+import { useUser } from "../../contexts/UserContext";
+import FullPageSpinner from "../../components/FullPageSpinner";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [postcode, setPostcode] = useState("");
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const { user, register, isLoading } = useUser();
+
+  useEffect(
+    function () {
+      if (user) {
+        navigate("/");
+      }
+    },
+    [user, navigate]
+  );
 
   const convertPostcodeToLatLng = async (postcode) => {
     try {
@@ -34,32 +44,33 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const { lat, lng } = await convertPostcodeToLatLng(postcode);
-    const resultAction = await dispatch(
-      registerUser({
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        lat,
-        lng,
-      })
-    );
 
-    // Check if registration was successful and redirect
-    if (registerUser.fulfilled.match(resultAction)) {
-      const response = resultAction.payload;
-      if (response.success) {
-        console.log("Registration successful!", response);
-        navigate("/login"); // Redirect to the login page after successful registration
-      }
-    } else {
-      console.error("Registration failed:", resultAction.error.message);
-    }
+    await register({
+      email,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+      lat,
+      lng,
+    });
+
+    // // Check if registration was successful and redirect
+    // if (registerUser.fulfilled.match(resultAction)) {
+    //   const response = resultAction.payload;
+    //   if (response.success) {
+    //     console.log("Registration successful!", response);
+    //     navigate("/login"); // Redirect to the login page after successful registration
+    //   }
+    // } else {
+    //   console.error("Registration failed:", resultAction.error.message);
+    // }
   };
+
+  if (isLoading) return <FullPageSpinner />;
 
   return (
     <div className="register-container">
-      <form onSubmit={submitHandler} >
+      <form onSubmit={submitHandler}>
         <input
           type="text"
           placeholder="First Name"

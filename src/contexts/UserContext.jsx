@@ -13,7 +13,10 @@ function UserProvider({ children }) {
   useEffect(
     function () {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
 
       async function fetchUserData() {
         try {
@@ -63,7 +66,8 @@ function UserProvider({ children }) {
 
       const data = await response.json();
 
-      setUser(data);
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
     } catch (err) {
       console.log(err);
     } finally {
@@ -87,7 +91,9 @@ function UserProvider({ children }) {
 
       const data = await response.json();
 
-      setUser(data);
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
+      navigate("/");
     } catch (err) {
       console.log(err);
     } finally {

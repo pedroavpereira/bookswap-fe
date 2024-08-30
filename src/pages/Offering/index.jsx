@@ -11,20 +11,25 @@ import { useUser } from "../../contexts/UserContext";
 const OfferingPage = () => {
   const navigate = useNavigate();
   const { collection_id } = useParams(); // Extract collection_id from URL params
-  const { createSwap, swaps } = useSwaps();
-  const { collections } = useCollections();
-  const { user } = useUser();
+  const { createSwap, swaps, isLoading: swapsLoading } = useSwaps();
+  const { collections, isLoading: collectionsLoading } = useCollections();
+  const { user, isLoading: userLoading } = useUser();
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const isLoading =
+    swapsLoading || collectionsLoading || userLoading || loading;
+
   const alreadyRequested = swaps?.find(
     (s) => collection_id === s.collection_requested
   );
-  const userHasEnoughCollections = collections?.length > 3;
+  const userHasEnoughCollections = collections?.length >= 3;
 
-  const yourCollection = user.user_id === bookData.user_id;
+  const yourCollection = user?.user_id === bookData?.user_id;
+
+  console.log(swaps);
 
   useEffect(() => {
     // Early return if no collection_id is provided
@@ -65,13 +70,16 @@ const OfferingPage = () => {
     fetchCollectionData();
   }, [collection_id, navigate]);
 
+  async function handleRequestSwap() {
+    createSwap(collection_id);
+  }
+
   // Render loading state
-  if (loading) return <FullPageSpinner />;
+  if (isLoading) return <FullPageSpinner />;
 
   // Render error state
   if (error) return <p>Error: {error}</p>;
 
-  // Render main content if data is available
   return (
     <div className="offering-page">
       {bookData && userData ? (
@@ -115,7 +123,9 @@ const OfferingPage = () => {
               </p>
             )}
           {!yourCollection && userHasEnoughCollections && !alreadyRequested && (
-            <button className="request-swap-button">Request Swap</button>
+            <button onClick={handleRequestSwap} className="request-swap-button">
+              Request Swap
+            </button>
           )}
         </>
       ) : (

@@ -1,25 +1,31 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { loginUser } from "../../redux/actions/loginActions";
+import { useUser } from "../../contexts/UserContext";
+import FullPageSpinner from "../../components/FullPageSpinner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const { user, login, isLoading } = useUser();
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const { loading, error } = useSelector((state) => state.login || {});
+  useEffect(
+    function () {
+      if (user) {
+        navigate("/");
+      }
+    },
+    [user, navigate]
+  );
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const resultAction = await dispatch(loginUser({ email, password }));
-
-    // Check if the login was successful
-    if (loginUser.fulfilled.match(resultAction)) {
-      navigate("/"); // Redirect to homepage
-    }
+    login({ email, password });
+    setEmail("");
+    setPassword("");
   };
+
+  if (isLoading) return <FullPageSpinner />;
 
   return (
     <div className="login-container">
@@ -38,14 +44,13 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
         </button>
-        {error && <div className="error-message">{error}</div>}
       </form>
       <p>
         <a href="/signup">Register here</a>
-        </p>
+      </p>
     </div>
   );
 };

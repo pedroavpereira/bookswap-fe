@@ -53,13 +53,15 @@ function SwapsProvider({ children }) {
 
     if (!token) return null;
 
+    const reqBody = { collection_id: parseInt(data) };
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(reqBody),
     };
 
     try {
