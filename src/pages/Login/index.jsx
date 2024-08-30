@@ -23,7 +23,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
       <form onSubmit={submitHandler}>
         <input
           type="email"
@@ -46,7 +45,7 @@ const Login = () => {
       </form>
       <p>
         <a href="/signup">Register here</a>
-      </p>
+        </p>
     </div>
   );
 };
