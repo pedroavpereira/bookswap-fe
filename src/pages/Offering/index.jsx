@@ -1,16 +1,26 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MapComponent from "../../components/MapComponent";
+import FullPageSpinner from "../../components/FullPageSpinner";
 import "./OfferingPage.css";
 import { API_URL } from "../../utils/constants";
+import { useSwaps } from "../../contexts/SwapsContext";
+import { useCollections } from "../../contexts/CollectionsContext";
 
 const OfferingPage = () => {
   const navigate = useNavigate();
   const { collection_id } = useParams(); // Extract collection_id from URL params
+  const { createSwap, swaps } = useSwaps();
+  const { collections } = useCollections();
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const alreadyRequested = swaps?.find(
+    (s) => collection_id === s.collection_requested
+  );
+  const userHasEnoughCollections = collections?.length > 3;
 
   useEffect(() => {
     // Early return if no collection_id is provided
@@ -52,7 +62,7 @@ const OfferingPage = () => {
   }, [collection_id, navigate]);
 
   // Render loading state
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <FullPageSpinner />;
 
   // Render error state
   if (error) return <p>Error: {error}</p>;
@@ -87,7 +97,17 @@ const OfferingPage = () => {
               <MapComponent latitude={userData.lat} longitude={userData.lng} />
             )}
           </div>
-          <button className="request-swap-button">Request Swap</button>
+          {alreadyRequested && (
+            <p className="request-swap-button">Already requested</p>
+          )}
+          {!alreadyRequested && !userHasEnoughCollections && (
+            <p className="request-swap-button">
+              Not enough books in your collection
+            </p>
+          )}
+          {userHasEnoughCollections && !alreadyRequested && (
+            <button className="request-swap-button">Request Swap</button>
+          )}
         </>
       ) : (
         <p>No book or user data available</p>
