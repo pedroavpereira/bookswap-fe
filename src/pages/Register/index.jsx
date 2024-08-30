@@ -59,7 +59,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} >
         <input
           type="text"
           placeholder="First Name"
