@@ -23,13 +23,12 @@ const OfferingPage = () => {
     swapsLoading || collectionsLoading || userLoading || loading;
 
   const alreadyRequested = swaps?.find(
-    (s) => collection_id === s.collection_requested
+    (s) => +collection_id === s.collection_requested
   );
+
   const userHasEnoughCollections = collections?.length >= 3;
 
   const yourCollection = user?.user_id === bookData?.user_id;
-
-  console.log(swaps);
 
   useEffect(() => {
     // Early return if no collection_id is provided

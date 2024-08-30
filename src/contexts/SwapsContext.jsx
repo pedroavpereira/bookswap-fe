@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const SwapContext = createContext();
 
 // const API_URL = "http://54.75.137.47:3000";
 
 function SwapsProvider({ children }) {
+  const navigate = useNavigate();
   const [swaps, setSwaps] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,6 +76,7 @@ function SwapsProvider({ children }) {
       const data = await response.json();
 
       setSwaps((swaps) => [...swaps, data]);
+      navigate("/swaps");
     } catch (err) {
       console.log(err);
     } finally {

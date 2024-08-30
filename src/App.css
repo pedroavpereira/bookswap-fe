@@ -362,3 +362,26 @@
   font-size: 1.5rem;
   color: red;
 }
+
+.swaps-table-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-button {
+  border: none;
+  color: #555;
+  width: 30%;
+  padding: 0.5rem 1rem;
+}
+
+.action-button:hover {
+  border: none;
+  background-color: #ccc;
+  color: #353535;
+  width: 30%;
+  padding: 0.5rem 1rem;
+}
