@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
-
-const API_URL = "http://127.0.0.1:3001";
+import { API_URL } from "../../utils/constants";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +40,7 @@ function Search() {
 
       fetchCollections();
     },
-    [lat, lng, title, radius]
+    [lat, lng, title, radius, navigate]
   );
 
   if (isLoading) return <FullPageSpinner />;
