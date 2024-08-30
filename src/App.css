@@ -385,3 +385,25 @@
   width: 30%;
   padding: 0.5rem 1rem;
 }
+
+.hover-scale:hover {
+  scale: 1.02;
+}
+
+.card-selected {
+  scale: 1.03;
+  border: 3px solid #ccc;
+  border-radius: 7px;
+}
+
+.wishlist-table-status {
+  text-transform: capitalize;
+}
+
+/* .swap-complete-accepted td {
+  background-color: rgba(0, 255, 3, 0.1);
+}
+
+.swap-complete-rejected td {
+  background-color: rgba(254, 0, 0, 0.15);
+} */

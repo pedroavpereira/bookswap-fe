@@ -3,7 +3,6 @@ import { Table } from "react-bootstrap";
 import { HiOutlineTrash } from "react-icons/hi2";
 
 function SwapsTable({ onRender }) {
-  console.log("SwapsTable");
   return (
     <Table>
       <tbody className="wishlist-table-body">{onRender}</tbody>

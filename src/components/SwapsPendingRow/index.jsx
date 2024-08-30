@@ -1,13 +1,18 @@
-import { Link } from "react-router-dom";
 import calculateDistance from "../../utils/calculateDistance";
 import { useSwaps } from "../../contexts/SwapsContext";
+import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 function SwapsPendingRow({ swap = {} }) {
+  const navigate = useNavigate();
   const { rejectSwap } = useSwaps();
 
   function handleReject() {
     rejectSwap(swap.swap_id);
+  }
+
+  function navigateToAccept() {
+    navigate(`/swaps/accept/${swap.swap_id}`);
   }
 
   const { bookRequested, userRequested, userOffered } = swap;
@@ -34,7 +39,7 @@ function SwapsPendingRow({ swap = {} }) {
       </td>
       <td className="wishlist-table-content">
         <div className="swaps-table-actions">
-          <button className="action-button">
+          <button onClick={navigateToAccept} className="action-button">
             View {swap.userRequested.first_name}'s collection
           </button>
           <button className="action-button" onClick={handleReject}>

@@ -27,7 +27,14 @@ function App() {
                   element={<Pages.OfferingPage />}
                 />
                 <Route path="/wishlist" element={<Pages.WishList />} />
-                <Route path="/swaps" element={<Pages.Swap />} />
+                <Route path="/swaps">
+                  <Route index element={<Pages.Swap />} />
+                  <Route
+                    path="accept/:swap_id"
+                    element={<Pages.SwapAccept />}
+                  />
+                </Route>
+
                 <Route path="/collection">
                   <Route index element={<Pages.Collection />} />
                   <Route path="add" element={<Pages.CollectionAdd />} />

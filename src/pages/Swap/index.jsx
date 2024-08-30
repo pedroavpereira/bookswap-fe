@@ -6,8 +6,6 @@ import SwapsTable from "../../components/SwapsTable";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import SwapsPendingRow from "../../components/SwapsPendingRow";
 import SwapsAcceptedRow from "../../components/SwapsAcceptedRow";
-import SwapsRejectedRow from "../../components/SwapsRejectedRow";
-import SwapsYourSwapsRow from "../../components/SwapsYourSwapsRow";
 import SwapsCompletedRow from "../../components/SwapsCompletedRow";
 
 function Swap() {
@@ -27,10 +25,12 @@ function Swap() {
     (el) => el.completed === true && user.user_id !== el.user_requesting
   );
 
+  console.log(swaps);
+
   if (loading) return <FullPageSpinner />;
 
   return (
-    <Container fluid className="mx-5">
+    <Container className="mt-5">
       <Row>
         <h1>Your Swaps</h1>
       </Row>
@@ -47,8 +47,8 @@ function Swap() {
             title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
           >
             <SwapsTable
-              onRender={pendingSwaps.map((swap) => (
-                <SwapsPendingRow swap={swap} key={swap.id} />
+              onRender={pendingSwaps.map((swap, i) => (
+                <SwapsPendingRow swap={swap} key={i} />
               ))}
             />
           </Tab>
@@ -57,8 +57,8 @@ function Swap() {
             title={`Accepted (${acceptedSwaps ? acceptedSwaps.length : 0})`}
           >
             <SwapsTable
-              onRender={acceptedSwaps.map((swap) => (
-                <SwapsAcceptedRow swap={swap} key={swap.id} />
+              onRender={acceptedSwaps.map((swap, i) => (
+                <SwapsAcceptedRow swap={swap} key={i} />
               ))}
             />
           </Tab>
@@ -67,8 +67,8 @@ function Swap() {
             title={`Completed (${completedSwaps ? completedSwaps.length : 0})`}
           >
             <SwapsTable
-              onRender={completedSwaps.map((swap) => (
-                <SwapsCompletedRow swap={swap} key={swap.id} />
+              onRender={completedSwaps.map((swap, i) => (
+                <SwapsCompletedRow swap={swap} key={i} />
               ))}
             />
           </Tab>
