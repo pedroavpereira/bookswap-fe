@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
+import { API_URL } from "../utils/constants";
 
 const SwapContext = createContext();
 
-const API_URL = "http://54.75.137.47:3000";
+// const API_URL = "http://54.75.137.47:3000";
 
 function SwapsProvider({ children }) {
   const [swaps, setSwaps] = useState(null);
