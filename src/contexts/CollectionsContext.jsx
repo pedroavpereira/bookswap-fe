@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState, createContext } from "react";
+import { API_URL } from "../utils/constants";
 
 const CollectionsContext = createContext();
 
-const API_URL = "http://54.75.137.47:3000";
+// const API_URL = "http://54.75.137.47:3000";
 
 function CollectionsProvider({ children }) {
   const [collections, setCollections] = useState(null);

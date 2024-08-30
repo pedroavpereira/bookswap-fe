@@ -10,7 +10,8 @@ import {
   userLogout,
 } from '../reducers/userReducer';
 
-const API_BASE_URL = 'http://54.75.137.47:5000';
+import {AUTH_URL} from '../../utils/constants'
+ 
 
 
 
@@ -21,7 +22,7 @@ export const loginUser = createAsyncThunk(
     try {
       dispatch(userLoginRequest());
 
-      const { data } = await axios.post(`${API_BASE_URL}/login`, userData, {
+      const { data } = await axios.post(`${AUTH_URL}/login`, userData, {
         headers: { 'Content-Type': 'application/json' },
       });
       console.log("Login API Response:", data);
@@ -57,7 +58,7 @@ export const validateToken = createAsyncThunk(
     try {
       dispatch(userValidateRequest());
 
-      const { data } = await axios.get(`${API_BASE_URL}/validate-token`, {
+      const { data } = await axios.get(`${AUTH_URL}/validate-token`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

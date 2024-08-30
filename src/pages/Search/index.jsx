@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
-
-const API_URL = "http://127.0.0.1:3001";
+import { API_URL } from "../../utils/constants";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,9 +24,10 @@ function Search() {
           const response = await fetch(
             `${API_URL}/collections/search?radius=${radius}&lat=${lat}&lng=${lng}&title=${title}`
           );
+          console.log(response);
           if (response.ok) {
             const data = await response.json();
-
+            // console.log(data);
             setCollections(data);
           } else {
             throw new Error("err");
@@ -41,9 +41,10 @@ function Search() {
 
       fetchCollections();
     },
-    [lat, lng, title, radius]
+    [lat, lng, title, radius, navigate]
   );
 
+  console.log("collections search page", collections);
   if (isLoading) return <FullPageSpinner />;
 
   return (

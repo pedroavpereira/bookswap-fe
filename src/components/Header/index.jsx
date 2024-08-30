@@ -10,11 +10,23 @@ const Header = () => {
       </div>
       <nav className="navbar">
         <ul>
-          <li><NavLink to="/" end>Home</NavLink></li>
-          <li><NavLink to="/search">Browse</NavLink></li>
-          <li><NavLink to="/swap">Swap</NavLink></li>
-          <li><NavLink to="/collection">Collection</NavLink></li>
-          <li><NavLink to="/login">Login</NavLink></li>
+          <li>
+            <NavLink to="/" end>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/search">Browse</NavLink>
+          </li>
+          <li>
+            <NavLink to="/swap">Swap</NavLink>
+          </li>
+          <li>
+            <NavLink to="/collection">Collection</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
         </ul>
       </nav>
     </header>

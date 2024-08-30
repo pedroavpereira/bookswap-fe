@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
+import { API_URL } from "../utils/constants";
 
 const SwapContext = createContext();
 
-const API_URL = "http://54.75.137.47:3000";
+// const API_URL = "http://54.75.137.47:3000";
 
 function SwapsProvider({ children }) {
   const [swaps, setSwaps] = useState(null);
@@ -27,7 +28,7 @@ function SwapsProvider({ children }) {
         };
         try {
           setIsLoading(true);
-          const response = await fetch(`${API_URL}/swaps/mine`, options);
+          const response = await fetch(`${API_URL}/swaps/`, options);
 
           if (response.status !== 200) return null;
 
