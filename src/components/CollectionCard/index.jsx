@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Badge, Card } from "react-bootstrap";
 import { HiTrash } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function CollectionCard({ collection, onClick }) {
   console.log(collection);
@@ -13,7 +14,7 @@ function CollectionCard({ collection, onClick }) {
     <Card style={{ width: "16rem" }} className="relative">
       <Card.Img
         variant="top"
-        style={{ aspectRatio: "9/13", scale: "0.8" }}
+        style={{ aspectRatio: "9/13", scale: "0.8", cursor: "pointer" }} // Added cursor style
         src={collection?.book.image}
       />
       <Card.Body className="pt-0">

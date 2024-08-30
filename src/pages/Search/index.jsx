@@ -24,9 +24,10 @@ function Search() {
           const response = await fetch(
             `${API_URL}/collections/search?radius=${radius}&lat=${lat}&lng=${lng}&title=${title}`
           );
+          console.log(response);
           if (response.ok) {
             const data = await response.json();
-
+            // console.log(data);
             setCollections(data);
           } else {
             throw new Error("err");
@@ -43,6 +44,7 @@ function Search() {
     [lat, lng, title, radius, navigate]
   );
 
+  console.log("collections search page", collections);
   if (isLoading) return <FullPageSpinner />;
 
   return (

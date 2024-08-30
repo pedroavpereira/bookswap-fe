@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
+import {AUTH_URL} from '../../utils/constants'
 // Base URL for API requests, using Vite proxy
-const API_URL = '/api';
+ 
 
 export const registerUser = createAsyncThunk(
   'user/register',
   async (userData, { rejectWithValue }) => {
     try {
       // Debugging: log the API URL and user data to ensure they're loaded correctly
-      console.log("API Base URL:", API_URL);
+      console.log("API Base URL:", AUTH_URL);
       console.log("User Data:", userData);
 
       // Make a POST request with JSON data using the proxy URL
-      const { data } = await axios.post(`${API_URL}/signup`, userData, {
+      const { data } = await axios.post(`${AUTH_URL}/signup`, userData, {
         headers: {
           'Content-Type': 'application/json',
         },
