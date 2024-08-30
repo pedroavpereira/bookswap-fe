@@ -6,12 +6,14 @@ import "./OfferingPage.css";
 import { API_URL } from "../../utils/constants";
 import { useSwaps } from "../../contexts/SwapsContext";
 import { useCollections } from "../../contexts/CollectionsContext";
+import { useUser } from "../../contexts/UserContext";
 
 const OfferingPage = () => {
   const navigate = useNavigate();
   const { collection_id } = useParams(); // Extract collection_id from URL params
   const { createSwap, swaps } = useSwaps();
   const { collections } = useCollections();
+  const { user } = useUser();
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,6 +23,8 @@ const OfferingPage = () => {
     (s) => collection_id === s.collection_requested
   );
   const userHasEnoughCollections = collections?.length > 3;
+
+  const yourCollection = user.user_id === bookData.user_id;
 
   useEffect(() => {
     // Early return if no collection_id is provided
@@ -97,15 +101,20 @@ const OfferingPage = () => {
               <MapComponent latitude={userData.lat} longitude={userData.lng} />
             )}
           </div>
-          {alreadyRequested && (
+          {yourCollection && (
+            <p className="request-swap-button">Your Collection</p>
+          )}
+          {!yourCollection && alreadyRequested && (
             <p className="request-swap-button">Already requested</p>
           )}
-          {!alreadyRequested && !userHasEnoughCollections && (
-            <p className="request-swap-button">
-              Not enough books in your collection
-            </p>
-          )}
-          {userHasEnoughCollections && !alreadyRequested && (
+          {!yourCollection &&
+            !alreadyRequested &&
+            !userHasEnoughCollections && (
+              <p className="request-swap-button">
+                Not enough books in your collection
+              </p>
+            )}
+          {!yourCollection && userHasEnoughCollections && !alreadyRequested && (
             <button className="request-swap-button">Request Swap</button>
           )}
         </>
