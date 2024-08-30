@@ -98,3 +98,5 @@ export const useBookSwap = () => {
 };
 
 export { BookSwapContext };
+
+export default BookSwapProvider;

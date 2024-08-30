@@ -1,10 +1,35 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import MapComponent from "../../components/mapComponent";
+import MapComponent from "../../components/MapComponent";
 import "./OfferingPage.css";
 
+// Mock data based on the provided structure
+const mockData = {
+  collection_id: 5,
+  book_id: 4,
+  user_id: 1,
+  condition: "mint",
+  delivery_preference: ["hand-off"],
+  book: {
+    book_id: 4,
+    title: "War and Peace",
+    authors: ["graf Leo Tolstoy", "Louise Maude"],
+    categories: ["Fiction"],
+    lang: "en",
+    isbn: "9780192833983",
+    image:
+      "http://books.google.com/books/content?id=9nxfsPujsYoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  },
+  user: {
+    first_name: "test",
+    last_name: "etst",
+    lat: 52.404387,
+    lng: -1.515175,
+  },
+};
+
 const OfferingPage = () => {
-  const { book_id } = useParams();
+  const { collection_id } = useParams(); // Extract collection_id from URL params
   const navigate = useNavigate();
   const [bookData, setBookData] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -15,50 +40,71 @@ const OfferingPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    // Early return if no book_id is provided
-    if (!book_id) {
-      setError("No book_id provided");
+    // Early return if no collection_id is provided
+    if (!collection_id) {
+      setError("No collection_id provided");
       navigate("/");
       return;
     }
 
+    // Check if we're using mock data or real API data
+    const useMockData = true; // Set this to false to use real API data
+
     const fetchCollectionData = async () => {
-      const authToken = localStorage.getItem("authToken");
-
-      // Redirect to login if no auth token is found
-      if (!authToken) {
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const response = await fetch(`${apiUrl}/collections/${book_id}`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-
-        // Check for a failed response
-        if (!response.ok) {
-          if (response.status === 401) {
-            navigate("/login");
+      if (useMockData) {
+        // Use mock data
+        setTimeout(() => {
+          if (parseInt(collection_id) === mockData.collection_id) {
+            setBookData(mockData);
+            setUserData(mockData.user);
+            setLoading(false);
           } else {
-            throw new Error("Failed to fetch collection data");
+            setError("Collection not found");
+            setLoading(false);
           }
+        }, 1000); // Simulate network delay
+      } else {
+        // Fetch data from the API
+        const authToken = localStorage.getItem("authToken");
+
+        // Redirect to login if no auth token is found
+        if (!authToken) {
+          navigate("/login");
+          return;
         }
 
-        const data = await response.json();
-        setBookData(data);
-        setUserData(data.user);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        try {
+          const response = await fetch(
+            `${apiUrl}/collections/id/${collection_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          // Check for a failed response
+          if (!response.ok) {
+            if (response.status === 401) {
+              navigate("/login");
+            } else {
+              throw new Error("Failed to fetch collection data");
+            }
+          }
+
+          const data = await response.json();
+          setBookData(data);
+          setUserData(data.user);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
     fetchCollectionData();
-  }, [book_id, apiUrl, navigate]);
+  }, [collection_id, apiUrl, navigate]);
 
   // Render loading state
   if (loading) return <p>Loading...</p>;
@@ -96,7 +142,7 @@ const OfferingPage = () => {
               <MapComponent latitude={userData.lat} longitude={userData.lng} />
             )}
           </div>
-          <p>Book ID: {book_id}</p>
+          <p>Collection ID: {collection_id}</p>
           <button className="request-swap-button">Request Swap</button>
         </>
       ) : (

@@ -1,19 +1,20 @@
 import { useCollections } from "../../contexts/CollectionsContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Updated import
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { Col, Container, Row } from "react-bootstrap";
 
 import CollectionAddForm from "../../components/CollectionAddForm";
+
 import FullPageSpinner from "../../components/FullPageSpinner";
+// import BookList from "../../components/BookList";
+import { Col, Container, Row } from "react-bootstrap";
 import CollectionCard from "../../components/CollectionCard";
 
 const Collection = () => {
-  const { collections, isLoading, createCollection } = useCollections();
+  const { collections, isLoading, createCollection, deleteCollection } =
+    useCollections();
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate(); // Updated to useNavigate
 
   function handleOpen() {
     setShowModal(true);
@@ -23,17 +24,14 @@ const Collection = () => {
     setShowModal(false);
   }
 
-  const handleCardClick = (collections) => {
-    navigate(`/offering/${collections.book.book_id}`, {
-      state: { collections },
-    });
-  };
+  console.log(collections);
 
   if (isLoading) return <FullPageSpinner />;
 
   return (
     <>
       <Container>
+        {isLoading && <FullPageSpinner />}
         <Row>
           <Col xs={10}>
             <h1>Your Collection</h1>
@@ -50,7 +48,7 @@ const Collection = () => {
             <CollectionCard
               key={col.collection_id}
               collection={col}
-              onClick={() => handleCardClick(col)}
+              onClick={deleteCollection}
             />
           ))}
         </div>
