@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+
 * {
   box-sizing: border-box;
 }
@@ -35,26 +38,40 @@
 .homepage-background {
   height: 100vh;
   width: 100vw;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: radial-gradient(
+    hsla(36, 94%, 43%),
+    rgba(221, 173, 16, 0.5)
+  );
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
   gap: 5rem;
 }
 
 .homepage-headers-container {
   position: absolute;
-  top: 15rem;
+  top: 8rem;
 }
 
 .homepage-header {
-  font-size: 4rem;
+  font-size: 6rem;
   margin-bottom: 1rem;
+  color:#000;
+  font-family: 'Staatliches', sans-serif;
 }
 
+
 .homepage-subheader {
-  font-size: 2rem;
+  font-size: 3rem;
+  font-style: bold;
+  color: #000;
 }
 
 .searchform {
@@ -69,7 +86,8 @@
 .searchform-input {
   padding: 0.5rem 0.7rem;
   border-radius: 5px;
-  background-color: #f8f9fa;
+  background-color: #fff;
+  border: 1px solid #ccc;
 }
 
 .searchform-title-input {
@@ -83,7 +101,7 @@
 
 .searchform-submit-button {
   color: white;
-  background-color: red;
+  background-color: #000;
 }
 
 /* General container for the login form */
@@ -123,7 +141,7 @@
   width: 100%;
   padding: 0.5rem;
   margin-top: 1rem;
-  background-color: #333; /* Dark button */
+  background-color: #000; /* Dark button */
   color: #fff; /* White text */
   border: none;
   border-radius: 5px;
@@ -145,10 +163,12 @@
 /* Link styling */
 .login-container p {
   margin-top: 1rem;
+  color: #fff;
+  font-size: 18px;
 }
 
 .login-container a {
-  color: #007bff;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -193,7 +213,7 @@
   width: 100%;
   padding: 0.5rem;
   margin-top: 1rem;
-  background-color: #333; /* Dark button */
+  background-color: #000; /* Dark button */
   color: #fff; /* White text */
   border: none;
   border-radius: 5px;
@@ -273,8 +293,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("./assets/影像.png") no-repeat center center /cover;
-  z-index: -1;
+  background: url('./assets/影像.png') no-repeat center center /cover;
+}
+
+.register-container img {
+  height: 100px;
+  width: 100px;
+  border-radius: 70px;
+  margin-bottom: 15px;
 }
 
 .login-container {
@@ -287,9 +313,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("./assets/影像.png") no-repeat center center /cover;
-  z-index: -1;
+  background: url('./assets/影像.png') no-repeat center center /cover;
 }
+
+.login-container img {
+    height: 100px;
+    width: 100px;
+    border-radius: 70px;
+    margin-bottom: 15px;
+}
+
 
 .relative {
   position: relative;
@@ -333,3 +366,4 @@
   font-weight: bold;
   margin: 0;
 }
+

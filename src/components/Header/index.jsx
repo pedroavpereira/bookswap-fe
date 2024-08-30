@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import './Header.css';  
+import logo from '../../assets/logo.png'
 
 const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <NavLink to="/">BookNest</NavLink>
+        <NavLink to="/"><img src={logo}/></NavLink>
       </div>
       <nav className="navbar">
         <ul>

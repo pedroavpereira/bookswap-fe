@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { loginUser } from "../../redux/actions/loginActions";
+import logo from '../../assets/logo.png'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={submitHandler}>
+        <img src={logo}/>
         <input
           type="email"
           placeholder="Email"
@@ -43,9 +45,7 @@ const Login = () => {
         </button>
         {error && <div className="error-message">{error}</div>}
       </form>
-      <p>
-        <a href="/signup">Register here</a>
-        </p>
+      <p> Don't have an account? <a href="/signup">Register here</a></p>
     </div>
   );
 };
