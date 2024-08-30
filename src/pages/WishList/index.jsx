@@ -5,7 +5,7 @@ import { Button, Modal, Col, Container, Row } from "react-bootstrap";
 
 import WishlistAddForm from "../../components/WishlistAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
-import WishListCard from "../../components/WishListCard";
+// import WishListCard from "../../components/WishListCard";
 
 import { API_URL } from "../../utils/constants";
 import WishlistTable from "../../components/WishlistTable";

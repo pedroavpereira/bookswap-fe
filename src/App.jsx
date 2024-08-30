@@ -24,6 +24,7 @@ function App() {
                 path="/offering/:collection_id"
                 element={<Pages.OfferingPage />}
               />
+              <Route path="/wishlist" element={<Pages.WishList />} />
               <Route path="/swaps" element={<Pages.Swap />} />
               <Route path="/collection">
                 <Route index element={<Pages.Collection />} />
