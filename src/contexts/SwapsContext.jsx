@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const SwapContext = createContext();
 
@@ -10,7 +10,41 @@ function SwapsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
 
   //Fetch swaps
+  useEffect(
+    function () {
+      async function fetchCollections() {
+        if (swaps !== null) return null;
 
+        const token = localStorage.getItem("token");
+
+        if (!token) return null;
+
+        const options = {
+          method: "GET",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        try {
+          setIsLoading(true);
+          const response = await fetch(`${API_URL}/swaps/mine`, options);
+
+          if (response.status !== 200) return null;
+
+          const data = await response.json();
+
+          setSwaps(data);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      fetchCollections();
+    },
+    [swaps]
+  );
   //Create swap
 
   async function createSwap(data) {
@@ -155,6 +189,15 @@ function SwapsProvider({ children }) {
       {children}
     </SwapContext.Provider>
   );
+}
+
+export function useSwaps() {
+  const context = useContext(SwapContext);
+  if (context === undefined)
+    throw new Error(
+      "Collections context was used outside of the CollectionsProvider"
+    );
+  return context;
 }
 
 export default SwapsProvider;
