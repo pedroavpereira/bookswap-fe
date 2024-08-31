@@ -4,6 +4,7 @@ import SearchForm from "../../components/SearchForm";
 import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import { API_URL } from "../../utils/constants";
+import { Container, Row } from "react-bootstrap";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,17 +45,20 @@ function Search() {
     [lat, lng, title, radius, navigate]
   );
 
-  console.log("collections search page", collections);
   if (isLoading) return <FullPageSpinner />;
 
   return (
-    <div>
-      <SearchForm />
-      <h2>
-        Results for {title} in {radius} miles
-      </h2>
+    <Container>
+      <Row>
+        <SearchForm />
+      </Row>
+      <Row>
+        <h2>
+          Results for {title} in {radius} miles
+        </h2>
+      </Row>
       <BookList collections={collections} />
-    </div>
+    </Container>
   );
 }
 
