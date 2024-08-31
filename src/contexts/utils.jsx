@@ -1,3 +1,4 @@
+import React from "react";
 export function obfuscateLocation(lat, lng, radiusInMeters = 500) {
   const earthRadius = 6371000; // Earth's radius in meters
   const maxRadiusInDegrees = (radiusInMeters / earthRadius) * (180 / Math.PI);

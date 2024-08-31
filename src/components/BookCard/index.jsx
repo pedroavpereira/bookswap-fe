@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import React from "react"; // Ensure this import is present
 import { useNavigate } from "react-router-dom";
 
 function BookCard({ collection }) {
@@ -9,9 +9,10 @@ function BookCard({ collection }) {
   function handleClick() {
     navigate(`/offering/${collection.collection_id}`);
   }
+
   return (
     <div onClick={handleClick} className="bookcard-container">
-      <img src={book.image} className="bookcard-image" />
+      <img src={book.image} alt={book.title} className="bookcard-image" />
       <p className="bookcard-title">{book.title}</p>
       <p className="bookcard-condition">
         <span className="bookcard-attribute">Condition: </span>{" "}

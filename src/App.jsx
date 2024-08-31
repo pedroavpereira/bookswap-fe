@@ -1,3 +1,4 @@
+import React from "react"; // Add this line
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/index"; // Ensure correct path

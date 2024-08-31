@@ -1,3 +1,4 @@
+import React from "react";
 function FullPageSpinner() {
   return (
     <div className="spinner-background">

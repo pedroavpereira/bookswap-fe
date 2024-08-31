@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
+import React from "react";
 import { Badge, Card } from "react-bootstrap";
 import { HiTrash } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function CollectionCard({ collection, onClick }) {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   console.log(collection);
 
@@ -13,7 +13,6 @@ function CollectionCard({ collection, onClick }) {
   }
 
   function handleImageClick() {
-    // Redirect to the offering page with the collection's book ID
     navigate(`/offering/${collection.book.book_id}`, {
       state: { collection },
     });
@@ -23,9 +22,9 @@ function CollectionCard({ collection, onClick }) {
     <Card style={{ width: "16rem" }} className="relative">
       <Card.Img
         variant="top"
-        style={{ aspectRatio: "9/13", scale: "0.8", cursor: "pointer" }} // Added cursor style
+        style={{ aspectRatio: "9/13", scale: "0.8", cursor: "pointer" }}
         src={collection?.book.image}
-        onClick={handleImageClick} // Added onClick handler
+        onClick={handleImageClick}
       />
       <Card.Body className="pt-0">
         <Card.Title className="text-center">
@@ -39,6 +38,7 @@ function CollectionCard({ collection, onClick }) {
           onClick={handleDelete}
           pill
           className="collection-card-delete p-2 fs-4 text-white bg-danger"
+          data-testid="delete-button" // Added data-testid for testing
         >
           <HiTrash />
         </Badge>

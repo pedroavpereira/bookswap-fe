@@ -1,65 +1,55 @@
-/* eslint-disable react/prop-types */
+import React from "react";
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
 function BookSearch({ selected, setSelected, onTyping }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(null);
-
-  // console.log(results);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleSelection(selected) {
     setQuery(selected.volumeInfo.title);
     setSelected(selected);
   }
 
-  useEffect(
-    function () {
-      const controller = new AbortController();
+  useEffect(() => {
+    const controller = new AbortController();
 
-      async function fetchMovies() {
-        try {
-          setIsLoading(true);
+    async function fetchBooks() {
+      try {
+        setIsLoading(true);
 
-          const res = await fetch(
-            `https://www.googleapis.com/books/v1/volumes?q=intitle:${query}&orderBy=relevance&langRestrict=en`,
-            { signal: controller.signal }
-          );
+        const res = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=intitle:${query}&orderBy=relevance&langRestrict=en`,
+          { signal: controller.signal }
+        );
 
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies");
+        if (!res.ok)
+          throw new Error("Something went wrong with fetching books");
 
-          const data = await res.json();
+        const data = await res.json();
 
-          setResults(data.items.slice(6));
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            console.log(err.message);
-          }
-        } finally {
-          setIsLoading(false);
+        setResults(data.items || []);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error(err.message);
         }
+      } finally {
+        setIsLoading(false);
       }
+    }
 
-      if (query.length < 3) {
-        setResults([]);
-        return;
-      }
+    if (query.length < 3 || selected) {
+      setResults([]);
+      return;
+    }
 
-      if (selected) {
-        setResults([]);
-        return;
-      }
+    fetchBooks();
 
-      fetchMovies();
-
-      return function () {
-        controller.abort();
-      };
-    },
-    [query, selected]
-  );
+    return function () {
+      controller.abort();
+    };
+  }, [query, selected]);
 
   return (
     <div>
@@ -70,11 +60,14 @@ function BookSearch({ selected, setSelected, onTyping }) {
           setSelected(null);
           setQuery(e.target.value);
         }}
+        data-testid="book-search-input"
       />
       <div className="relative">
-        {/* {results?.items?.length > 0 && results.items[0]?.volumeInfo?.title} */}
-        {results?.length > 0 && !isLoading && (
-          <div className="search-book-results">
+        {results.length > 0 && !isLoading && (
+          <div
+            className="search-book-results"
+            data-testid="search-results-container"
+          >
             {results.map((res) => (
               <Result key={res.id} data={res} onSelection={handleSelection} />
             ))}
@@ -86,26 +79,28 @@ function BookSearch({ selected, setSelected, onTyping }) {
 }
 
 function Result({ data, onSelection }) {
-  let authors = data?.volumeInfo?.authors;
-  const title = data?.volumeInfo?.title;
-  const image = data?.volumeInfo?.imageLinks?.smallThumbnail;
+  const { authors, title, imageLinks } = data.volumeInfo;
+  const image = imageLinks?.smallThumbnail;
 
   return (
-    <div className="search-book-result" onClick={() => onSelection(data)}>
-      <img style={{ width: "3rem" }} src={image} />
+    <div
+      className="search-book-result"
+      onClick={() => onSelection(data)}
+      data-testid="search-book-result"
+    >
+      {image && <img style={{ width: "3rem" }} src={image} alt={title} />}
       <div className="search-book-result-information">
         <p>{title}</p>
-        <p>
-          {authors
-            ? typeof authors === "string"
-              ? authors
-              : authors.slice(0, 3).map((au, i) => (
-                  <span key={au}>
-                    {au} {i <= 1 ? "," : ""}{" "}
-                  </span>
-                ))
-            : null}
-        </p>
+        {authors && (
+          <p>
+            {authors.slice(0, 3).map((author, index, array) => (
+              <span key={author}>
+                {author}
+                {index < array.length - 1 && index < 2 && ", "}
+              </span>
+            ))}
+          </p>
+        )}
       </div>
     </div>
   );

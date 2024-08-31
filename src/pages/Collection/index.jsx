@@ -1,3 +1,4 @@
+import React from "react";
 import { useCollections } from "../../contexts/CollectionsContext";
 import { useState } from "react";
 

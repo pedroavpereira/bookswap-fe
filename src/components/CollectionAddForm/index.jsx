@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import BookSearch from "../BookSearch";
@@ -58,87 +57,97 @@ function CollectionAddForm({ onSubmit }) {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
-    // Log form data or handle it as needed
+    e.preventDefault();
     if (isbnChecked && delivery_preference.length >= 1 && condition) {
       onSubmit({ isbn, delivery_preference, condition });
     }
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
         <Row>
-          <Form.Label>
-            Book Title:{" "}
-            <span className="text-danger">
-              {isbnError && "Please enter a correct ISBN"}
-            </span>
-          </Form.Label>
-          <BookSearch
-            onTyping={handleReset}
-            selected={bookSelected}
-            setSelected={handleBookSelected}
-          />
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Form.Label>
-              ISBN:{" "}
+          <Form.Group>
+            <Form.Label htmlFor="book-search-input">
+              Book Title:{" "}
               <span className="text-danger">
                 {isbnError && "Please enter a correct ISBN"}
               </span>
             </Form.Label>
-            <Row>
-              <Col xs={10}>
-                <Form.Control
-                  value={isbn}
-                  onChange={(e) => {
-                    setIsbnChecked(false);
-                    setIsbnError(false);
-                    setIsbn(e.target.value);
-                  }}
-                />
-              </Col>
-              <Col xs={2} className="px-0">
-                <Button onClick={checkIsbn}>Verify</Button>
-              </Col>
-            </Row>
+            <BookSearch
+              onTyping={handleReset}
+              selected={bookSelected}
+              setSelected={handleBookSelected}
+              inputProps={{ id: "book-search-input" }}
+            />
+          </Form.Group>
+        </Row>
+        <Row className="mb-2">
+          <Col>
+            <Form.Group>
+              <Form.Label htmlFor="isbn-input">
+                ISBN:{" "}
+                <span className="text-danger">
+                  {isbnError && "Please enter a correct ISBN"}
+                </span>
+              </Form.Label>
+              <Row>
+                <Col xs={10}>
+                  <Form.Control
+                    id="isbn-input"
+                    value={isbn}
+                    onChange={(e) => {
+                      setIsbnChecked(false);
+                      setIsbnError(false);
+                      setIsbn(e.target.value);
+                    }}
+                  />
+                </Col>
+                <Col xs={2} className="px-0">
+                  <Button onClick={checkIsbn}>Verify</Button>
+                </Col>
+              </Row>
+            </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Form.Label>Condition:</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-            >
-              <option value="mint">Mint</option>
-              <option value="very good">Very Good</option>
-              <option value="fair">Fair</option>
-              <option value="poor">Poor</option>
-            </Form.Select>
+            <Form.Group>
+              <Form.Label htmlFor="condition-select">Condition:</Form.Label>
+              <Form.Select
+                id="condition-select"
+                value={condition}
+                onChange={(e) => setCondition(e.target.value)}
+              >
+                <option value="mint">Mint</option>
+                <option value="very good">Very Good</option>
+                <option value="fair">Fair</option>
+                <option value="poor">Poor</option>
+              </Form.Select>
+            </Form.Group>
           </Col>
         </Row>
         <Row className="my-2">
           <Col>
-            <Form.Label>Delivery Preferences:</Form.Label>
-            {deliveryOptions.map((option, i) => (
-              <Form.Check // prettier-ignore
-                type={"checkbox"}
-                id={i}
-                key={i}
-                checked={delivery_preference?.includes(option)}
-                onChange={(e) => {
-                  e.target.checked
-                    ? setDelivery_preference((s) => [...s, option])
-                    : setDelivery_preference((s) =>
-                        s.filter((item) => item !== option)
-                      );
-                }}
-                label={option}
-              />
-            ))}
+            <Form.Group>
+              <Form.Label>Delivery Preferences:</Form.Label>
+              {deliveryOptions.map((option, i) => (
+                <Form.Check
+                  key={i}
+                  id={`delivery-option-${i}`}
+                  type="checkbox"
+                  label={option}
+                  checked={delivery_preference?.includes(option)}
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setDelivery_preference((s) => [...s, option])
+                      : setDelivery_preference((s) =>
+                          s.filter((item) => item !== option)
+                        );
+                  }}
+                />
+              ))}
+            </Form.Group>
           </Col>
         </Row>
         <Row className="mt-3">

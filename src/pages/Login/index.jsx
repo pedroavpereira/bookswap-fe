@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
@@ -45,7 +46,7 @@ const Login = () => {
       </form>
       <p>
         <a href="/signup">Register here</a>
-        </p>
+      </p>
     </div>
   );
 };
