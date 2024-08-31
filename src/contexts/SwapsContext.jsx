@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const SwapContext = createContext();
 
 // const API_URL = "http://54.75.137.47:3000";
 
 function SwapsProvider({ children }) {
+  const navigate = useNavigate();
   const [swaps, setSwaps] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,13 +55,15 @@ function SwapsProvider({ children }) {
 
     if (!token) return null;
 
+    const reqBody = { collection_id: parseInt(data) };
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(reqBody),
     };
 
     try {
@@ -72,6 +76,7 @@ function SwapsProvider({ children }) {
       const data = await response.json();
 
       setSwaps((swaps) => [...swaps, data]);
+      navigate("/swaps");
     } catch (err) {
       console.log(err);
     } finally {
@@ -106,9 +111,7 @@ function SwapsProvider({ children }) {
 
       const data = await response.json();
 
-      setSwaps((swaps) =>
-        swaps.map((sw) => (sw.swap_id === swap_id ? data : sw))
-      );
+      return data;
     } catch (err) {
       console.log(err);
     } finally {
@@ -138,6 +141,8 @@ function SwapsProvider({ children }) {
       if (response.status !== 200) return null;
 
       const data = await response.json();
+
+      console.log("fetch", data);
 
       setSwaps((swaps) => swaps.map((sw) => (sw.swap_id === id ? data : sw)));
     } catch (err) {
@@ -175,6 +180,8 @@ function SwapsProvider({ children }) {
       setIsLoading(false);
     }
   }
+
+  console.log(swaps);
 
   return (
     <SwapContext.Provider

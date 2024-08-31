@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
 
 * {
   box-sizing: border-box;
@@ -45,10 +44,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(
-    hsla(36, 94%, 43%),
-    rgba(221, 173, 16, 0.5)
-  );
+  background: radial-gradient(hsla(36, 94%, 43%), rgba(221, 173, 16, 0.5));
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -64,10 +60,9 @@
 .homepage-header {
   font-size: 6rem;
   margin-bottom: 1rem;
-  color:#000;
-  font-family: 'Staatliches', sans-serif;
+  color: #000;
+  font-family: "Staatliches", sans-serif;
 }
-
 
 .homepage-subheader {
   font-size: 3rem;
@@ -294,7 +289,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('./assets/影像.png') no-repeat center center /cover;
+  background: url("./assets/影像.png") no-repeat center center / cover;
 }
 
 .register-container img {
@@ -314,16 +309,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('./assets/影像.png') no-repeat center center /cover;
+  background: url("./assets/影像.png") no-repeat center center / cover;
 }
 
 .login-container img {
-    height: 100px;
-    width: 100px;
-    border-radius: 70px;
-    margin-bottom: 15px;
+  height: 100px;
+  width: 100px;
+  border-radius: 70px;
+  margin-bottom: 15px;
 }
-
 
 .relative {
   position: relative;
@@ -368,3 +362,73 @@
   margin: 0;
 }
 
+.wishtable-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wishtable-image img {
+  width: 5rem;
+}
+
+.wishlist-table-content {
+  vertical-align: middle;
+}
+
+.wishlist-table-title {
+  font-size: 1.2rem;
+}
+
+.wishlist-table-radius {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.wishlist-table-action {
+  font-size: 1.5rem;
+  color: red;
+}
+
+.swaps-table-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-button {
+  border: none;
+  color: #555;
+  min-width: fit-content;
+  width: 75%;
+  padding: 0.7rem 1rem;
+}
+
+.action-button:hover {
+  background-color: #ccc;
+  color: #353535;
+}
+
+.hover-scale:hover {
+  scale: 1.02;
+}
+
+.card-selected {
+  scale: 1.03;
+  border: 3px solid #ccc;
+  border-radius: 7px;
+}
+
+.wishlist-table-status {
+  text-transform: capitalize;
+}
+
+/* .swap-complete-accepted td {
+  background-color: rgba(0, 255, 3, 0.1);
+}
+
+.swap-complete-rejected td {
+  background-color: rgba(254, 0, 0, 0.15);
+} */
