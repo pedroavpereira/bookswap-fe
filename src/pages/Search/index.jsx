@@ -5,6 +5,7 @@ import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import { API_URL } from "../../utils/constants";
 import { Container, Row } from "react-bootstrap";
+import BookCard from "../../components/BookCard";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,7 +58,11 @@ function Search() {
           Results for {title} in {radius} miles
         </h2>
       </Row>
-      <BookList collections={collections} />
+      <BookList>
+        {collections.map((col) => (
+          <BookCard collection={col} key={col.collection_id} />
+        ))}
+      </BookList>
     </Container>
   );
 }

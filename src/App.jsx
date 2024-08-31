@@ -15,18 +15,18 @@ function App() {
         <UserProvider>
           <SwapsProvider>
             <CollectionsProvider>
-              <Header />
+              {/* <Header /> */}
               <Routes>
                 <Route index element={<Pages.HomePage />} />
                 <Route path="/login" element={<Pages.Login />} />
                 <Route path="/signup" element={<Pages.Register />} />
                 <Route path="/search" element={<Pages.Search />} />
                 <Route path="/chat" element={<Pages.Chat />} />
+                <Route path="/wishlist" element={<Pages.WishList />} />
                 <Route
                   path="/offering/:collection_id"
                   element={<Pages.OfferingPage />}
                 />
-                <Route path="/wishlist" element={<Pages.WishList />} />
                 <Route path="/swaps">
                   <Route index element={<Pages.Swap />} />
                   <Route

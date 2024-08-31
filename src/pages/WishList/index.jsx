@@ -5,10 +5,11 @@ import { Button, Modal, Col, Container, Row } from "react-bootstrap";
 
 import WishlistAddForm from "../../components/WishlistAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
-// import WishListCard from "../../components/WishListCard";
+import WishListCard from "../../components/WishListCard";
 
 import { API_URL } from "../../utils/constants";
 import WishlistTable from "../../components/WishlistTable";
+import BookList from "../../components/BookList";
 
 const WishList = () => {
   const navigate = useNavigate();
@@ -16,16 +17,12 @@ const WishList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  // console.log("wishlistPage");
-  // console.log(wishlists);
-
   useEffect(
     function () {
       async function fetchWishList() {
         try {
           setIsLoading(true);
           const token = localStorage.getItem("token");
-
           if (!token) {
             navigate("/");
             return;
@@ -37,8 +34,11 @@ const WishList = () => {
             },
           };
 
+          console.log("beforeFetch");
+
           const response = await fetch(`${API_URL}/wishlists/mine`, options);
 
+          console.log("afterFetch");
           console.log(response);
           if (response.status !== 200) return null;
 
@@ -51,6 +51,7 @@ const WishList = () => {
           setIsLoading(false);
         }
       }
+      console.log("useEffect");
       fetchWishList();
     },
     [navigate]
@@ -137,8 +138,19 @@ const WishList = () => {
             </Button>
           </Col>
         </Row>
+        <Row>
+          <BookList>
+            {wishlists.map((wish) => (
+              <WishListCard
+                wish={wish}
+                key={wish.wishlist_id}
+                onDelete={deleteWishlist}
+              />
+            ))}
+          </BookList>
+        </Row>
 
-        <WishlistTable wishs={wishlists} onDelete={deleteWishlist} />
+        {/* <WishlistTable wishs={wishlists} onDelete={deleteWishlist} /> */}
         {/* <div className="collection-card-row">
           {wishlists.map((wish) => (
             <WishListCard

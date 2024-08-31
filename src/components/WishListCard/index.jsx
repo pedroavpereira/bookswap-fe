@@ -1,35 +1,44 @@
 /* eslint-disable react/prop-types */
-import { Badge, Card } from "react-bootstrap";
-import { HiTrash } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import "./WishListCard.css";
+import { HiClock, HiOutlineSparkles, HiTrash } from "react-icons/hi";
 
 function WishListCard({ wish, onDelete }) {
+  const navigate = useNavigate();
+
+  const { book } = wish;
+
   console.log(wish);
-  function handleDelete() {
-    onDelete(wish.wishlist_id);
-  }
 
   return (
-    <Card style={{ width: "16rem" }} className="relative">
-      <Card.Img
-        variant="top"
-        style={{ aspectRatio: "9/13", scale: "0.8" }}
-        src={wish?.book.image}
-      />
-      <Card.Body className="pt-0">
-        <Card.Title className="text-center">{wish?.book.title}</Card.Title>
-        <Card.Text className="text-center">
-          <span className="fw-bold">Radius: </span>
-          {wish?.radius}
-        </Card.Text>
-        <Badge
-          onClick={handleDelete}
-          pill
-          className="collection-card-delete p-2 fs-4 text-white bg-danger"
-        >
-          <HiTrash />
-        </Badge>
-      </Card.Body>
-    </Card>
+    <div className="card-container">
+      <a href="/" className="hero-image-container">
+        <img
+          className="hero-image"
+          src={book.image}
+          alt="Spinning glass cube"
+        />
+      </a>
+      <main className="main-content">
+        <h1>
+          <h2 href="#">{book.title}</h2>
+        </h1>
+        <div className="card-attribute" style={{ marginTop: "0.2rem" }}>
+          <div className="flex-row">
+            <div className="time-left">
+              <HiClock className="small-image" />
+              <p>{wish.radius} miles</p>
+            </div>
+            <div className="time-left">
+              <HiTrash
+                className="small-image text-danger"
+                onClick={() => onDelete(wish.wishlist_id)}
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
 

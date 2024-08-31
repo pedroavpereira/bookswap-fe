@@ -53,6 +53,12 @@ function CollectionAddForm({ onSubmit }) {
       onSubmit({ isbn, radius });
     }
   };
+
+  function handleReset() {
+    setIsbn("");
+    setIsbnChecked(false);
+  }
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -64,6 +70,7 @@ function CollectionAddForm({ onSubmit }) {
             </span>
           </Form.Label>
           <BookSearch
+            onTyping={handleReset}
             setChecked={setIsbnChecked}
             selected={bookSelected}
             setSelected={handleBookSelected}

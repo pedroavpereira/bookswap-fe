@@ -246,7 +246,7 @@
 
 .bookList-container {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .bookcard-container {
