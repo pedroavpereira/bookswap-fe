@@ -8,7 +8,6 @@ import FullPageSpinner from "../../components/FullPageSpinner";
 import WishListCard from "../../components/WishListCard";
 
 import { API_URL } from "../../utils/constants";
-import WishlistTable from "../../components/WishlistTable";
 import BookList from "../../components/BookList";
 
 const WishList = () => {
@@ -149,17 +148,6 @@ const WishList = () => {
             ))}
           </BookList>
         </Row>
-
-        {/* <WishlistTable wishs={wishlists} onDelete={deleteWishlist} /> */}
-        {/* <div className="collection-card-row">
-          {wishlists.map((wish) => (
-            <WishListCard
-              key={wish.wishlist_id}
-              wish={wish}
-              onDelete={deleteWishlist}
-            />
-          ))}
-        </div> */}
 
         <Modal show={showModal} onHide={handleClose} animation={false} centered>
           <Modal.Header closeButton>

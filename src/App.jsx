@@ -7,6 +7,9 @@ import CollectionsProvider from "./contexts/CollectionsContext"; // Ensure corre
 import SwapsProvider from "./contexts/SwapsContext"; // Ensure correct path
 import { BookSwapProvider } from "./contexts/BookSwapContext"; // Ensure correct path
 import UserProvider from "./contexts/UserContext";
+import ChatsList from "./components/ChatsList";
+import ChatProvider from "./contexts/ChatsContext";
+import ChatWindow from "./components/ChatWindow";
 
 function App() {
   return (
@@ -40,6 +43,11 @@ function App() {
                   <Route path="add" element={<Pages.CollectionAdd />} />
                 </Route>
               </Routes>
+              <ChatProvider>
+                <ChatsList />
+                <ChatWindow />
+              </ChatProvider>
+
               <Footer />
             </CollectionsProvider>
           </SwapsProvider>
