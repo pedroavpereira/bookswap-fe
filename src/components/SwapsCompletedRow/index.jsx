@@ -13,7 +13,7 @@ function SwapsCompletedRow({ swap }) {
         <img src={bookRequested?.image} />
       </td>
       <td className="wishlist-table-content text-center ">
-        <p className="wishlist-table-title fw-bold">{bookRequested.title}</p>
+        <p className="wishlist-table-title fw-bold">{bookRequested?.title}</p>
         <p>
           Requested by: {swap.userRequested.first_name}{" "}
           {swap.userRequested.last_name}
