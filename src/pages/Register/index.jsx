@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate from react
 import axios from "axios";
 import { useUser } from "../../contexts/UserContext";
 import FullPageSpinner from "../../components/FullPageSpinner";
-
+import logo from "../../assets/logo.png";
 const Register = () => {
   const navigate = useNavigate();
 
@@ -71,6 +71,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <form onSubmit={submitHandler}>
+        <img src={logo} />
         <input
           type="text"
           placeholder="First Name"

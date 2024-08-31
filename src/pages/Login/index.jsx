@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+<<<<<<< HEAD
 import { useUser } from "../../contexts/UserContext";
 import FullPageSpinner from "../../components/FullPageSpinner";
+=======
+import { loginUser } from "../../redux/actions/loginActions";
+import logo from '../../assets/logo.png'
+>>>>>>> dev
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,6 +35,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={submitHandler}>
+        <img src={logo}/>
         <input
           type="email"
           placeholder="Email"
@@ -48,9 +54,7 @@ const Login = () => {
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
-      <p>
-        <a href="/signup">Register here</a>
-      </p>
+      <p> Don't have an account? <a href="/signup">Register here</a></p>
     </div>
   );
 };
