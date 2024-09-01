@@ -9,18 +9,20 @@ import {
 } from "react";
 import io from "socket.io-client";
 import { API_URL } from "../utils/constants";
+import toast from "react-hot-toast";
+import MessageToast from "../components/MessageToast";
 
 const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const { user } = useUser();
   const [socket, setSocket] = useState(null);
-  const [username, setUsername] = useState("");
-  const [rooms, setRooms] = useState("");
+  const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [showChat, setShowChat] = useState(false);
   const [messageList, setMessageList] = useState([]);
   const [chatIsLoading, setChatIsLoading] = useState(false);
+
+  // console.log(rooms);
 
   useEffect(function () {
     async function fetchRooms() {
@@ -51,26 +53,34 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const newSocket = io(API_URL);
+    if (!user) return;
+    const newSocket = io(API_URL, { query: { userId: user?.user_id } });
     setSocket(newSocket);
     return () => newSocket.close();
-  }, []);
+  }, [user]);
 
   const markAsRead = useCallback(async () => {
     const token = localStorage.getItem("token");
 
+    console.log("markAsRead");
+
+    console.log("selectedRoom", selectedRoom);
+    // console.log(
+    //   "selectedRoom",
+    console.log(messageList);
+
     if (
       messageList.length === 0 ||
       messageList.find(
-        (msg) => msg.user_sent !== user.userId && msg.read === true
-      ) ||
+        (msg) => msg.user_sent !== user.user_id && msg.read === false
+      ) === undefined ||
       !selectedRoom
     )
       return;
 
     if (!token) return null;
 
-    console.log("markAsRead called");
+    console.log("AFTER FLOW CONTROL");
 
     const options = {
       method: "PATCH",
@@ -88,6 +98,8 @@ export const ChatProvider = ({ children }) => {
 
       const data = await response.json();
 
+      console.log("mark as read", data);
+
       setMessageList((msgs) =>
         [...msgs].map((msg) =>
           msg.user_sent === user.user_id ? msg : { ...msg, read: true }
@@ -100,46 +112,85 @@ export const ChatProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [messageList?.length, selectedRoom?.room_id, user?.user_id]);
+  }, [user?.user_id, messageList, selectedRoom]);
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("receive_message", (data) => {
+    const handleReceiveMessage = (data) => {
+      console.log("receiveMessage");
       setMessageList((list) => [...list, data]);
-    });
+    };
 
-    socket.on("receive_messages", (messages) => {
+    const handleReceiveMessages = (messages) => {
       setMessageList(messages);
       setChatIsLoading(false);
       markAsRead();
-    });
+    };
+
+    const handlePing = (data) => {
+      const { user, message, message_id, read, room_id, sent_at, user_sent } =
+        data;
+
+      setRooms((rooms) =>
+        rooms.map((room) =>
+          room.room_id === room_id
+            ? {
+                ...room,
+                last_message: { message, message_id, read, sent_at, user_sent },
+              }
+            : room
+        )
+      );
+
+      toast((t) => (
+        <MessageToast name={`${user.first_name} ${user.last_name}`} t={t} />
+      ));
+    };
+
+    socket.on("receive_message", handleReceiveMessage);
+
+    socket.on("receive_messages", handleReceiveMessages);
+
+    socket.on("pinged", handlePing);
+
+    return () => {
+      socket.off("receive_message", handleReceiveMessage);
+      socket.off("receive_messages", handleReceiveMessages);
+      socket.off("pinged", handlePing);
+    };
   }, [socket, markAsRead]);
 
   const joinRoom = (room_id) => {
     socket.emit("join_room", { room: room_id, user: user.user_id });
     setChatIsLoading(true);
-    setShowChat(true);
+  };
+
+  const leaveRoom = () => {
+    socket.emit("leaveRoom", { room: selectedRoom });
   };
 
   const sendMessage = async (currentMessage) => {
     if (currentMessage !== "") {
-      console.log(selectedRoom.room_id);
       const messageData = {
         room_id: selectedRoom.room_id,
         user_sent: user.user_id,
         message: currentMessage,
+        user_receiver:
+          selectedRoom.user_1 === user.user_id
+            ? selectedRoom.user_2
+            : selectedRoom.user_1,
       };
 
-      console.log(messageData);
       await socket.emit("send_message", messageData);
       setMessageList((msg) => [...msg, messageData]);
-      // We don't need to update messageList here as it will be updated by the Supabase real-time subscription
     }
   };
 
   function onRoomSelected(room_id) {
     setSelectedRoom(rooms.find((room) => room.room_id === room_id));
+
+    if (!room_id) return;
     joinRoom(room_id);
   }
 
@@ -151,14 +202,11 @@ export const ChatProvider = ({ children }) => {
     <ChatContext.Provider
       value={{
         socket,
-        username,
-        setUsername,
         rooms,
-        showChat,
-        setShowChat,
         selectedRoom,
         onRoomSelected,
         joinRoom,
+        leaveRoom,
         messageList,
         resetMessages,
         sendMessage,

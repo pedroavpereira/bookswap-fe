@@ -10,6 +10,8 @@ import UserProvider from "./contexts/UserContext";
 import ChatsList from "./components/ChatsList";
 import ChatProvider from "./contexts/ChatsContext";
 import ChatWindow from "./components/ChatWindow";
+import Chat from "./components/Chat";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -44,10 +46,11 @@ function App() {
                 </Route>
               </Routes>
               <ChatProvider>
-                <ChatsList />
-                <ChatWindow />
+                <Chat />
+                {/* <ChatsList /> */}
+                {/* <ChatWindow /> */}
               </ChatProvider>
-
+              <Toaster position="bottom-right" />
               <Footer />
             </CollectionsProvider>
           </SwapsProvider>
