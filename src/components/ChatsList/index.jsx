@@ -16,7 +16,7 @@ function ChatsList() {
       </div>
       {isOpen && (
         <div className="chats-body">
-          {rooms.map((room) => (
+          {rooms?.map((room) => (
             <ChatRoom room={room} key={room.id} onClick={onRoomSelected} />
           ))}
         </div>

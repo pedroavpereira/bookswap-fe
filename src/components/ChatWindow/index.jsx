@@ -14,14 +14,13 @@ function ChatWindow() {
     sendMessage,
     resetMessages,
     chatIsLoading,
+    markAsRead,
   } = useChats();
   const { user } = useUser;
   const [text, setText] = useState("");
 
   console.log(user);
   if (!selectedRoom) return null;
-
-  console.log("messages", messageList);
 
   function closeRoom() {
     onRoomSelected(null);
@@ -35,7 +34,7 @@ function ChatWindow() {
   }
 
   return (
-    <div className="chat-window">
+    <div className="chat-window" onClick={markAsRead}>
       <div className="chats-header chat-window-header">
         <span>
           {selectedRoom.user.first_name} {selectedRoom.user.last_name}

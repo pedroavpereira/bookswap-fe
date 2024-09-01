@@ -3,7 +3,12 @@ import "./ChatRoom.css";
 
 function ChatRoom({ room, onClick }) {
   return (
-    <div className="chat-room-flex" onClick={() => onClick(room.room_id)}>
+    <div
+      className={`chat-room-flex ${room.last_message && "message"}${
+        room?.last_message.read ? "message-read" : "message-unread"
+      }`}
+      onClick={() => onClick(room.room_id)}
+    >
       <p className="chat-room-user">
         {room.user.first_name} {room.user.last_name}
       </p>

@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useUser } from "./UserContext";
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import io from "socket.io-client";
 import { API_URL } from "../utils/constants";
 
@@ -50,6 +56,52 @@ export const ChatProvider = ({ children }) => {
     return () => newSocket.close();
   }, []);
 
+  const markAsRead = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
+    if (
+      messageList.length === 0 ||
+      messageList.find(
+        (msg) => msg.user_sent !== user.userId && msg.read === true
+      ) ||
+      !selectedRoom
+    )
+      return;
+
+    if (!token) return null;
+
+    console.log("markAsRead called");
+
+    const options = {
+      method: "PATCH",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    try {
+      const response = await fetch(
+        `${API_URL}/rooms/markAsRead/${selectedRoom.room_id}`,
+        options
+      );
+
+      if (response.status !== 200) return null;
+
+      const data = await response.json();
+
+      setMessageList((msgs) =>
+        [...msgs].map((msg) =>
+          msg.user_sent === user.user_id ? msg : { ...msg, read: true }
+        )
+      );
+
+      setRooms((rooms) =>
+        [...rooms].map((room) => (room.room_id === data.room_id ? data : room))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }, [messageList?.length, selectedRoom?.room_id, user?.user_id]);
+
   useEffect(() => {
     if (!socket) return;
 
@@ -60,8 +112,9 @@ export const ChatProvider = ({ children }) => {
     socket.on("receive_messages", (messages) => {
       setMessageList(messages);
       setChatIsLoading(false);
+      markAsRead();
     });
-  }, [socket]);
+  }, [socket, markAsRead]);
 
   const joinRoom = (room_id) => {
     socket.emit("join_room", { room: room_id, user: user.user_id });
@@ -110,6 +163,7 @@ export const ChatProvider = ({ children }) => {
         resetMessages,
         sendMessage,
         chatIsLoading,
+        markAsRead,
       }}
     >
       {children}
