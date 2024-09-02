@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+
+import React, { useState } from "react";
+import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import BookSearch from "../BookSearch";
 
 const distancesAllowed = [0.5, 1, 5, 10, 15, 20];
 
-function CollectionAddForm({ onSubmit }) {
+function WishlistAddForm({ onSubmit }) {
   const [isbn, setIsbn] = useState("");
   const [bookSelected, setBookSelected] = useState(null);
   const [radius, setRadius] = useState(10);
@@ -38,27 +38,31 @@ function CollectionAddForm({ onSubmit }) {
 
       if (data.totalItems === 1) {
         setIsbnChecked(true);
+        setIsbnError(false);
       } else {
         setIsbnError(true);
+        setIsbnChecked(false);
       }
     } catch (err) {
       console.log(err);
+      setIsbnError(true);
+      setIsbnChecked(false);
     }
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
-    // Log form data or handle it as needed
+    e.preventDefault();
     if (isbnChecked && radius) {
       onSubmit({ isbn, radius });
     }
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
         <Row>
-          <Form.Label>
-            Book Title:{" "}
+          <Form.Label htmlFor="book-title">
+            Book Title:
             <span className="text-danger">
               {isbnError && "Please enter a correct ISBN"}
             </span>
@@ -71,8 +75,8 @@ function CollectionAddForm({ onSubmit }) {
         </Row>
         <Row className="my-2">
           <Col>
-            <Form.Label>
-              ISBN:{" "}
+            <Form.Label htmlFor="isbn">
+              ISBN:
               <span className="text-danger">
                 {isbnError && "Please enter a correct ISBN"}
               </span>
@@ -80,6 +84,7 @@ function CollectionAddForm({ onSubmit }) {
             <Row>
               <Col xs={10}>
                 <Form.Control
+                  id="isbn"
                   value={isbn}
                   onChange={(e) => {
                     setIsbnChecked(false);
@@ -96,9 +101,9 @@ function CollectionAddForm({ onSubmit }) {
         </Row>
         <Row className="my-2">
           <Col>
-            <Form.Label>Radius:</Form.Label>
+            <Form.Label htmlFor="radius">Radius:</Form.Label>
             <Form.Select
-              className=""
+              id="radius"
               aria-label="Radius distance in miles"
               value={radius}
               onChange={(e) => setRadius(e.target.value)}
@@ -114,7 +119,7 @@ function CollectionAddForm({ onSubmit }) {
         <Row className="mt-3">
           {!isbnChecked && (
             <p className="text-center text-danger">
-              You must verify the ISBN before adding book to wishlist
+              You must verify the ISBN before adding the book to the wishlist
             </p>
           )}
           <Button
@@ -130,4 +135,4 @@ function CollectionAddForm({ onSubmit }) {
   );
 }
 
-export default CollectionAddForm;
+export default WishlistAddForm;

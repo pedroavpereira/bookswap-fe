@@ -1,5 +1,5 @@
 export const REGISTER_API_URL = "/signup";
 
-export const AUTH_URL = "http://52.211.210.237:5000";
+export const AUTH_URL = "34.242.65.93:5000";
 
-export const API_URL = "http://52.211.210.237:3000";
+export const API_URL = "34.242.65.93:3000";

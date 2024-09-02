@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest --coverage"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
@@ -40,6 +40,7 @@
     "globals": "^15.9.0",
     "jsdom": "^25.0.0",
     "react-router-dom": "^6.26.1",
+    "sinon-chai": "^4.0.0",
     "vite": "^5.4.1",
     "vitest": "^2.0.5"
   }
