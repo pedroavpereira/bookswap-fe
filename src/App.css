@@ -52,10 +52,10 @@
   gap: 5rem;
 }
 
-.homepage-headers-container {
+/* .homepage-headers-container {
   position: absolute;
   top: 8rem;
-}
+} */
 
 .homepage-header {
   font-size: 6rem;
@@ -501,4 +501,13 @@
   font-size: 20px;
   font-weight: bold;
   transition: color 0.3s ease;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-content {
+  flex: 1;
 }

@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
+import { useUser } from "../../contexts/UserContext";
 import "./ChatRoom.css";
 
 function ChatRoom({ room, onClick }) {
+  const { user } = useUser();
+  // console.log(room, room?.last_message, room?.last_message?.read);
+  const thereIsMessage = Boolean(room.last_message);
+
   return (
     <div
       className={`chat-room-flex ${room?.last_message && "message"}${
@@ -15,6 +20,11 @@ function ChatRoom({ room, onClick }) {
       <p className="chat-room-message">
         {room.last_message && room.last_message.message}
       </p>
+      {thereIsMessage &&
+        !room?.last_message?.read &&
+        room?.last_message.user_sent !== user.user_id && (
+          <span className="message-unread"></span>
+        )}
     </div>
   );
 }

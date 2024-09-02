@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header/index"; // Ensure correct path
-import Footer from "./components/Footer/index"; // Ensure correct path
+import Layout from "./layouts";
 import * as Pages from "./pages"; // Ensure all components are correctly exported from this index.js file
 import CollectionsProvider from "./contexts/CollectionsContext"; // Ensure correct path
 import SwapsProvider from "./contexts/SwapsContext"; // Ensure correct path
@@ -18,30 +17,31 @@ function App() {
         <UserProvider>
           <SwapsProvider>
             <CollectionsProvider>
-              <Header />
               <Routes>
-                <Route index element={<Pages.HomePage />} />
-                <Route path="/login" element={<Pages.Login />} />
-                <Route path="/signup" element={<Pages.Register />} />
-                <Route path="/search" element={<Pages.Search />} />
-                <Route path="/chat" element={<Pages.Chat />} />
-                <Route path="/profile" element={<Pages.Profile />} />
-                <Route path="/wishlist" element={<Pages.WishList />} />
-                <Route
-                  path="/offering/:collection_id"
-                  element={<Pages.OfferingPage />}
-                />
-                <Route path="/swap">
-                  <Route index element={<Pages.Swap />} />
+                <Route element={<Layout />}>
+                  <Route index element={<Pages.HomePage />} />
+                  <Route path="/login" element={<Pages.Login />} />
+                  <Route path="/signup" element={<Pages.Register />} />
+                  <Route path="/search" element={<Pages.Search />} />
+                  <Route path="/chat" element={<Pages.Chat />} />
+                  <Route path="/profile" element={<Pages.Profile />} />
+                  <Route path="/wishlist" element={<Pages.WishList />} />
                   <Route
-                    path="accept/:swap_id"
-                    element={<Pages.SwapAccept />}
+                    path="/offering/:collection_id"
+                    element={<Pages.OfferingPage />}
                   />
-                </Route>
+                  <Route path="/swap">
+                    <Route index element={<Pages.Swap />} />
+                    <Route
+                      path="accept/:swap_id"
+                      element={<Pages.SwapAccept />}
+                    />
+                  </Route>
 
-                <Route path="/collection">
-                  <Route index element={<Pages.Collection />} />
-                  <Route path="add" element={<Pages.CollectionAdd />} />
+                  <Route path="/collection">
+                    <Route index element={<Pages.Collection />} />
+                    <Route path="add" element={<Pages.CollectionAdd />} />
+                  </Route>
                 </Route>
               </Routes>
               <ChatProvider>
@@ -49,7 +49,6 @@ function App() {
                 {/* <ChatWindow /> */}
               </ChatProvider>
               <Toaster position="bottom-right" />
-              <Footer />
             </CollectionsProvider>
           </SwapsProvider>
         </UserProvider>

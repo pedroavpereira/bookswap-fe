@@ -1,8 +1,20 @@
 .chat-room-flex {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 5px;
   padding: 1rem 0.5rem;
+}
+
+.message-unread {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #ccc;
 }
 
 .chat-room-flex p {
