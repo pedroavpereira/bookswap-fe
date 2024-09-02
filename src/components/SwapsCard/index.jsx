@@ -27,7 +27,7 @@ function SwapsCard({ swap, type = "pending", children }) {
       </span>
       <main className="main-content">
         <h1>
-          <h2 href="#">{book.title}</h2>
+          <p>{book.title}</p>
         </h1>
         <div className="flex-row"></div>
       </main>

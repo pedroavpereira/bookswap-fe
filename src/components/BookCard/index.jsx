@@ -22,7 +22,7 @@ function BookCard({
       </span>
       <main className="main-content">
         <h1>
-          <h2 href="#">{book.title}</h2>
+          <h2>{book.title}</h2>
         </h1>
         <div className="flex-row">
           {type === "search" && (

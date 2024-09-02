@@ -2,11 +2,7 @@ import { Container, Tab, Tabs, Row } from "react-bootstrap";
 import { useSwaps } from "../../contexts/SwapsContext";
 import { useUser } from "../../contexts/UserContext";
 
-import SwapsTable from "../../components/SwapsTable";
 import FullPageSpinner from "../../components/FullPageSpinner";
-import SwapsPendingRow from "../../components/SwapsPendingRow";
-import SwapsAcceptedRow from "../../components/SwapsAcceptedRow";
-import SwapsCompletedRow from "../../components/SwapsCompletedRow";
 import SwapsCard from "../../components/SwapsCard";
 import { useNavigate } from "react-router-dom";
 
