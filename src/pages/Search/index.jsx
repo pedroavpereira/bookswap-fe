@@ -5,6 +5,8 @@ import SearchForm from "../../components/SearchForm";
 import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import { API_URL } from "../../utils/constants";
+import { Container, Row } from "react-bootstrap";
+import BookCard from "../../components/BookCard";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,12 +29,12 @@ function Search() {
           );
           if (response.ok) {
             const data = await response.json();
-
             setCollections(data);
           } else {
             throw new Error("err");
           }
         } catch (err) {
+          console.log(err);
           navigate("/");
         } finally {
           setIsLoading(false);
@@ -47,13 +49,26 @@ function Search() {
   if (isLoading) return <FullPageSpinner />;
 
   return (
-    <div>
-      <SearchForm />
-      <h2>
-        Results for {title} in {radius} miles
-      </h2>
-      <BookList collections={collections} />
-    </div>
+    <Container>
+      <Row>
+        <SearchForm />
+      </Row>
+      <Row>
+        <h2>
+          Results for {title} in {radius} miles
+        </h2>
+      </Row>
+      <BookList>
+        {collections.map((col) => (
+          <BookCard
+            book={col.book}
+            user={col.user}
+            collection={col}
+            key={col.collection_id}
+          />
+        ))}
+      </BookList>
+    </Container>
   );
 }
 

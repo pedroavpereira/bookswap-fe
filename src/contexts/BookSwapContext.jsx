@@ -22,7 +22,7 @@ export const BookSwapProvider = ({ children }) => {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             });
-            console.log("Got user's location:", position.coords);
+            // console.log("Got user's location:", position.coords);
           },
           (error) => {
             console.error("Error getting location:", error);
@@ -35,7 +35,7 @@ export const BookSwapProvider = ({ children }) => {
           }
         );
       } else {
-        console.log("Geolocation is not supported by this browser.");
+        // console.log("Geolocation is not supported by this browser.");
         // Fallback to New York coordinates if geolocation is not supported
         setCurrentUser({
           id: "current",

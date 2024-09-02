@@ -57,6 +57,11 @@ function WishlistAddForm({ onSubmit }) {
     }
   };
 
+  function handleReset() {
+    setIsbn("");
+    setIsbnChecked(false);
+  }
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -68,6 +73,7 @@ function WishlistAddForm({ onSubmit }) {
             </span>
           </Form.Label>
           <BookSearch
+            onTyping={handleReset}
             setChecked={setIsbnChecked}
             selected={bookSelected}
             setSelected={handleBookSelected}
