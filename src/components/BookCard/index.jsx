@@ -1,25 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from "react-router-dom";
+import { HiTrash } from "react-icons/hi2";
 import "./BookCard.css";
 import { HiClock, HiOutlineSparkles } from "react-icons/hi";
 
-function BookCard({ user, book, collection, wish, type = "search" }) {
-  const navigate = useNavigate();
-
-  function handleClick() {
-    if (type !== "search") return;
-    navigate(`/offering/${collection.collection_id}`);
-  }
-
+function BookCard({
+  user,
+  book,
+  collection,
+  type = "search",
+  onClick,
+  onDelete,
+}) {
   return (
-    <div className="card-container" onClick={handleClick}>
-      <a href="/" className="hero-image-container">
+    <div className="card-container" onClick={() => onClick(collection)}>
+      <span href="/" className="hero-image-container">
         <img
           className="hero-image"
           src={book.image}
           alt="Spinning glass cube"
         />
-      </a>
+      </span>
       <main className="main-content">
         <h1>
           <h2 href="#">{book.title}</h2>
@@ -27,7 +27,6 @@ function BookCard({ user, book, collection, wish, type = "search" }) {
         <div className="flex-row">
           {type === "search" && (
             <>
-              {" "}
               <div className="time-left">
                 <HiOutlineSparkles className="small-image" />
                 <p>{collection.condition}</p>
@@ -38,17 +37,56 @@ function BookCard({ user, book, collection, wish, type = "search" }) {
               </div>
             </>
           )}
+
+          {type === "selection" && (
+            <div className="time-left">
+              <HiOutlineSparkles className="small-image" />
+              <p>{collection.condition}</p>
+            </div>
+          )}
+
+          {type === "display" && (
+            <>
+              <div className="time-left">
+                <HiOutlineSparkles className="small-image" />
+                <p>{collection.condition}</p>
+              </div>
+              <div className="time-left">
+                <HiTrash
+                  className="small-image text-danger"
+                  onClick={() => onDelete(collection)}
+                />
+              </div>
+            </>
+          )}
+
+          {type === "display" && (
+            <>
+              <div className="time-left">
+                <HiOutlineSparkles className="small-image" />
+                <p>{collection.condition}</p>
+              </div>
+              <div className="time-left">
+                <HiTrash
+                  className="small-image text-danger"
+                  onClick={() => onDelete(collection)}
+                />
+              </div>
+            </>
+          )}
         </div>
       </main>
-      <div className="card-attribute">
-        <p>
-          <span>
-            <p href="#">
-              Owner: {user.first_name} {user.last_name}
-            </p>
-          </span>
-        </p>
-      </div>
+      {type !== "selection" && (
+        <div className="card-attribute">
+          <p>
+            <span>
+              <p href="#">
+                Owner: {user.first_name} {user.last_name}
+              </p>
+            </span>
+          </p>
+        </div>
+      )}
     </div>
   );
 }

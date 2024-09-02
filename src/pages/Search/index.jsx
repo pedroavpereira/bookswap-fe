@@ -45,6 +45,10 @@ function Search() {
     [lat, lng, title, radius, navigate]
   );
 
+  function handleCollectionClick(collection) {
+    navigate(`/offering/${collection.collection_id}`);
+  }
+
   if (isLoading) return <FullPageSpinner />;
 
   return (
@@ -60,6 +64,7 @@ function Search() {
       <BookList>
         {collections.map((col) => (
           <BookCard
+            onClick={handleCollectionClick}
             book={col.book}
             user={col.user}
             collection={col}

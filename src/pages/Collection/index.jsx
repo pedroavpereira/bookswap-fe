@@ -1,5 +1,5 @@
 import { useCollections } from "../../contexts/CollectionsContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -9,15 +9,27 @@ import CollectionAddForm from "../../components/CollectionAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
 // import BookList from "../../components/BookList";
 import { Col, Container, Row } from "react-bootstrap";
-import CollectionCard from "../../components/CollectionCard";
+import { useUser } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import BookCard from "../../components/BookCard";
 
 const Collection = () => {
+  const navigate = useNavigate();
   const { collections, isLoading, createCollection, deleteCollection } =
     useCollections();
+  const { user, isLoading: userLoading } = useUser();
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(
+    function () {
+      if (!userLoading && !user) {
+        navigate("/");
+      }
+    },
+    [userLoading, user, navigate]
+  );
+
   function handleCreateCollection(data) {
-    console.log("handleCreation");
     setShowModal(false);
     createCollection(data);
   }
@@ -28,6 +40,10 @@ const Collection = () => {
 
   function handleClose() {
     setShowModal(false);
+  }
+
+  function handleDeleteCollection(collection) {
+    deleteCollection(collection.collection_id);
   }
 
   if (isLoading) return <FullPageSpinner />;
@@ -49,10 +65,13 @@ const Collection = () => {
 
         <div className="collection-card-row">
           {collections.map((col) => (
-            <CollectionCard
+            <BookCard
               key={col.collection_id}
+              user={col.user}
+              book={col.book}
               collection={col}
-              onClick={deleteCollection}
+              onDelete={handleDeleteCollection}
+              type="display"
             />
           ))}
         </div>

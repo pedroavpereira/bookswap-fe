@@ -12,7 +12,10 @@ const Login = () => {
 
   useEffect(
     function () {
+      console.log("LOGIN PAGE");
+      console.log(user);
       if (user) {
+        console.log("navigate?");
         navigate("/");
       }
     },
