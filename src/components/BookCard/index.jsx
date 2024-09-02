@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { HiTrash } from "react-icons/hi2";
-import "./BookCard.css";
+// import "./BookCard.css";
 import { HiClock, HiOutlineSparkles } from "react-icons/hi";
 
 function BookCard({
