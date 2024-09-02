@@ -26,15 +26,14 @@ function Search() {
           const response = await fetch(
             `${API_URL}/collections/search?radius=${radius}&lat=${lat}&lng=${lng}&title=${title}`
           );
-          console.log(response);
           if (response.ok) {
             const data = await response.json();
-            // console.log(data);
             setCollections(data);
           } else {
             throw new Error("err");
           }
         } catch (err) {
+          console.log(err);
           navigate("/");
         } finally {
           setIsLoading(false);
@@ -60,7 +59,12 @@ function Search() {
       </Row>
       <BookList>
         {collections.map((col) => (
-          <BookCard collection={col} key={col.collection_id} />
+          <BookCard
+            book={col.book}
+            user={col.user}
+            collection={col}
+            key={col.collection_id}
+          />
         ))}
       </BookList>
     </Container>

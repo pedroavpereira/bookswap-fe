@@ -7,9 +7,7 @@ import CollectionsProvider from "./contexts/CollectionsContext"; // Ensure corre
 import SwapsProvider from "./contexts/SwapsContext"; // Ensure correct path
 import { BookSwapProvider } from "./contexts/BookSwapContext"; // Ensure correct path
 import UserProvider from "./contexts/UserContext";
-import ChatsList from "./components/ChatsList";
 import ChatProvider from "./contexts/ChatsContext";
-import ChatWindow from "./components/ChatWindow";
 import Chat from "./components/Chat";
 import { Toaster } from "react-hot-toast";
 
@@ -47,7 +45,6 @@ function App() {
               </Routes>
               <ChatProvider>
                 <Chat />
-                {/* <ChatsList /> */}
                 {/* <ChatWindow /> */}
               </ChatProvider>
               <Toaster position="bottom-right" />

@@ -3,12 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./BookCard.css";
 import { HiClock, HiOutlineSparkles } from "react-icons/hi";
 
-function BookCard({ collection, type = "search" }) {
+function BookCard({ user, book, collection, wish, type = "search" }) {
   const navigate = useNavigate();
-
-  console.log(collection);
-
-  const { book, user } = collection;
 
   function handleClick() {
     if (type !== "search") return;
@@ -29,14 +25,19 @@ function BookCard({ collection, type = "search" }) {
           <h2 href="#">{book.title}</h2>
         </h1>
         <div className="flex-row">
-          <div className="time-left">
-            <HiOutlineSparkles className="small-image" />
-            <p>{collection.condition}</p>
-          </div>
-          <div className="time-left">
-            <HiClock className="small-image" />
-            <p>{Math.round(collection.distance * 100) / 100} miles away</p>
-          </div>
+          {type === "search" && (
+            <>
+              {" "}
+              <div className="time-left">
+                <HiOutlineSparkles className="small-image" />
+                <p>{collection.condition}</p>
+              </div>
+              <div className="time-left">
+                <HiClock className="small-image" />
+                <p>{Math.round(collection.distance * 100) / 100} miles away</p>
+              </div>
+            </>
+          )}
         </div>
       </main>
       <div className="card-attribute">

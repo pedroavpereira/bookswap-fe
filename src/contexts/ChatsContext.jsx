@@ -22,8 +22,6 @@ export const ChatProvider = ({ children }) => {
   const [messageList, setMessageList] = useState([]);
   const [chatIsLoading, setChatIsLoading] = useState(false);
 
-  // console.log(rooms);
-
   useEffect(function () {
     async function fetchRooms() {
       const token = localStorage.getItem("token");
@@ -62,13 +60,6 @@ export const ChatProvider = ({ children }) => {
   const markAsRead = useCallback(async () => {
     const token = localStorage.getItem("token");
 
-    console.log("markAsRead");
-
-    console.log("selectedRoom", selectedRoom);
-    // console.log(
-    //   "selectedRoom",
-    console.log(messageList);
-
     if (
       messageList.length === 0 ||
       messageList.find(
@@ -79,8 +70,6 @@ export const ChatProvider = ({ children }) => {
       return;
 
     if (!token) return null;
-
-    console.log("AFTER FLOW CONTROL");
 
     const options = {
       method: "PATCH",
@@ -97,8 +86,6 @@ export const ChatProvider = ({ children }) => {
       if (response.status !== 200) return null;
 
       const data = await response.json();
-
-      console.log("mark as read", data);
 
       setMessageList((msgs) =>
         [...msgs].map((msg) =>
@@ -118,7 +105,6 @@ export const ChatProvider = ({ children }) => {
     if (!socket) return;
 
     const handleReceiveMessage = (data) => {
-      console.log("receiveMessage");
       setMessageList((list) => [...list, data]);
     };
 
