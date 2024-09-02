@@ -52,7 +52,7 @@ function Swap() {
             eventKey="pending"
             title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
           >
-            {pendingSwaps.map((swap) => (
+            {pendingSwaps?.map((swap) => (
               <SwapsCard swap={swap} key={swap.wish_id} type="pending">
                 <div className="swap-action-buttons">
                   <button
@@ -75,7 +75,7 @@ function Swap() {
             eventKey="accepted"
             title={`Accepted (${acceptedSwaps ? acceptedSwaps.length : 0})`}
           >
-            {acceptedSwaps.map((swap) => (
+            {acceptedSwaps?.map((swap) => (
               <SwapsCard swap={swap} key={swap.wish_id}>
                 <div className="swap-action-buttons">
                   <button className="action-button action-button-highlight">
@@ -100,7 +100,7 @@ function Swap() {
                 <SwapsCompletedRow swap={swap} key={i} />
               ))}
             /> */}
-            {completedSwaps.map((swap) => (
+            {completedSwaps?.map((swap) => (
               <SwapsCard swap={swap} key={swap.wish_id}>
                 <div className="swap-action-buttons">
                   Swap was: {swap.status}
