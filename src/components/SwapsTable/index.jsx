@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import React from "react"; /* eslint-disable react/prop-types */
 import { Table } from "react-bootstrap";
 import { HiOutlineTrash } from "react-icons/hi2";
 

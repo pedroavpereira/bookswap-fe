@@ -19,7 +19,7 @@ function App() {
         <UserProvider>
           <SwapsProvider>
             <CollectionsProvider>
-              <Header />
+              {/* <Header /> */}
               <Routes>
                 <Route index element={<Pages.HomePage />} />
                 <Route path="/login" element={<Pages.Login />} />
@@ -50,7 +50,7 @@ function App() {
                 {/* <ChatWindow /> */}
               </ChatProvider>
               <Toaster position="bottom-right" />
-              <Footer />
+              {/* <Footer /> */}
             </CollectionsProvider>
           </SwapsProvider>
         </UserProvider>

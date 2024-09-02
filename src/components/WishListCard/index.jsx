@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./WishListCard.css";
 import { HiClock, HiOutlineSparkles, HiTrash } from "react-icons/hi";

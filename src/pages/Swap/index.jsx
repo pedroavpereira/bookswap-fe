@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Tab, Tabs, Row } from "react-bootstrap";
 import { useSwaps } from "../../contexts/SwapsContext";
 import { useUser } from "../../contexts/UserContext";
