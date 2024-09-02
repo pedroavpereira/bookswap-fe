@@ -18,7 +18,7 @@ function App() {
         <UserProvider>
           <SwapsProvider>
             <CollectionsProvider>
-              <Header />
+              {/* <Header /> */}
               <Routes>
                 <Route index element={<Pages.HomePage />} />
                 <Route path="/login" element={<Pages.Login />} />
