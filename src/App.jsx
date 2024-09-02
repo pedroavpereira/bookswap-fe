@@ -25,6 +25,7 @@ function App() {
                 <Route path="/signup" element={<Pages.Register />} />
                 <Route path="/search" element={<Pages.Search />} />
                 <Route path="/chat" element={<Pages.Chat />} />
+                <Route path="/profile" element={<Pages.Profile />} />
                 <Route path="/wishlist" element={<Pages.WishList />} />
                 <Route
                   path="/offering/:collection_id"
