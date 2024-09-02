@@ -386,8 +386,11 @@
 }
 
 .wishlist-table-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
-  color: red;
 }
 
 .swaps-table-actions {
@@ -398,12 +401,26 @@
   gap: 0.5rem;
 }
 
+.swap-action-buttons {
+  width: 100%;
+  padding: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
 .action-button {
   border: none;
-  color: #555;
   min-width: fit-content;
-  width: 75%;
+  width: 100%;
   padding: 0.7rem 1rem;
+  border-radius: 3px;
+}
+
+.action-button-primary {
+  color: #555;
 }
 
 .action-button:hover {
@@ -411,14 +428,22 @@
   color: #353535;
 }
 
+.action-button-highlight {
+  background-color: #e7e7e7;
+  color: #353535;
+}
+
+.action-button-highlight:hover {
+  background-color: #ccc;
+}
+
 .hover-scale:hover {
-  scale: 1.02;
+  scale: 1.1;
 }
 
 .card-selected {
-  scale: 1.03;
-  border: 3px solid #ccc;
-  border-radius: 7px;
+  scale: 1.1;
+  z-index: 20;
 }
 
 .wishlist-table-status {

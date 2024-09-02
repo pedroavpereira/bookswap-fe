@@ -38,7 +38,7 @@ Variables
 
   /* Fonts */
   --var-heading: normal normal 600 1.5em/1.6em "Outfit", sans-serif;
-  --var-small-heading: normal normal 400 1em/1em "Outfit", sans-serif;
+  --var-small-heading: normal normal 700 1em/1em "Outfit", sans-serif;
   --var-para: normal normal 300 1em/1.55em "Outfit", sans-serif;
 }
 
@@ -85,7 +85,7 @@ Font Styling
   padding: 0.3em 0 0 0;
 }
 
-.card-container h2 {
+.card-container p {
   font: var(--var-small-heading);
   color: var(--var-lightest);
   padding: 0.2rem 0;

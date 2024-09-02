@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useSwaps } from "../../contexts/SwapsContext";
 import FullPageSpinner from "../../components/FullPageSpinner";
+import BookList from "../../components/BookList";
 import { useUser } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
 import { API_URL } from "../../utils/constants";
 import { Col, Container, Row } from "react-bootstrap";
-import CollectionCard from "../../components/CollectionCard";
+import BookCard from "../../components/BookCard";
 
 function SwapHistory() {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ function SwapHistory() {
 
   useEffect(
     function () {
-      console.log(swap);
       if (!swap) return;
 
       if (
@@ -72,12 +72,13 @@ function SwapHistory() {
   }
 
   async function handleAccept() {
+    // console.log("handleAccept", selected, swap_id);
     const room = await acceptSwap({
-      swap_id,
+      swap_id: +swap_id,
       collection_id: selected.collection_id,
     });
 
-    navigate(`/chats/${room.room_id}`);
+    navigate("/swaps");
   }
 
   async function handleReject() {
@@ -108,20 +109,26 @@ function SwapHistory() {
         </Col>
       </Row>
       <Row>
-        <div className="collection-card-row">
-          {collections.map((el) => (
+        <BookList>
+          {collections.map((col) => (
             <div
+              key={col.collection_id}
               className={`hover-scale ${
-                el.collection_id === selected?.collection_id
+                selected?.collection_id === col?.collection_id
                   ? "card-selected"
                   : ""
               }`}
-              key={el.collection_id}
             >
-              <CollectionCard collection={el} onClick={handleCardClick} />
+              <BookCard
+                onClick={handleCardClick}
+                book={col.book}
+                user={col.user}
+                collection={col}
+                type="selection"
+              />
             </div>
           ))}
-        </div>
+        </BookList>
       </Row>
     </Container>
   );

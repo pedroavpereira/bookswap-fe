@@ -110,6 +110,11 @@ function SwapsProvider({ children }) {
       if (response.status !== 200) return null;
 
       const data = await response.json();
+      setSwaps((swaps) =>
+        swaps.map((sw) =>
+          sw.swap_id === swap_id ? { ...sw, status: "accepted" } : sw
+        )
+      );
 
       return data;
     } catch (err) {
@@ -141,8 +146,6 @@ function SwapsProvider({ children }) {
       if (response.status !== 200) return null;
 
       const data = await response.json();
-
-      console.log("fetch", data);
 
       setSwaps((swaps) => swaps.map((sw) => (sw.swap_id === id ? data : sw)));
     } catch (err) {

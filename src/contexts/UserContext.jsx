@@ -107,8 +107,6 @@ function UserProvider({ children }) {
     navigate("/");
   }
 
-  console.log(user);
-
   return (
     <UserContext.Provider value={{ user, isLoading, login, register, logout }}>
       {children}
