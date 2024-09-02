@@ -10,3 +10,4 @@ export { default as SwapAccept } from "./SwapAccept";
 export { default as Collection } from "./Collection";
 export { default as WishList } from "./WishList";
 export { default as CollectionAdd } from "./CollectionAdd";
+export { default as Profile } from "./Profile";
