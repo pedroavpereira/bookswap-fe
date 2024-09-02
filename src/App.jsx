@@ -18,7 +18,7 @@ function App() {
         <UserProvider>
           <SwapsProvider>
             <CollectionsProvider>
-              {/* <Header /> */}
+              <Header />
               <Routes>
                 <Route index element={<Pages.HomePage />} />
                 <Route path="/login" element={<Pages.Login />} />
@@ -30,7 +30,7 @@ function App() {
                   path="/offering/:collection_id"
                   element={<Pages.OfferingPage />}
                 />
-                <Route path="/swaps">
+                <Route path="/swap">
                   <Route index element={<Pages.Swap />} />
                   <Route
                     path="accept/:swap_id"
