@@ -57,6 +57,7 @@ Setup
 
 .card-container img {
   width: 75%;
+  height: 240px;
   margin: auto;
   border-radius: 15px;
   display: block;
@@ -90,6 +91,10 @@ Font Styling
   padding: 0.2rem 0;
   text-align: begining;
   /* padding on .coin-base */
+  white-space: nowrap; /* Prevents the text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflow content */
+  text-overflow: ellipsis; /* Displays an ellipsis (...) if the text is too long */
+  max-width: 100%; /* Ensures the heading fits within its container */
 }
 
 .card-container p {
@@ -122,6 +127,7 @@ Classes
 
 div.flex-row {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 }
@@ -212,7 +218,7 @@ div.attribution {
 }
 
 @media (min-width: 600px) {
-  body {
+  .card-container * {
     font-size: 18px;
   }
 }

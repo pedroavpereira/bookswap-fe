@@ -5,6 +5,7 @@ import BookList from "../../components/BookList";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import { API_URL } from "../../utils/constants";
 import { Container, Row } from "react-bootstrap";
+import BookCard from "../../components/BookCard";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,15 +26,14 @@ function Search() {
           const response = await fetch(
             `${API_URL}/collections/search?radius=${radius}&lat=${lat}&lng=${lng}&title=${title}`
           );
-          console.log(response);
           if (response.ok) {
             const data = await response.json();
-            // console.log(data);
             setCollections(data);
           } else {
             throw new Error("err");
           }
         } catch (err) {
+          console.log(err);
           navigate("/");
         } finally {
           setIsLoading(false);
@@ -57,7 +57,16 @@ function Search() {
           Results for {title} in {radius} miles
         </h2>
       </Row>
-      <BookList collections={collections} />
+      <BookList>
+        {collections.map((col) => (
+          <BookCard
+            book={col.book}
+            user={col.user}
+            collection={col}
+            key={col.collection_id}
+          />
+        ))}
+      </BookList>
     </Container>
   );
 }

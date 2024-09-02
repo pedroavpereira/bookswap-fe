@@ -3,13 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./WishListCard.css";
 import { HiClock, HiOutlineSparkles, HiTrash } from "react-icons/hi";
 
-function WishListCard({ wish, onDelete }) {
+function SwapsCard({ swap, onDelete }) {
   const navigate = useNavigate();
 
-  const { book } = wish;
-
-  console.log(wish);
-
+  //
   return (
     <div className="card-container">
       <a href="/" className="hero-image-container">
@@ -42,4 +39,4 @@ function WishListCard({ wish, onDelete }) {
   );
 }
 
-export default WishListCard;
+export default SwapsCard;
