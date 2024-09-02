@@ -6,7 +6,7 @@ import BookSearch from "../BookSearch";
 
 const distancesAllowed = [0.5, 1, 5, 10, 15, 20];
 
-function CollectionAddForm({ onSubmit }) {
+function WishlistAddForm({ onSubmit }) {
   const [isbn, setIsbn] = useState("");
   const [bookSelected, setBookSelected] = useState(null);
   const [radius, setRadius] = useState(10);
@@ -137,4 +137,4 @@ function CollectionAddForm({ onSubmit }) {
   );
 }
 
-export default CollectionAddForm;
+export default WishlistAddForm;
