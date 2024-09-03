@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FullPageSpinner from "../FullPageSpinner";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 const distancesAllowed = [0.5, 1, 5, 10, 15, 20];
 
@@ -11,7 +12,7 @@ function SearchForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [titleInput, setTitleInput] = useState("");
-  const [postCode, setPostCode] = useState("");
+  const [postCode, setPostCode] = useLocalStorageState("", "postcode");
   const [distance, setDistance] = useState(5);
 
   async function fetchLocationFromPostCode(postCode) {
