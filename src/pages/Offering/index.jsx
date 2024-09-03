@@ -7,6 +7,7 @@ import { API_URL } from "../../utils/constants";
 import { useSwaps } from "../../contexts/SwapsContext";
 import { useCollections } from "../../contexts/CollectionsContext";
 import { useUser } from "../../contexts/UserContext";
+import Reviewlist from "../../components/Reviewlist";
 
 const OfferingPage = () => {
   const navigate = useNavigate();
@@ -76,55 +77,86 @@ const OfferingPage = () => {
 
   return (
     <div className="offering-page">
-      {bookData && userData ? (
-        <>
-          <div className="book-details">
-            <img
-              src={bookData.book.image}
-              alt={bookData.book.title}
-              className="book-cover"
-            />
-            <div className="book-info">
-              <h2>{bookData.book.title}</h2>
-              <p>{bookData.book.authors.join(", ")}</p>
-              <p>Condition: {bookData.condition}</p>
+      <div className="product-card my-5">
+        {bookData && userData ? (
+          <div className="product-container">
+            <div className="product-image">
+              <img
+                className=" book-shadow"
+                src={bookData.book.image}
+                alt={bookData.book.title}
+              />
+              <div className="offering-action-button">
+                {yourCollection && (
+                  <button className="action-button action-button-highlight book-shadow">
+                    Your Collection
+                  </button>
+                )}
+                {!yourCollection && alreadyRequested && (
+                  <button className="action-button action-button-highlight book-shadow">
+                    Already requested
+                  </button>
+                )}
+                {!yourCollection &&
+                  !alreadyRequested &&
+                  !userHasEnoughCollections && (
+                    <button className="action-button action-button-highlight book-shadow">
+                      Not enough books in your collection
+                    </button>
+                  )}
+                {!yourCollection &&
+                  userHasEnoughCollections &&
+                  !alreadyRequested && (
+                    <button
+                      onClick={handleRequestSwap}
+                      className="action-button"
+                    >
+                      Request Swap
+                    </button>
+                  )}
+              </div>
+            </div>
+            <div className="product-info">
+              <h2 className="book-title">{bookData.book.title}</h2>
               <p>
-                Owner: {userData.first_name} {userData.last_name}
+                <span className="book-attribute">
+                  Author{bookData.book.authors.length > 1 ? "'s " : " "}:
+                </span>
+                {bookData.book.authors.join(", ")}
               </p>
-              <p>{bookData.book.categories.join(", ")}</p>
+              <p>
+                {" "}
+                <span className="book-attribute">Condition: </span>
+                {bookData.condition}
+              </p>
+              <p>
+                <span className="book-attribute">Owner: </span>
+                {userData.first_name} {userData.last_name}
+              </p>
+              <p>
+                <span className="book-attribute">Categories: </span>{" "}
+                {bookData.book.categories.join(", ")}
+              </p>
+
+              <div className="swap-details">
+                <h3>Swap Details</h3>
+                <p>
+                  Delivery Preference: {bookData.delivery_preference.join(", ")}
+                </p>
+                {userData.lat && userData.lng && (
+                  <MapComponent
+                    latitude={userData.lat}
+                    longitude={userData.lng}
+                  />
+                )}
+              </div>
             </div>
           </div>
-          <div className="swap-details">
-            <h3>Swap Details</h3>
-            <p>
-              Delivery Preference: {bookData.delivery_preference.join(", ")}
-            </p>
-            {userData.lat && userData.lng && (
-              <MapComponent latitude={userData.lat} longitude={userData.lng} />
-            )}
-          </div>
-          {yourCollection && (
-            <p className="request-swap-button">Your Collection</p>
-          )}
-          {!yourCollection && alreadyRequested && (
-            <p className="request-swap-button">Already requested</p>
-          )}
-          {!yourCollection &&
-            !alreadyRequested &&
-            !userHasEnoughCollections && (
-              <p className="request-swap-button">
-                Not enough books in your collection
-              </p>
-            )}
-          {!yourCollection && userHasEnoughCollections && !alreadyRequested && (
-            <button onClick={handleRequestSwap} className="request-swap-button">
-              Request Swap
-            </button>
-          )}
-        </>
-      ) : (
-        <p>No book or user data available</p>
-      )}
+        ) : (
+          <p>No book or user data available</p>
+        )}
+      </div>
+      <Reviewlist />
     </div>
   );
 };
