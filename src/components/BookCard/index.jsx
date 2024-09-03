@@ -61,7 +61,7 @@ function BookCard({
           )}
         </div>
       </main>
-      {type !== "selection" && (
+      {type === "selection" && (
         <div className="card-attribute">
           <p>
             <span>
