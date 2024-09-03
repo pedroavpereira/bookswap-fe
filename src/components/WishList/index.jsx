@@ -65,6 +65,7 @@ const WishList = () => {
 
   async function createWishList(data) {
     const token = localStorage.getItem("token");
+    setShowModal(false);
 
     if (!token) return null;
 
@@ -90,7 +91,6 @@ const WishList = () => {
       console.log(err);
     } finally {
       setIsLoading(false);
-      setShowModal(false);
     }
   }
 
@@ -119,8 +119,6 @@ const WishList = () => {
       setIsLoading(false);
     }
   }
-
-  if (isLoading) return <FullPageSpinner />;
 
   return (
     <>

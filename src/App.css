@@ -350,16 +350,21 @@
   position: absolute;
   width: 100%;
   z-index: 100;
-  background: #fff;
+  background: #fbfbfb;
   top: 95%;
+  border-right: 1px solid rgb(138, 138, 138);
+  border-left: 1px solid rgb(156, 155, 155);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .search-book-result {
   display: flex;
   gap: 2rem;
   align-items: center;
-  border: 1px solid black;
+  border-bottom: 1px solid rgb(202, 202, 202);
   padding: 0.5rem;
+  max-height: 100px;
 }
 
 .search-book-result-information {
@@ -367,11 +372,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  width: 100%;
+  overflow: hidden; /* Hides the overflow content */
 }
 
-.search-book-result-information p {
+.search-book-title {
   font-weight: bold;
   margin: 0;
+  width: 100%;
+  white-space: nowrap; /* Prevents the text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflow content */
+  text-overflow: ellipsis; /* Displays an ellipsis (...) if the text is too long */
+}
+
+.search-book-authors {
+  width: 100%;
+  white-space: nowrap; /* Prevents the text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflow content */
+  text-overflow: ellipsis; /* Displays an ellipsis (...) if the text is too long */
 }
 
 .wishtable-image {
