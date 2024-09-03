@@ -59,21 +59,6 @@ function BookCard({
               </div>
             </>
           )}
-
-          {type === "display" && (
-            <>
-              <div className="time-left">
-                <HiOutlineSparkles className="small-image" />
-                <p>{collection.condition}</p>
-              </div>
-              <div className="time-left">
-                <HiTrash
-                  className="small-image text-danger"
-                  onClick={() => onDelete(collection)}
-                />
-              </div>
-            </>
-          )}
         </div>
       </main>
       {type !== "selection" && (
