@@ -30,7 +30,7 @@ function Swap() {
   );
 
   function navigateToAccept(swap_id) {
-    navigate(`/swaps/accept/${swap_id}`);
+    navigate(`/swap/accept/${swap_id}`);
   }
 
   if (loading) return <FullPageSpinner />;

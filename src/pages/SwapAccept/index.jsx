@@ -31,7 +31,7 @@ function SwapHistory() {
         swap?.user_requesting === user?.user_id ||
         swap.status !== "pending"
       ) {
-        navigate("/swaps");
+        navigate("/swap");
         return;
       }
     },
@@ -78,12 +78,12 @@ function SwapHistory() {
       collection_id: selected.collection_id,
     });
 
-    navigate("/swaps");
+    navigate("/swap");
   }
 
   async function handleReject() {
     await rejectSwap(swap.swap_id);
-    navigate(`/swaps`);
+    navigate(`/swap`);
   }
 
   if (loading) return <FullPageSpinner />;

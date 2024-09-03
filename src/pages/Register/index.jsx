@@ -54,6 +54,7 @@ const Register = () => {
       lng,
     });
 
+    navigate("/");
     // // Check if registration was successful and redirect
     // if (registerUser.fulfilled.match(resultAction)) {
     //   const response = resultAction.payload;
