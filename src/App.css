@@ -420,11 +420,17 @@
 }
 
 .action-button-primary {
-  color: #555;
+  background-color: #ccc;
+  color: #353535;
+}
+
+.action-button-primary:hover {
+  background-color: #bbbbbb;
+  color: #353535;
 }
 
 .action-button:hover {
-  background-color: #ccc;
+  background-color: #bbbbbb;
   color: #353535;
 }
 
@@ -434,7 +440,7 @@
 }
 
 .action-button-highlight:hover {
-  background-color: #ccc;
+  background-color: #f79c00;
 }
 
 .hover-scale:hover {

@@ -85,7 +85,10 @@ function UserReviewForm({ onSubmit, swap }) {
           onChange={(e) => setMessage(e.target.value)}
         />
       </div>
-      <button className="action-button" onClick={handleSubmit}>
+      <button
+        className="action-button action-button-highlight "
+        onClick={handleSubmit}
+      >
         Mark as completed
       </button>
     </Form>
