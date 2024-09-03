@@ -18,7 +18,7 @@
   border-bottom: 1px solid #eeeeee;
 }
 
-.chat-row-user {
+.chat-row-user-icon {
   font-size: 2rem;
 }
 
@@ -48,6 +48,7 @@
 
 .chat-room-user {
   font-size: 1rem;
+  text-transform: capitalize;
 }
 
 .chat-room-message {
