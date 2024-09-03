@@ -38,10 +38,7 @@ function App() {
                     />
                   </Route>
 
-                  <Route path="/collection">
-                    <Route index element={<Pages.Collection />} />
-                    <Route path="add" element={<Pages.CollectionAdd />} />
-                  </Route>
+                  <Route path="/collection" element={<Pages.Collection />} />
                 </Route>
               </Routes>
               <ChatProvider>
