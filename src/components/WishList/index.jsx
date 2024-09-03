@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Modal, Col, Container, Row } from "react-bootstrap";
-
 import WishlistAddForm from "../../components/WishlistAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import WishListCard from "../../components/WishListCard";
-
 import { API_URL } from "../../utils/constants";
 import BookList from "../../components/BookList";
 
@@ -15,58 +12,50 @@ const WishList = () => {
   const [wishlists, setWishLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(
-    function () {
-      async function fetchWishList() {
-        try {
-          setIsLoading(true);
-          const token = localStorage.getItem("token");
-          if (!token) {
-            navigate("/");
-            return;
-          }
-          const options = {
-            method: "GET",
-            headers: {
-              Authorization: token,
-            },
-          };
-
-          console.log("beforeFetch");
-
-          const response = await fetch(`${API_URL}/wishlists/mine`, options);
-
-          console.log("afterFetch");
-          console.log(response);
-          if (response.status !== 200) return null;
-
-          const data = await response.json();
-
-          setWishLists(data);
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setIsLoading(false);
-        }
+  const fetchWishList = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/");
+        return;
       }
-      fetchWishList();
-    },
-    [navigate]
-  );
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      };
 
-  function handleOpen() {
-    setShowModal(true);
-  }
+      const response = await fetch(`${API_URL}/wishlists/mine`, options);
 
-  function handleClose() {
-    setShowModal(false);
-  }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-  async function createWishList(data) {
+      const data = await response.json();
+      setWishLists(data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch wishlist. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchWishList();
+  }, [fetchWishList]);
+
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  const createWishList = async (data) => {
     const token = localStorage.getItem("token");
-
-    if (!token) return null;
+    if (!token) return;
 
     const options = {
       method: "POST",
@@ -79,25 +68,27 @@ const WishList = () => {
 
     try {
       setIsLoading(true);
+      setError(null);
       const response = await fetch(`${API_URL}/wishlists`, options);
 
-      if (response.status !== 201) return null;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-      const data = await response.json();
-
-      setWishLists((col) => [...col, data]);
+      const newData = await response.json();
+      setWishLists((prevWishlists) => [...prevWishlists, newData]);
+      setShowModal(false);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setError("Failed to create wishlist item. Please try again.");
     } finally {
       setIsLoading(false);
-      setShowModal(false);
     }
-  }
+  };
 
-  async function deleteWishlist(id) {
+  const deleteWishlist = async (id) => {
     const token = localStorage.getItem("token");
-
-    if (!token) return null;
+    if (!token) return;
 
     const options = {
       method: "DELETE",
@@ -108,56 +99,58 @@ const WishList = () => {
 
     try {
       setIsLoading(true);
+      setError(null);
       const response = await fetch(`${API_URL}/wishlists/${id}`, options);
 
-      if (response.status !== 204) return null;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-      setWishLists((col) => [...col].filter((el) => el.wishlist_id !== id));
+      setWishLists((prevWishlists) => prevWishlists.filter((el) => el.wishlist_id !== id));
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setError("Failed to delete wishlist item. Please try again.");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   if (isLoading) return <FullPageSpinner />;
 
   return (
-    <>
-      <Container>
-        {isLoading && <FullPageSpinner />}
-        <Row>
-          <Col xs={10}>
-            <h1>Your Wishlist</h1>
-          </Col>
-          <Col className="d-flex justify-content-center align-items-center">
-            <button className="action-button" onClick={handleOpen}>
-              Add new Book
-            </button>
-          </Col>
-        </Row>
-        <Row>
-          <BookList>
-            {wishlists.map((wish) => (
-              <WishListCard
-                wish={wish}
-                key={wish.wishlist_id}
-                onDelete={deleteWishlist}
-              />
-            ))}
-          </BookList>
-        </Row>
+    <Container>
+      {error && <div className="error-message">{error}</div>}
+      <Row>
+        <Col xs={10}>
+          <h1>Your Wishlist</h1>
+        </Col>
+        <Col className="d-flex justify-content-center align-items-center">
+          <button className="action-button" onClick={handleOpen}>
+            Add new Book
+          </button>
+        </Col>
+      </Row>
+      <Row>
+        <BookList>
+          {wishlists.map((wish) => (
+            <WishListCard
+              wish={wish}
+              key={wish.wishlist_id}
+              onDelete={deleteWishlist}
+            />
+          ))}
+        </BookList>
+      </Row>
 
-        <Modal show={showModal} onHide={handleClose} animation={false} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Add new book to wishlist</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <WishlistAddForm onSubmit={createWishList} />
-          </Modal.Body>
-        </Modal>
-      </Container>
-    </>
+      <Modal show={showModal} onHide={handleClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add new book to wishlist</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <WishlistAddForm onSubmit={createWishList} />
+        </Modal.Body>
+      </Modal>
+    </Container>
   );
 };
 
