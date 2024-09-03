@@ -1,12 +1,13 @@
 /* Footer.css */
 
 .footer {
- /* Navy blue background color */
-    color: #000; /* White text color */
-    text-align: center;
-    padding: 15px 0; /* Vertical padding */
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-  }
-  
+  /* Navy blue background color */
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  color: #000; /* White text color */
+  text-align: center;
+  padding: 1.2rem 0; /* Vertical padding */
+  width: 100%;
+}
