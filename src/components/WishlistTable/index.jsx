@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import React from 'react';
 import { Table } from "react-bootstrap";
 import { HiOutlineTrash } from "react-icons/hi2";
 
@@ -8,9 +8,7 @@ function WishlistTable({ wishs, onDelete }) {
       <thead>
         <tr className="text">
           <th className="text-center">Book</th>
-
           <th>Title</th>
-
           <th className="text-center">Radius</th>
           <th className="text-center">Actions</th>
         </tr>
@@ -19,7 +17,7 @@ function WishlistTable({ wishs, onDelete }) {
         {wishs.map((wish) => (
           <tr key={wish.wishlist_id}>
             <td className="wishtable-image">
-              <img src={wish?.book?.image} />
+              <img src={wish?.book?.image} alt={wish?.book?.title} />
             </td>
             <td className="wishlist-table-content wishlist-table-title">
               {wish?.book.title}
