@@ -23,6 +23,14 @@ const OfferingPage = () => {
   const isLoading =
     swapsLoading || collectionsLoading || userLoading || loading;
 
+  console.log(
+    "offeringPage",
+    swapsLoading,
+    collectionsLoading,
+    userLoading,
+    loading
+  );
+
   const alreadyRequested = swaps?.find(
     (s) => +collection_id === s.collection_requested
   );
@@ -32,7 +40,7 @@ const OfferingPage = () => {
   const yourCollection = user?.user_id === bookData?.user_id;
 
   useEffect(() => {
-    if (!collection_id) {
+    if (!collection_id || (!userLoading && !user)) {
       setError("No collection_id provided");
       navigate("/");
       return;
@@ -43,12 +51,14 @@ const OfferingPage = () => {
         const response = await fetch(
           `${API_URL}/collections/id/${collection_id}`
         );
+        console.log(response);
 
         if (!response.ok) {
           throw new Error("Failed to fetch collection data");
         }
 
         const data = await response.json();
+        console.log(data);
 
         if (data && data.collection_id === parseInt(collection_id)) {
           setBookData(data);

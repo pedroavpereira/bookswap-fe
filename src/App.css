@@ -248,6 +248,8 @@
 
 .bookList-container {
   display: flex;
+  flex-wrap: wrap;
+
   gap: 1.5rem;
 }
 
@@ -333,6 +335,7 @@
 
 .collection-card-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
