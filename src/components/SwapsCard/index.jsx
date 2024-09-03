@@ -22,7 +22,7 @@ function SwapsCard({ swap, children }) {
       <span href="/" className="hero-image-container">
         <img
           className="hero-image"
-          src={book?.image}
+          src={book.image}
           alt="Spinning glass cube"
         />
       </span>
