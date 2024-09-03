@@ -22,6 +22,8 @@ export const ChatProvider = ({ children }) => {
   const [messageList, setMessageList] = useState([]);
   const [chatIsLoading, setChatIsLoading] = useState(false);
 
+  console.log(rooms);
+
   useEffect(function () {
     async function fetchRooms() {
       const token = localStorage.getItem("token");
@@ -136,10 +138,16 @@ export const ChatProvider = ({ children }) => {
         <MessageToast name={`${user.first_name} ${user.last_name}`} t={t} />
       ));
     };
+    const handleNewRoom = (data) => {
+      console.log("new Room");
+      console.log(data);
+    };
 
     socket.on("receive_message", handleReceiveMessage);
 
     socket.on("receive_messages", handleReceiveMessages);
+
+    socket.on("new_room", handleNewRoom);
 
     socket.on("pinged", handlePing);
 
@@ -147,6 +155,7 @@ export const ChatProvider = ({ children }) => {
       socket.off("receive_message", handleReceiveMessage);
       socket.off("receive_messages", handleReceiveMessages);
       socket.off("pinged", handlePing);
+      socket.off("new_room", handleNewRoom);
     };
   }, [socket, markAsRead]);
 
@@ -187,7 +196,10 @@ export const ChatProvider = ({ children }) => {
     setMessageList([]);
   }
 
-  console.log(rooms);
+  function newRoom(room) {
+    socket.emit("room_created", { room, user_id: user.user_id });
+  }
+
   return (
     <ChatContext.Provider
       value={{
@@ -202,6 +214,7 @@ export const ChatProvider = ({ children }) => {
         sendMessage,
         chatIsLoading,
         markAsRead,
+        newRoom,
       }}
     >
       {children}
