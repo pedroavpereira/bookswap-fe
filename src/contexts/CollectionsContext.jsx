@@ -8,14 +8,14 @@ const CollectionsContext = createContext();
 // const API_URL = "http://54.75.137.47:3000";
 
 function CollectionsProvider({ children }) {
-  const [collections, setCollections] = useState(null);
+  const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   //Fetch collections
   useEffect(
     function () {
       async function fetchCollections() {
-        if (collections !== null) return null;
+        if (collections.length !== 0) return null;
 
         const token = localStorage.getItem("token");
 

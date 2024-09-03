@@ -1,63 +1,122 @@
+<<<<<<< HEAD
 import React from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
+=======
+import { Container, Tab, Tabs, Row } from "react-bootstrap";
+>>>>>>> dev
 import { useSwaps } from "../../contexts/SwapsContext";
+import { useUser } from "../../contexts/UserContext";
+
 import FullPageSpinner from "../../components/FullPageSpinner";
-import SwapItem from "../../components/SwapItem";
+import SwapsCard from "../../components/SwapsCard";
+import BookList from "../../components/BookList";
+import { useNavigate } from "react-router-dom";
 
 function Swap() {
-  const { swaps, isLoading } = useSwaps();
+  const navigate = useNavigate();
+  const {
+    swaps,
+    isLoading: swapsLoading,
+    rejectSwap,
+    completeSwap,
+  } = useSwaps();
+  const { user, isLoading: userLoading } = useUser();
 
-  const pendingSwaps = swaps?.filter((el) => el.status === "pending");
-  const acceptedSwaps = swaps?.filter(
-    (el) => el.status === "accepted" && el.completed === false
+  const loading = swapsLoading || userLoading;
+
+  const pendingSwaps = swaps?.filter(
+    (el) => el.status === "pending" && el.user_offered === user.user_id
   );
-  const rejectedSwaps = swaps?.filter((el) => el.status === "rejected");
-  const completedSwaps = swaps?.filter((el) => el.completed === true);
+  const acceptedSwaps = swaps?.filter(
+    (el) => el.status == "accepted" && el.completed !== true
+  );
 
-  if (isLoading) return <FullPageSpinner />;
+  const completedSwaps = swaps?.filter(
+    (el) => el.completed === true && user.user_id !== el.user_requesting
+  );
+
+  function navigateToAccept(swap_id) {
+    navigate(`/swap/accept/${swap_id}`);
+  }
+
+  if (loading) return <FullPageSpinner />;
 
   return (
-    <Container fluid className="mx-5">
-      <h1>Your Swaps</h1>
-      <Tabs
-        defaultActiveKey="pending"
-        id="fill-tab-example"
-        className="mb-3"
-        fill
-      >
-        <Tab
-          eventKey="pending"
-          title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
+    <Container className="mt-5">
+      <Row>
+        <h1>Your Swaps</h1>
+      </Row>
+
+      <Row>
+        <Tabs
+          defaultActiveKey="pending"
+          id="fill-tab-example"
+          className="mb-3"
+          fill
         >
-          {pendingSwaps?.map((swap) => (
-            <SwapItem swap={swap} key={swap.swap_id} />
-          ))}
-        </Tab>
-        <Tab
-          eventKey="accepted"
-          title={`Accepted (${pendingSwaps ? pendingSwaps.length : 0})`}
-        >
-          {acceptedSwaps?.map((swap) => (
-            <SwapItem swap={swap} key={swap.swap_id} />
-          ))}
-        </Tab>
-        <Tab
-          eventKey="rejected"
-          title={`Rejected (${pendingSwaps ? pendingSwaps.length : 0})`}
-        >
-          {rejectedSwaps?.map((swap) => (
-            <SwapItem swap={swap} key={swap.swap_id} />
-          ))}
-        </Tab>
-        <Tab
-          eventKey="completed"
-          title={`Completed (${pendingSwaps ? pendingSwaps.length : 0})`}
-        >
-          {completedSwaps?.map((swap) => (
-            <SwapItem swap={swap} key={swap.swap_id} />
-          ))}
-        </Tab>
-      </Tabs>
+          <Tab
+            eventKey="pending"
+            title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
+          >
+            <BookList>
+              {pendingSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.swap_id} type="pending">
+                  <div className="swap-action-buttons">
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => navigateToAccept(swap.swap_id)}
+                    >
+                      View collection
+                    </button>
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => rejectSwap(swap.swap_id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </SwapsCard>
+              ))}
+            </BookList>
+          </Tab>
+          <Tab
+            eventKey="accepted"
+            title={`Accepted (${acceptedSwaps ? acceptedSwaps.length : 0})`}
+          >
+            <BookList>
+              {acceptedSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.swap_id}>
+                  <div className="swap-action-buttons">
+                    <button className="action-button action-button-highlight">
+                      Chat
+                    </button>
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => completeSwap(swap.swap_id)}
+                    >
+                      Mark as completed
+                    </button>
+                  </div>
+                </SwapsCard>
+              ))}
+            </BookList>
+          </Tab>
+          <Tab
+            eventKey="completed"
+            title={`Completed (${completedSwaps ? completedSwaps.length : 0})`}
+          >
+            <BookList>
+              {completedSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.swap_id}>
+                  <div className="swap-action-buttons">
+                    Swap was: {swap.status}
+                  </div>
+                </SwapsCard>
+              ))}
+            </BookList>
+          </Tab>
+        </Tabs>
+      </Row>
     </Container>
   );
 }

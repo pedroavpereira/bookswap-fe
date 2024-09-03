@@ -1,48 +1,65 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import { BrowserRouter } from "react-router-dom";
-import Header from "./index";
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import '@testing-library/jest-dom';
+import Header from './index';  // Import the actual Header component
 
-// Wrapper component to provide router context
-const RouterWrapper = ({ children }) => (
-  <BrowserRouter>{children}</BrowserRouter>
-);
+// Mock the UserContext
+const mockUseUser = vi.fn();
+vi.mock('../../contexts/UserContext', () => ({
+  useUser: () => mockUseUser(),
+}));
 
-describe("Header", () => {
-  it("renders the header with correct logo and navigation links", () => {
-    render(<Header />, { wrapper: RouterWrapper });
+// Mock the logo import
+vi.mock('../../assets/logo.png', () => ({
+  default: 'mocked-logo.png'
+}));
 
-    // Check if logo is present
-    const logo = screen.getByText("BookNest");
-    expect(logo).to.exist;
-    expect(logo.closest("a")).to.have.property("href").that.includes("/");
+describe('Header Component', () => {
+  const mockLogout = vi.fn();
 
-    // Check if all navigation links are present
-    const navLinks = [
-      { text: "Home", href: "/" },
-      { text: "Browse", href: "/search" },
-      { text: "Swap", href: "/swap" },
-      { text: "Collection", href: "/collection" },
-      { text: "Login", href: "/login" },
-    ];
-
-    navLinks.forEach((link) => {
-      const linkElement = screen.getByText(link.text);
-      expect(linkElement).to.exist;
-      expect(linkElement.closest("a"))
-        .to.have.property("href")
-        .that.includes(link.href);
-    });
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("applies correct CSS classes", () => {
-    render(<Header />, { wrapper: RouterWrapper });
+  const renderHeader = (user = null) => {
+    mockUseUser.mockReturnValue({ user, logout: mockLogout });
+    return render(
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    );
+  };
 
-    const header = screen.getByRole("banner");
-    expect(header.classList.contains("header")).to.be.true;
+  it('renders Home link for all users', () => {
+    renderHeader();
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
 
-    const nav = screen.getByRole("navigation");
-    expect(nav.classList.contains("navbar")).to.be.true;
+  it('renders Login and Signup links when user is not authenticated', () => {
+    renderHeader();
+    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Signup')).toBeInTheDocument();
+  });
+
+  it('renders Swap, Collection, and Logout links when user is authenticated', () => {
+    renderHeader({ id: '1', name: 'Test User' });
+    expect(screen.getByText('Swap')).toBeInTheDocument();
+    expect(screen.getByText('Collection')).toBeInTheDocument();
+    expect(screen.getByText('Logout')).toBeInTheDocument();
+  });
+
+  it('does not render Login and Signup links when user is authenticated', () => {
+    renderHeader({ id: '1', name: 'Test User' });
+    expect(screen.queryByText('Login')).not.toBeInTheDocument();
+    expect(screen.queryByText('Signup')).not.toBeInTheDocument();
+  });
+
+  it('calls logout function when Logout is clicked', () => {
+    renderHeader({ id: '1', name: 'Test User' });
+    const logoutLink = screen.getByText('Logout');
+    fireEvent.click(logoutLink);
+    expect(mockLogout).toHaveBeenCalledTimes(1);
   });
 });

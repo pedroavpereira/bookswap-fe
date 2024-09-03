@@ -6,20 +6,24 @@ import { useNavigate } from "react-router-dom";
 function CollectionCard({ collection, onClick }) {
   const navigate = useNavigate();
 
-  console.log(collection);
-
-  function handleDelete() {
+  function handleDelete(e) {
+    e.stopPropagation();
     onClick(collection.collection_id);
   }
 
-  function handleImageClick() {
+  function handleImageClick(e) {
+    e.stopPropagation();
     navigate(`/offering/${collection.book.book_id}`, {
       state: { collection },
     });
   }
 
   return (
-    <Card style={{ width: "16rem" }} className="relative">
+    <Card
+      style={{ width: "16rem" }}
+      className="relative"
+      onClick={() => onClick(collection)}
+    >
       <Card.Img
         variant="top"
         style={{ aspectRatio: "9/13", scale: "0.8", cursor: "pointer" }}
@@ -38,7 +42,7 @@ function CollectionCard({ collection, onClick }) {
           onClick={handleDelete}
           pill
           className="collection-card-delete p-2 fs-4 text-white bg-danger"
-          data-testid="delete-button" // Added data-testid for testing
+          data-testid="delete-button"
         >
           <HiTrash />
         </Badge>
