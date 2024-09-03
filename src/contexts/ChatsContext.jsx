@@ -22,31 +22,31 @@ export const ChatProvider = ({ children }) => {
   const [messageList, setMessageList] = useState([]);
   const [chatIsLoading, setChatIsLoading] = useState(false);
 
-  useEffect(function () {
-    async function fetchRooms() {
-      const token = localStorage.getItem("token");
+  const fetchRooms = useCallback(async () => {
+    const token = localStorage.getItem("token");
 
-      if (!token) return null;
+    if (!token) return null;
 
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      };
-      try {
-        const response = await fetch(`${API_URL}/rooms/`, options);
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    try {
+      const response = await fetch(`${API_URL}/rooms/`, options);
 
-        if (response.status !== 200) return null;
+      if (response.status !== 200) return null;
 
-        const data = await response.json();
+      const data = await response.json();
 
-        setRooms(data);
-      } catch (err) {
-        console.log(err);
-      }
+      setRooms(data);
+    } catch (err) {
+      console.log(err);
     }
+  }, []);
 
+  useEffect(function () {
     fetchRooms();
   }, []);
 
@@ -87,8 +87,6 @@ export const ChatProvider = ({ children }) => {
 
       const data = await response.json();
 
-      console.log(data);
-
       setMessageList((msgs) =>
         [...msgs].map((msg) =>
           msg.user_sent === user.user_id ? msg : { ...msg, read: true }
@@ -111,6 +109,7 @@ export const ChatProvider = ({ children }) => {
     };
 
     const handleReceiveMessages = (messages) => {
+      messages.sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at));
       setMessageList(messages);
       setChatIsLoading(false);
       markAsRead();
@@ -132,13 +131,29 @@ export const ChatProvider = ({ children }) => {
       );
 
       toast((t) => (
-        <MessageToast name={`${user.first_name} ${user.last_name}`} t={t} />
+        <MessageToast
+          title={`${user.first_name} ${user.last_name}`}
+          subtitle={"Just messaged you!"}
+          t={t}
+        />
       ));
+    };
+    const handleNewRoom = ({ user }) => {
+      toast((t) => (
+        <MessageToast
+          title={`${user.first_name} ${user.last_name}`}
+          subtitle={"Accepted a swap"}
+          t={t}
+        />
+      ));
+      fetchRooms();
     };
 
     socket.on("receive_message", handleReceiveMessage);
 
     socket.on("receive_messages", handleReceiveMessages);
+
+    socket.on("new_room", handleNewRoom);
 
     socket.on("pinged", handlePing);
 
@@ -146,6 +161,7 @@ export const ChatProvider = ({ children }) => {
       socket.off("receive_message", handleReceiveMessage);
       socket.off("receive_messages", handleReceiveMessages);
       socket.off("pinged", handlePing);
+      socket.off("new_room", handleNewRoom);
     };
   }, [socket, markAsRead]);
 
@@ -186,7 +202,11 @@ export const ChatProvider = ({ children }) => {
     setMessageList([]);
   }
 
-  console.log(rooms);
+  function newRoom(room) {
+    fetchRooms();
+    socket.emit("room_created", { room, user_id: user.user_id });
+  }
+
   return (
     <ChatContext.Provider
       value={{
@@ -201,6 +221,7 @@ export const ChatProvider = ({ children }) => {
         sendMessage,
         chatIsLoading,
         markAsRead,
+        newRoom,
       }}
     >
       {children}

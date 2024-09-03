@@ -15,40 +15,41 @@ function App() {
     <>
       <BookSwapProvider>
         <UserProvider>
-          <SwapsProvider>
-            <CollectionsProvider>
-              <Routes>
-                <Route element={<Layout />}>
-                  <Route index element={<Pages.HomePage />} />
-                  <Route path="/login" element={<Pages.Login />} />
-                  <Route path="/signup" element={<Pages.Register />} />
-                  <Route path="/search" element={<Pages.Search />} />
-                  <Route path="/chat" element={<Pages.Chat />} />
-                  <Route path="/profile" element={<Pages.Profile />} />
-                  <Route path="/wishlist" element={<Pages.WishList />} />
-                  <Route
-                    path="/offering/:collection_id"
-                    element={<Pages.OfferingPage />}
-                  />
-                  <Route path="/swap">
-                    <Route index element={<Pages.Swap />} />
+          <ChatProvider>
+            <SwapsProvider>
+              <CollectionsProvider>
+                <Routes>
+                  <Route element={<Layout />}>
+                    <Route index element={<Pages.HomePage />} />
+                    <Route path="/login" element={<Pages.Login />} />
+                    <Route path="/signup" element={<Pages.Register />} />
+                    <Route path="/search" element={<Pages.Search />} />
+                    <Route path="/chat" element={<Pages.Chat />} />
+                    <Route path="/profile" element={<Pages.Profile />} />
+                    <Route path="/wishlist" element={<Pages.WishList />} />
                     <Route
-                      path="accept/:swap_id"
-                      element={<Pages.SwapAccept />}
+                      path="/offering/:collection_id"
+                      element={<Pages.OfferingPage />}
                     />
-                  </Route>
+                    <Route path="/swap">
+                      <Route index element={<Pages.Swap />} />
+                      <Route
+                        path="accept/:swap_id"
+                        element={<Pages.SwapAccept />}
+                      />
+                    </Route>
 
-                  <Route path="/collection" element={<Pages.Collection />} />
-                </Route>
-              </Routes>
-              <ChatProvider>
+                    <Route path="/collection" element={<Pages.Collection />} />
+                  </Route>
+                </Routes>
+
                 <Chat />
                 {/* <ChatWindow /> */}
-              </ChatProvider>
-              <Toaster position="bottom-right" />
-            </CollectionsProvider>
-          </SwapsProvider>
+              </CollectionsProvider>
+            </SwapsProvider>
+          </ChatProvider>
         </UserProvider>
+        <Toaster position="bottom-right" />
       </BookSwapProvider>
     </>
   );
