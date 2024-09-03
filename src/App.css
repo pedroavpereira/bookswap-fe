@@ -336,6 +336,8 @@
 .collection-card-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+
   gap: 2rem;
 }
 
@@ -592,7 +594,7 @@
   border-radius: 10px;
 }
 
-.product-info {
+.product-info-container {
   flex-grow: 2;
   padding: 2rem;
 }
@@ -603,9 +605,25 @@
 }
 
 .book-attribute {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.book-swap-preferences {
+  width: 100%;
+  margin-bottom: 0rem;
+}
+
+.book-attribute-hightlight {
   font-weight: bold;
 }
 
 .book-shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.book-attribute-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0;
 }
