@@ -4,6 +4,7 @@ import { useUser } from "../../contexts/UserContext";
 
 import FullPageSpinner from "../../components/FullPageSpinner";
 import SwapsCard from "../../components/SwapsCard";
+import BookList from "../../components/BookList";
 import { useNavigate } from "react-router-dom";
 
 function Swap() {
@@ -52,61 +53,62 @@ function Swap() {
             eventKey="pending"
             title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
           >
-            {pendingSwaps?.map((swap) => (
-              <SwapsCard swap={swap} key={swap.wish_id} type="pending">
-                <div className="swap-action-buttons">
-                  <button
-                    className="action-button action-button-highlight"
-                    onClick={() => navigateToAccept(swap.swap_id)}
-                  >
-                    View collection
-                  </button>
-                  <button
-                    className="action-button action-button-highlight"
-                    onClick={() => rejectSwap(swap.swap_id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              </SwapsCard>
-            ))}
+            <BookList>
+              {pendingSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.wish_id} type="pending">
+                  <div className="swap-action-buttons">
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => navigateToAccept(swap.swap_id)}
+                    >
+                      View collection
+                    </button>
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => rejectSwap(swap.swap_id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </SwapsCard>
+              ))}
+            </BookList>
           </Tab>
           <Tab
             eventKey="accepted"
             title={`Accepted (${acceptedSwaps ? acceptedSwaps.length : 0})`}
           >
-            {acceptedSwaps?.map((swap) => (
-              <SwapsCard swap={swap} key={swap.wish_id}>
-                <div className="swap-action-buttons">
-                  <button className="action-button action-button-highlight">
-                    Chat
-                  </button>
-                  <button
-                    className="action-button action-button-highlight"
-                    onClick={() => completeSwap(swap.swap_id)}
-                  >
-                    Mark as completed
-                  </button>
-                </div>
-              </SwapsCard>
-            ))}
+            <BookList>
+              {acceptedSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.wish_id}>
+                  <div className="swap-action-buttons">
+                    <button className="action-button action-button-highlight">
+                      Chat
+                    </button>
+                    <button
+                      className="action-button action-button-highlight"
+                      onClick={() => completeSwap(swap.swap_id)}
+                    >
+                      Mark as completed
+                    </button>
+                  </div>
+                </SwapsCard>
+              ))}
+            </BookList>
           </Tab>
           <Tab
             eventKey="completed"
             title={`Completed (${completedSwaps ? completedSwaps.length : 0})`}
           >
-            {/* <SwapsTable
-              onRender={completedSwaps.map((swap, i) => (
-                <SwapsCompletedRow swap={swap} key={i} />
+            <BookList>
+              {completedSwaps?.map((swap) => (
+                <SwapsCard swap={swap} key={swap.wish_id}>
+                  <div className="swap-action-buttons">
+                    Swap was: {swap.status}
+                  </div>
+                </SwapsCard>
               ))}
-            /> */}
-            {completedSwaps?.map((swap) => (
-              <SwapsCard swap={swap} key={swap.wish_id}>
-                <div className="swap-action-buttons">
-                  Swap was: {swap.status}
-                </div>
-              </SwapsCard>
-            ))}
+            </BookList>
           </Tab>
         </Tabs>
       </Row>
