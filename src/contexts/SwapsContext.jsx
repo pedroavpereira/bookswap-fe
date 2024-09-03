@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext";
 
 const SwapContext = createContext();
 
@@ -9,14 +10,25 @@ const SwapContext = createContext();
 
 function SwapsProvider({ children }) {
   const navigate = useNavigate();
-  const [swaps, setSwaps] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { user, isLoading: userLoading } = useUser();
+  const [swaps, setSwaps] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(
+    function () {
+      if (!user) {
+        setSwaps([]);
+        setIsLoading(true);
+      }
+    },
+    [user]
+  );
 
   //Fetch swaps
   useEffect(
     function () {
       async function fetchCollections() {
-        if (swaps !== null) return null;
+        if (!user || userLoading || !isLoading) return null;
 
         const token = localStorage.getItem("token");
 
@@ -46,7 +58,7 @@ function SwapsProvider({ children }) {
 
       fetchCollections();
     },
-    [swaps]
+    [isLoading, user, userLoading]
   );
   //Create swap
 
