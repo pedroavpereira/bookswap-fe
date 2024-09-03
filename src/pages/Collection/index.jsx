@@ -12,6 +12,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../../components/BookCard";
+import BookList from "../../components/BookList";
 
 const Collection = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const Collection = () => {
           </Col>
         </Row>
 
-        <div className="collection-card-row">
+        <BookList>
           {collections.map((col) => (
             <BookCard
               key={col.collection_id}
@@ -74,7 +75,7 @@ const Collection = () => {
               type="display"
             />
           ))}
-        </div>
+        </BookList>
 
         <Modal show={showModal} onHide={handleClose} animation={false} centered>
           <Modal.Header closeButton>

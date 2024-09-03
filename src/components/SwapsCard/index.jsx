@@ -2,10 +2,9 @@
 // import "./WishListCard.css";
 import { useUser } from "../../contexts/UserContext";
 
-function SwapsCard({ swap, children }) {
+function SwapsCard({ swap, type = "pending", children }) {
   const { user } = useUser();
 
-  const type = swap.status;
   let book;
 
   if (type === "accepted") {
@@ -13,7 +12,7 @@ function SwapsCard({ swap, children }) {
       swap.user_offered === user.user_id
         ? swap.bookOffered
         : swap.bookRequested;
-  } else if (type === "pending" || type === "rejected") {
+  } else if (type === "pending") {
     book = swap.bookRequested;
   }
 
@@ -27,9 +26,9 @@ function SwapsCard({ swap, children }) {
         />
       </span>
       <main className="main-content">
-        <h1>
-          <p>{book?.title}</p>
-        </h1>
+        <h2>
+          <p>{book.title}</p>
+        </h2>
         <div className="flex-row"></div>
       </main>
       <div className="card-attribute">{children}</div>

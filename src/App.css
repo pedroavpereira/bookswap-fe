@@ -2,6 +2,7 @@
 
 :root {
   --primary-colour: #f5af38;
+  --darker-primary-colour: #eb9707;
 }
 
 * {
@@ -630,4 +631,14 @@
   display: flex;
   flex-wrap: wrap;
   padding: 1rem 0;
+}
+
+.swap-tab-title {
+  font-size: 1.2rem;
+  color: black;
+}
+
+.swap-tab-title:hover {
+  font-size: 1.2rem;
+  color: var(--darker-primary-colour);
 }

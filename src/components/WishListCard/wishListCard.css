@@ -79,7 +79,7 @@ Font Styling
 =========================
 */
 
-.card-container h1 {
+.card-container h2 {
   font: var(--var-heading);
   color: var(--var-lightest);
   padding: 0.3em 0 0 0;

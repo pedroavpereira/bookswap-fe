@@ -67,6 +67,7 @@ function Swap() {
             fill
           >
             <Tab
+              tabClassName="swap-tab-title"
               eventKey="pending"
               title={`Pending (${pendingSwaps ? pendingSwaps.length : 0})`}
             >
@@ -92,6 +93,7 @@ function Swap() {
               </BookList>
             </Tab>
             <Tab
+              tabClassName="swap-tab-title"
               eventKey="accepted"
               title={`Accepted (${acceptedSwaps ? acceptedSwaps.length : 0})`}
             >
@@ -111,6 +113,7 @@ function Swap() {
               </BookList>
             </Tab>
             <Tab
+              tabClassName="swap-tab-title"
               eventKey="completed"
               title={`Completed (${
                 completedSwaps ? completedSwaps.length : 0
