@@ -14,8 +14,7 @@ function CollectionsProvider({ children }) {
   useEffect(
     function () {
       async function fetchCollections() {
-        if (collections.length !== 0) return null;
-
+        if (collections.length === 0 && !isLoading) return null;
         const token = localStorage.getItem("token");
 
         if (!token) return null;
@@ -27,7 +26,6 @@ function CollectionsProvider({ children }) {
           },
         };
         try {
-          setIsLoading(true);
           const response = await fetch(`${API_URL}/collections/mine`, options);
 
           if (response.status !== 200) return null;
@@ -44,7 +42,7 @@ function CollectionsProvider({ children }) {
 
       fetchCollections();
     },
-    [collections]
+    [collections, isLoading]
   );
 
   //Create new Collection

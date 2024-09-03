@@ -51,9 +51,9 @@ const Collection = () => {
 
   return (
     <>
-      <Container>
+      <Container className="">
         {isLoading && <FullPageSpinner />}
-        <Row>
+        <Row className="mt-5 mb-2">
           <Col xs={10}>
             <h1>Your Collection</h1>
           </Col>
