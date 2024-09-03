@@ -81,7 +81,7 @@ function Swap() {
                         View collection
                       </button>
                       <button
-                        className="action-button action-button-highlight"
+                        className="action-button action-button-primary"
                         onClick={() => rejectSwap(swap.swap_id)}
                       >
                         Reject

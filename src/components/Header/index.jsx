@@ -18,11 +18,11 @@ const Header = () => {
       </div>
       <nav className="navbar">
         <ul>
-          <li>
+          {/* <li>
             <NavLink to="/" className="header-Link" end>
               Home
             </NavLink>
-          </li>
+          </li> */}
           {user && (
             <>
               <li>
@@ -33,6 +33,11 @@ const Header = () => {
               <li>
                 <NavLink className="header-link" to="/collection">
                   Collection
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="header-link" to="/profile">
+                  Profile
                 </NavLink>
               </li>
               <li>
