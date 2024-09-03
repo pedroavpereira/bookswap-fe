@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 // import "./WishListCard.css";
+import React from 'react'; 
 import { useUser } from "../../contexts/UserContext";
 
 function SwapsCard({ swap, type = "pending", children }) {
