@@ -1,14 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from "react-router-dom";
 import "./WishListCard.css";
-import { HiClock, HiOutlineSparkles, HiTrash } from "react-icons/hi";
+import { HiClock, HiTrash } from "react-icons/hi";
 
 function WishListCard({ wish, onDelete }) {
-  const navigate = useNavigate();
-
   const { book } = wish;
-
-  console.log(wish);
 
   return (
     <div className="card-container">

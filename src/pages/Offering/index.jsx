@@ -31,7 +31,6 @@ const OfferingPage = () => {
   const yourCollection = user?.user_id === bookData?.user_id;
 
   useEffect(() => {
-    // Early return if no collection_id is provided
     if (!collection_id) {
       setError("No collection_id provided");
       navigate("/");
@@ -40,7 +39,6 @@ const OfferingPage = () => {
 
     const fetchCollectionData = async () => {
       try {
-        // Fetch real data from the API
         const response = await fetch(
           `${API_URL}/collections/id/${collection_id}`
         );
@@ -51,7 +49,6 @@ const OfferingPage = () => {
 
         const data = await response.json();
 
-        // Ensure data matches the requested collection_id
         if (data && data.collection_id === parseInt(collection_id)) {
           setBookData(data);
           setUserData(data.user);
@@ -73,10 +70,8 @@ const OfferingPage = () => {
     createSwap(collection_id);
   }
 
-  // Render loading state
   if (isLoading) return <FullPageSpinner />;
 
-  // Render error state
   if (error) return <p>Error: {error}</p>;
 
   return (

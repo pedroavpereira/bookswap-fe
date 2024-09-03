@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import logo from "../../assets/logo.png";
@@ -8,14 +8,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, login, isLoading } = useUser();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(
     function () {
-      console.log("LOGIN PAGE");
-      console.log(user);
       if (user) {
-        console.log("navigate?");
         navigate("/");
       }
     },

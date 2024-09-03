@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Modal, Col, Container, Row } from "react-bootstrap";
+import { Modal, Col, Container, Row } from "react-bootstrap";
 
 import WishlistAddForm from "../../components/WishlistAddForm";
 import FullPageSpinner from "../../components/FullPageSpinner";
@@ -50,7 +50,6 @@ const WishList = () => {
           setIsLoading(false);
         }
       }
-      console.log("useEffect");
       fetchWishList();
     },
     [navigate]
