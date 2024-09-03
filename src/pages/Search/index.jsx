@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SearchForm from "../../components/SearchForm";
 import BookList from "../../components/BookList";
@@ -53,25 +53,41 @@ function Search() {
 
   return (
     <Container>
-      <Row>
+      <Row className="my-4">
         <SearchForm />
       </Row>
-      <Row>
+      <Row className="my-4">
         <h2>
           Results for {title} in {radius} miles
         </h2>
       </Row>
-      <BookList>
-        {collections.map((col) => (
-          <BookCard
-            onClick={handleCollectionClick}
-            book={col.book}
-            user={col.user}
-            collection={col}
-            key={col.collection_id}
-          />
-        ))}
-      </BookList>
+      {collections.length > 0 && (
+        <BookList>
+          {collections.map((col) => (
+            <BookCard
+              onClick={handleCollectionClick}
+              book={col.book}
+              user={col.user}
+              collection={col}
+              key={col.collection_id}
+            />
+          ))}
+        </BookList>
+      )}
+      {collections.length === 0 && (
+        <div className="search-not-found">
+          <p className="search-not-found-title">No books found</p>
+          <p className="search-not-found-subtitle">
+            Add book to your wishlist to be notified when it becomes available
+          </p>
+
+          <div className="search-not-found-action">
+            <Link className="action-button action-button-highlight">
+              Go to wishlist
+            </Link>
+          </div>
+        </div>
+      )}
     </Container>
   );
 }

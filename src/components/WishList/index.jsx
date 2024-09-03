@@ -131,7 +131,10 @@ const WishList = () => {
             <h1>Your Wishlist</h1>
           </Col>
           <Col className="d-flex justify-content-center align-items-center">
-            <button className="action-button" onClick={handleOpen}>
+            <button
+              className="action-button action-button-highlight"
+              onClick={handleOpen}
+            >
               Add new Book
             </button>
           </Col>
