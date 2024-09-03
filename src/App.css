@@ -21,7 +21,7 @@
   padding: 15px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: cyan;
+  background: #f5af38;
   --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
   -webkit-mask: var(--_m);
   mask: var(--_m);
@@ -533,4 +533,20 @@
 
 .layout-content {
   flex: 1;
+}
+.review-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-flex-item-center {
+  width: fit-content;
+  margin: auto;
+}
+
+.review-textarea {
+  min-height: 8rem;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
