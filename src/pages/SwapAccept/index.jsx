@@ -92,7 +92,7 @@ function SwapHistory() {
 
   if (loading) return <FullPageSpinner />;
   return (
-    <Container>
+    <Container className="mt-5">
       <Row>
         <Col xs={8}>
           <h1>
@@ -115,7 +115,7 @@ function SwapHistory() {
           </button>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-5">
         <BookList>
           {collections.map((col) => (
             <div
