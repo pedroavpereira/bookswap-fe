@@ -55,7 +55,7 @@ function Swap() {
           >
             <BookList>
               {pendingSwaps?.map((swap) => (
-                <SwapsCard swap={swap} key={swap.swap_id} type="pending">
+                <SwapsCard swap={swap} key={swap.swap_id}>
                   <div className="swap-action-buttons">
                     <button
                       className="action-button action-button-highlight"
@@ -82,9 +82,6 @@ function Swap() {
               {acceptedSwaps?.map((swap) => (
                 <SwapsCard swap={swap} key={swap.swap_id}>
                   <div className="swap-action-buttons">
-                    <button className="action-button action-button-highlight">
-                      Chat
-                    </button>
                     <button
                       className="action-button action-button-highlight"
                       onClick={() => completeSwap(swap.swap_id)}

@@ -2,9 +2,10 @@
 // import "./WishListCard.css";
 import { useUser } from "../../contexts/UserContext";
 
-function SwapsCard({ swap, type = "pending", children }) {
+function SwapsCard({ swap, children }) {
   const { user } = useUser();
 
+  const type = swap.status;
   let book;
 
   if (type === "accepted") {
