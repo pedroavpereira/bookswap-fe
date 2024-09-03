@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { loginUser } from "../../redux/actions/loginActions";
-=======
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import logo from "../../assets/logo.png";
->>>>>>> dev
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,14 +10,11 @@ const Login = () => {
   const { user, login, isLoading } = useUser();
   const navigate = useNavigate();
 
-  useEffect(
-    function () {
-      if (user) {
-        navigate("/");
-      }
-    },
-    [user, navigate]
-  );
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -39,7 +28,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={submitHandler}>
-        <img src={logo} />
+        <img src={logo} alt="Logo" />
         <input
           type="email"
           placeholder="Email"
@@ -59,12 +48,7 @@ const Login = () => {
         </button>
       </form>
       <p>
-<<<<<<< HEAD
-        <a href="/signup">Register here</a>
-=======
-        {" "}
         Don't have an account? <a href="/signup">Register here</a>
->>>>>>> dev
       </p>
     </div>
   );
