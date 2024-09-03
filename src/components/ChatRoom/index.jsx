@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import React from 'react';
 import { FaCircleUser } from "react-icons/fa6";
 import { useUser } from "../../contexts/UserContext";
 import "./ChatRoom.css";
