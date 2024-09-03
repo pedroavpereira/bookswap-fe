@@ -100,7 +100,12 @@ function CollectionAddForm({ onSubmit }) {
                 />
               </Col>
               <Col xs={2} className="px-0">
-                <Button onClick={checkIsbn}>Verify</Button>
+                <button
+                  className="action-button action-button-highlight"
+                  onClick={checkIsbn}
+                >
+                  Verify
+                </button>
               </Col>
             </Row>
           </Col>
@@ -147,13 +152,13 @@ function CollectionAddForm({ onSubmit }) {
               You must verify the ISBN before adding to collection
             </p>
           )}
-          <Button
+          <button
             type="submit"
             disabled={!isbnChecked}
-            className="align-self-end"
+            className="action-button action-button-highlight align-self-end"
           >
             Add to collection
-          </Button>
+          </button>
         </Row>
       </Container>
     </Form>

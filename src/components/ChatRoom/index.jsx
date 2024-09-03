@@ -15,7 +15,7 @@ function ChatRoom({ room, onClick }) {
 
   return (
     <div className="chat-row" onClick={() => onClick(room.room_id)}>
-      <FaCircleUser className="chat-row-user" />
+      <FaCircleUser className="chat-row-user-icon" />
       <div
         className={`${room?.last_message && "message"} ${
           messageUnread ? "message-unread" : ""

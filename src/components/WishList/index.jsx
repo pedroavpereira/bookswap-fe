@@ -65,6 +65,7 @@ const WishList = () => {
 
   async function createWishList(data) {
     const token = localStorage.getItem("token");
+    setShowModal(false);
 
     if (!token) return null;
 
@@ -90,7 +91,6 @@ const WishList = () => {
       console.log(err);
     } finally {
       setIsLoading(false);
-      setShowModal(false);
     }
   }
 
@@ -120,8 +120,6 @@ const WishList = () => {
     }
   }
 
-  if (isLoading) return <FullPageSpinner />;
-
   return (
     <>
       <Container>
@@ -131,7 +129,10 @@ const WishList = () => {
             <h1>Your Wishlist</h1>
           </Col>
           <Col className="d-flex justify-content-center align-items-center">
-            <button className="action-button" onClick={handleOpen}>
+            <button
+              className="action-button action-button-highlight"
+              onClick={handleOpen}
+            >
               Add new Book
             </button>
           </Col>

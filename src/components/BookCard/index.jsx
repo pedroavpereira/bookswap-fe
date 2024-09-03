@@ -21,9 +21,9 @@ function BookCard({
         />
       </span>
       <main className="main-content">
-        <h1>
-          <h2>{book.title}</h2>
-        </h1>
+        <h2>
+          <p>{book.title}</p>
+        </h2>
         <div className="flex-row">
           {type === "search" && (
             <>

@@ -15,9 +15,9 @@ function WishListCard({ wish, onDelete }) {
         />
       </a>
       <main className="main-content">
-        <h1>
-          <h2 href="#">{book.title}</h2>
-        </h1>
+        <h2>
+          <p>{book.title}</p>
+        </h2>
         <div className="card-attribute" style={{ marginTop: "0.2rem" }}>
           <div className="flex-row">
             <div className="time-left">

@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
 
+:root {
+  --primary-colour: #f5af38;
+  --darker-primary-colour: #eb9707;
+}
+
 * {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -248,6 +253,8 @@
 
 .bookList-container {
   display: flex;
+  flex-wrap: wrap;
+
   gap: 1.5rem;
 }
 
@@ -333,6 +340,9 @@
 
 .collection-card-row {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
   gap: 2rem;
 }
 
@@ -340,28 +350,50 @@
   position: absolute;
   width: 100%;
   z-index: 100;
-  background: #fff;
+  background: #fbfbfb;
   top: 95%;
+  border-right: 1px solid rgb(138, 138, 138);
+  border-left: 1px solid rgb(156, 155, 155);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.search-book-result:not(:last-child) {
+  border-bottom: 1px solid rgb(202, 202, 202);
 }
 
 .search-book-result {
   display: flex;
   gap: 2rem;
   align-items: center;
-  border: 1px solid black;
   padding: 0.5rem;
+  max-height: 100px;
 }
 
 .search-book-result-information {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* Hides the overflow content */
 }
 
-.search-book-result-information p {
+.search-book-title {
   font-weight: bold;
   margin: 0;
+  width: 100%;
+  white-space: nowrap; /* Prevents the text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflow content */
+  text-overflow: ellipsis; /* Displays an ellipsis (...) if the text is too long */
+}
+
+.search-book-authors {
+  margin: 0;
+  width: 100%;
+  white-space: nowrap; /* Prevents the text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflow content */
+  text-overflow: ellipsis; /* Displays an ellipsis (...) if the text is too long */
 }
 
 .wishtable-image {
@@ -419,26 +451,50 @@
   width: 100%;
   padding: 0.7rem 1rem;
   border-radius: 3px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
 }
 
-.action-button-primary {
+.action-button-primary-outline {
+  border: 3px solid #ccc;
+  background-color: transparent;
+  color: #353535;
+}
+
+.action-button-primary-outline:hover {
+  border: 3px solid #ccc;
   background-color: #ccc;
   color: #353535;
 }
 
-.action-button-primary:hover {
-  background-color: #bbbbbb;
+.action-button-primary {
+  background-color: #edecec;
   color: #353535;
 }
 
-.action-button:hover {
-  background-color: #bbbbbb;
+.action-button-primary:hover {
+  background-color: #ccc;
   color: #353535;
 }
+
+/* .action-button:hover {
+  background-color: #bbbbbb;
+  color: #353535;
+} */
 
 .action-button-highlight {
   background-color: #f5af38;
-  color: #353535;
+  color: black;
+}
+
+.action-button-highlight:disabled {
+  filter: grayscale(0.4);
+}
+
+.action-button-highlight:disabled:hover {
+  filter: grayscale(0.5);
+  background-color: #f5af38;
 }
 
 .action-button-highlight:hover {
@@ -589,7 +645,7 @@
   border-radius: 10px;
 }
 
-.product-info {
+.product-info-container {
   flex-grow: 2;
   padding: 2rem;
 }
@@ -600,9 +656,63 @@
 }
 
 .book-attribute {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.book-swap-preferences {
+  width: 100%;
+  margin-bottom: 0rem;
+}
+
+.book-attribute-hightlight {
   font-weight: bold;
 }
 
 .book-shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.book-attribute-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.swap-tab-title {
+  font-size: 1.2rem;
+  color: black;
+}
+
+.swap-tab-title:hover {
+  font-size: 1.2rem;
+  color: var(--darker-primary-colour);
+}
+
+.search-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-not-found-container {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+}
+
+.search-not-found-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.search-not-found-subtitle {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.search-not-found-action {
+  max-width: 45rem;
+  width: 100%;
+  margin-top: 10px;
 }

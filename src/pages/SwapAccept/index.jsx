@@ -92,7 +92,7 @@ function SwapHistory() {
 
   if (loading) return <FullPageSpinner />;
   return (
-    <Container>
+    <Container className="mt-5">
       <Row>
         <Col xs={8}>
           <h1>
@@ -101,18 +101,21 @@ function SwapHistory() {
         </Col>
         <Col className="d-flex gap-3 justify-content-end align-items-center">
           <button
-            className="action-button"
+            className="action-button action-button-highlight"
             onClick={handleAccept}
             disabled={!collectionSelected}
           >
             Accept
           </button>
-          <button onClick={handleReject} className="action-button">
+          <button
+            onClick={handleReject}
+            className="action-button action-button-primary"
+          >
             Reject
           </button>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-5">
         <BookList>
           {collections.map((col) => (
             <div

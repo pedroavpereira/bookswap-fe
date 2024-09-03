@@ -75,8 +75,12 @@ function BookSearch({ selected, setSelected, onTyping }) {
         {/* {results?.items?.length > 0 && results.items[0]?.volumeInfo?.title} */}
         {results?.length > 0 && !isLoading && (
           <div className="search-book-results">
-            {results.map((res) => (
-              <Result key={res.id} data={res} onSelection={handleSelection} />
+            {results.map((result) => (
+              <Result
+                key={result.id}
+                data={result}
+                onSelection={handleSelection}
+              />
             ))}
           </div>
         )}
@@ -86,26 +90,20 @@ function BookSearch({ selected, setSelected, onTyping }) {
 }
 
 function Result({ data, onSelection }) {
-  let authors = data?.volumeInfo?.authors;
+  const authors = data?.volumeInfo?.authors;
   const title = data?.volumeInfo?.title;
   const image = data?.volumeInfo?.imageLinks?.smallThumbnail;
+  console.log(image);
 
   return (
     <div className="search-book-result" onClick={() => onSelection(data)}>
-      <img style={{ width: "3rem" }} src={image} />
+      <img
+        style={{ width: "3rem" }}
+        src={image ? image : "./book_cover_unavailable.jpg"}
+      />
       <div className="search-book-result-information">
-        <p>{title}</p>
-        <p>
-          {authors
-            ? typeof authors === "string"
-              ? authors
-              : authors.slice(0, 3).map((au, i) => (
-                  <span key={au}>
-                    {au} {i <= 1 ? "," : ""}{" "}
-                  </span>
-                ))
-            : null}
-        </p>
+        <p className="search-book-title">{title}</p>
+        <p className="search-book-authors">{authors?.join(", ")}</p>
       </div>
     </div>
   );

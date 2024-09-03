@@ -1,20 +1,32 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState, createContext } from "react";
 import { API_URL } from "../utils/constants";
+import { useUser } from "./UserContext";
 
 const CollectionsContext = createContext();
 
 // const API_URL = "http://54.75.137.47:3000";
 
 function CollectionsProvider({ children }) {
+  const { user, isLoading: userLoading } = useUser();
   const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(
+    function () {
+      if (!user) {
+        setCollections([]);
+        setIsLoading(true);
+      }
+    },
+    [user]
+  );
 
   //Fetch collections
   useEffect(
     function () {
       async function fetchCollections() {
-        if (collections.length !== 0) return null;
+        if (!user || userLoading || !isLoading) return null;
 
         const token = localStorage.getItem("token");
 
@@ -27,7 +39,6 @@ function CollectionsProvider({ children }) {
           },
         };
         try {
-          setIsLoading(true);
           const response = await fetch(`${API_URL}/collections/mine`, options);
 
           if (response.status !== 200) return null;
@@ -44,7 +55,7 @@ function CollectionsProvider({ children }) {
 
       fetchCollections();
     },
-    [collections]
+    [isLoading, user, userLoading]
   );
 
   //Create new Collection

@@ -11,9 +11,10 @@ const Header = () => {
   }
   return (
     <header className="header">
-      <div className="logo">
-        <NavLink to="/">
+      <div>
+        <NavLink to="/" className="logo">
           <img src={logo} />
+          <h1>BookNest</h1>
         </NavLink>
       </div>
       <nav className="navbar">

@@ -24,7 +24,6 @@ function App() {
                     <Route path="/login" element={<Pages.Login />} />
                     <Route path="/signup" element={<Pages.Register />} />
                     <Route path="/search" element={<Pages.Search />} />
-                    <Route path="/chat" element={<Pages.Chat />} />
                     <Route path="/profile" element={<Pages.Profile />} />
                     <Route path="/wishlist" element={<Pages.WishList />} />
                     <Route
