@@ -12,7 +12,7 @@ function SwapsCard({ swap, type = "pending", children }) {
       swap.user_offered === user.user_id
         ? swap.bookOffered
         : swap.bookRequested;
-  } else if (type === "pending") {
+  } else if (type === "pending" || type === "rejected") {
     book = swap.bookRequested;
   }
 
@@ -21,13 +21,13 @@ function SwapsCard({ swap, type = "pending", children }) {
       <span href="/" className="hero-image-container">
         <img
           className="hero-image"
-          src={book.image}
+          src={book?.image}
           alt="Spinning glass cube"
         />
       </span>
       <main className="main-content">
         <h1>
-          <p>{book.title}</p>
+          <p>{book?.title}</p>
         </h1>
         <div className="flex-row"></div>
       </main>
