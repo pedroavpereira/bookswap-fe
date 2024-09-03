@@ -2,7 +2,7 @@
 import toast from "react-hot-toast";
 import "./MessageToast.css";
 
-function MessageToast({ name, t }) {
+function MessageToast({ title, subtitle, t }) {
   function handleToastClose() {
     toast.dismiss(t.id);
   }
@@ -12,8 +12,8 @@ function MessageToast({ name, t }) {
         <div id="icon"></div>
       </div>
       <div id="toast-message">
-        <h4>{name}</h4>
-        <p>Just messaged you</p>
+        <h4>{title}</h4>
+        <p>{subtitle}</p>
       </div>
       <button id="toast-close" onClick={handleToastClose}></button>
     </section>

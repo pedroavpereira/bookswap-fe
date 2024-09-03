@@ -22,33 +22,31 @@ export const ChatProvider = ({ children }) => {
   const [messageList, setMessageList] = useState([]);
   const [chatIsLoading, setChatIsLoading] = useState(false);
 
-  console.log(rooms);
+  const fetchRooms = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return null;
+
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    try {
+      const response = await fetch(`${API_URL}/rooms/`, options);
+
+      if (response.status !== 200) return null;
+
+      const data = await response.json();
+
+      setRooms(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   useEffect(function () {
-    async function fetchRooms() {
-      const token = localStorage.getItem("token");
-
-      if (!token) return null;
-
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      };
-      try {
-        const response = await fetch(`${API_URL}/rooms/`, options);
-
-        if (response.status !== 200) return null;
-
-        const data = await response.json();
-
-        setRooms(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
     fetchRooms();
   }, []);
 
@@ -88,8 +86,6 @@ export const ChatProvider = ({ children }) => {
       if (response.status !== 200) return null;
 
       const data = await response.json();
-
-      console.log(data);
 
       setMessageList((msgs) =>
         [...msgs].map((msg) =>
@@ -135,12 +131,22 @@ export const ChatProvider = ({ children }) => {
       );
 
       toast((t) => (
-        <MessageToast name={`${user.first_name} ${user.last_name}`} t={t} />
+        <MessageToast
+          title={`${user.first_name} ${user.last_name}`}
+          subtitle={"Just messaged you!"}
+          t={t}
+        />
       ));
     };
-    const handleNewRoom = (data) => {
-      console.log("new Room");
-      console.log(data);
+    const handleNewRoom = ({ user }) => {
+      toast((t) => (
+        <MessageToast
+          title={`${user.first_name} ${user.last_name}`}
+          subtitle={"Accepted a swap"}
+          t={t}
+        />
+      ));
+      fetchRooms();
     };
 
     socket.on("receive_message", handleReceiveMessage);
@@ -197,6 +203,7 @@ export const ChatProvider = ({ children }) => {
   }
 
   function newRoom(room) {
+    fetchRooms();
     socket.emit("room_created", { room, user_id: user.user_id });
   }
 

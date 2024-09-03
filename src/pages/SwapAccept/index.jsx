@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../utils/constants";
 import { Col, Container, Row } from "react-bootstrap";
 import BookCard from "../../components/BookCard";
+import { useChats } from "../../contexts/ChatsContext";
 
 function SwapHistory() {
   const navigate = useNavigate();
   const { swap_id } = useParams();
+  const { newRoom } = useChats();
   const { swaps, acceptSwap, rejectSwap, isLoading: loadingSwaps } = useSwaps();
   const { user, isLoading: loadingUser } = useUser();
   const [collections, setCollections] = useState([]);
@@ -77,6 +79,8 @@ function SwapHistory() {
       swap_id: +swap_id,
       collection_id: selected.collection_id,
     });
+
+    newRoom(room);
 
     navigate("/swap");
   }
