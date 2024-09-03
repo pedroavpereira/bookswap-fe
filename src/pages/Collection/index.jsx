@@ -58,9 +58,12 @@ const Collection = () => {
             <h1>Your Collection</h1>
           </Col>
           <Col className="d-flex justify-content-center align-items-center">
-            <Button variant="outline-secondary" onClick={handleOpen}>
+            <button
+              className="action-button action-button-highlight"
+              onClick={handleOpen}
+            >
               Add new Book
-            </Button>
+            </button>
           </Col>
         </Row>
 

@@ -447,12 +447,12 @@
 }
 
 .action-button-primary {
-  background-color: #ccc;
+  background-color: #edecec;
   color: #353535;
 }
 
 .action-button-primary:hover {
-  background-color: #bbbbbb;
+  background-color: #ccc;
   color: #353535;
 }
 
@@ -464,6 +464,15 @@
 .action-button-highlight {
   background-color: #f5af38;
   color: black;
+}
+
+.action-button-highlight:disabled {
+  filter: grayscale(0.4);
+}
+
+.action-button-highlight:disabled:hover {
+  filter: grayscale(0.5);
+  background-color: #f5af38;
 }
 
 .action-button-highlight:hover {
