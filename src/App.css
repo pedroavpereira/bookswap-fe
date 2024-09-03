@@ -358,11 +358,14 @@
   border-bottom-right-radius: 15px;
 }
 
+.search-book-result:not(:last-child) {
+  border-bottom: 1px solid rgb(202, 202, 202);
+}
+
 .search-book-result {
   display: flex;
   gap: 2rem;
   align-items: center;
-  border-bottom: 1px solid rgb(202, 202, 202);
   padding: 0.5rem;
   max-height: 100px;
 }
@@ -370,8 +373,8 @@
 .search-book-result-information {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   overflow: hidden; /* Hides the overflow content */
 }
@@ -386,6 +389,7 @@
 }
 
 .search-book-authors {
+  margin: 0;
   width: 100%;
   white-space: nowrap; /* Prevents the text from wrapping onto a new line */
   overflow: hidden; /* Hides the overflow content */
