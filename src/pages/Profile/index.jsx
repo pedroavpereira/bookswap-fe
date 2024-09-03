@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import FullPageSpinner from "../../components/FullPageSpinner";
@@ -66,20 +66,29 @@ const Profile = () => {
       </Row>
 
       <Row className="mb-4">
-        <Col>
-          <Button variant="outline-primary" className="me-2">
-            Profile
-          </Button>
-          <Button
-            variant="outline-secondary"
-            className="me-2"
-            onClick={handleActivityClick}
+        <Col xs="1">
+          <Link
+            to="/profile"
+            className="action-button action-button-primary me-2"
           >
-            Activity
-          </Button>
-          <Button variant="outline-danger" onClick={logout}>
+            Profile
+          </Link>
+        </Col>
+        <Col xs="1">
+          <Link
+            to="/swap"
+            className="action-button action-button-highlight me-2"
+          >
+            Swaps
+          </Link>
+        </Col>
+        <Col xs="1">
+          <button
+            className="action-button action-button-primary-outline"
+            onClick={logout}
+          >
             Logout
-          </Button>
+          </button>
         </Col>
       </Row>
 

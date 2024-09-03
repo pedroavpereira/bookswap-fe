@@ -82,7 +82,10 @@ function Search() {
           </p>
 
           <div className="search-not-found-action">
-            <Link className="action-button action-button-highlight">
+            <Link
+              to="/profile"
+              className="action-button action-button-highlight"
+            >
               Go to wishlist
             </Link>
           </div>

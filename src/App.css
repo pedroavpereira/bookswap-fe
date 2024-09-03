@@ -434,6 +434,18 @@
   text-align: center;
 }
 
+.action-button-primary-outline {
+  border: 3px solid #ccc;
+  background-color: transparent;
+  color: #353535;
+}
+
+.action-button-primary-outline:hover {
+  border: 3px solid #ccc;
+  background-color: #ccc;
+  color: #353535;
+}
+
 .action-button-primary {
   background-color: #ccc;
   color: #353535;
@@ -444,10 +456,10 @@
   color: #353535;
 }
 
-.action-button:hover {
+/* .action-button:hover {
   background-color: #bbbbbb;
   color: #353535;
-}
+} */
 
 .action-button-highlight {
   background-color: #f5af38;
