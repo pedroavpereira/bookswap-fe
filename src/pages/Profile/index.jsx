@@ -1,108 +1,63 @@
-<<<<<<< HEAD
-import React from "react";
-function Profile() {
-  return <div></div>;
-}
-=======
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "../../contexts/UserContext";
-import { Button, Container, Row, Col } from "react-bootstrap";
-import FullPageSpinner from "../../components/FullPageSpinner";
-import WishList from "../../components/WishList";
-import ReviewList from "../../components/Reviewlist";
-import "./Profile.css";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext'; // Custom hook to access user context
+import FullPageSpinner from '../../components/FullPageSpinner'; // Spinner component to show during loading
+import WishList from '../../components/WishList'; // Component to show user's wishlist
+import ReviewList from '../../components/ReviewList'; // Component to show user's reviews
 
 const Profile = () => {
-  const { user, isLoading: isUserLoading, logout } = useUser();
-  const navigate = useNavigate();
-  const [location, setLocation] = useState("Location not set");
+  const { user, isLoading, logout } = useUser(); // Destructuring user data, loading state, and logout function from useUser hook
+  const [location, setLocation] = useState(null); // State to store location data
+  const [locationError, setLocationError] = useState(null); // State to store any errors while fetching location
+  const navigate = useNavigate(); // useNavigate hook for programmatically navigating
 
+  // useEffect hook to redirect unauthenticated users
   useEffect(() => {
-    if (!user && !isUserLoading) {
-      navigate("/");
+    if (!isLoading && !user) {
+      navigate('/');
     }
-  }, [user, navigate, isUserLoading]);
+  }, [isLoading, user, navigate]);
 
+  // useEffect hook to fetch location data based on user's coordinates
   useEffect(() => {
-    const fetchLocation = async () => {
-      if (user && user.lat && user.lng) {
+    if (user) {
+      const fetchLocation = async () => {
         try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${user.lat}&lon=${user.lng}&zoom=10&accept-language=en`
-          );
+          const response = await fetch(`https://api.locationiq.com/v1/reverse.php?key=YOUR_API_KEY&lat=${user.lat}&lon=${user.lng}&format=json`);
           const data = await response.json();
-          if (data.address) {
-            const city =
-              data.address.city || data.address.town || data.address.village;
-            const country = data.address.country;
-            setLocation(
-              city && country
-                ? `${city}, ${country}`
-                : city || country || "Location not found"
-            );
-          }
+          setLocation(`${data.address.city}, ${data.address.country}`);
         } catch (error) {
-          console.error("Error fetching location:", error);
-          setLocation("Error fetching location");
+          setLocationError('Failed to fetch location');
         }
-      }
-    };
+      };
 
-    fetchLocation();
+      fetchLocation();
+    }
   }, [user]);
 
-  if (isUserLoading) {
+  if (isLoading) {
     return <FullPageSpinner />;
   }
 
-  const fullName = `${user.first_name} ${user.last_name}`.trim();
-
-  const handleActivityClick = () => {
-    navigate("/swap");
-  };
+  if (!user) {
+    return null; // Render nothing if user is not authenticated
+  }
 
   return (
-    <Container className="profile-container mt-5">
-      <Row className="mb-4">
-        <Col>
-          <h1 className="profile-name">{fullName}</h1>
-          <p className="profile-location">{location}</p>
-        </Col>
-      </Row>
+    <div className="profile-container">
+      <h1>{`${user.first_name} ${user.last_name}`}</h1>
+      {location ? (
+        <p>{location}</p>
+      ) : (
+        <p>{locationError || 'Fetching location...'}</p>
+      )}
 
-      <Row className="mb-4">
-        <Col>
-          <Button variant="outline-primary" className="me-2">
-            Profile
-          </Button>
-          <Button
-            variant="outline-secondary"
-            className="me-2"
-            onClick={handleActivityClick}
-          >
-            Activity
-          </Button>
-          <Button variant="outline-danger" onClick={logout}>
-            Logout
-          </Button>
-        </Col>
-      </Row>
+      <WishList userId={user.user_id} />
+      <ReviewList userId={user.user_id} />
 
-      <Row className="mb-4">
-        <Col>
-          <WishList />
-        </Col>
-      </Row>
-
-      <Row className="mb-4">
-        <Col>
-          <ReviewList userId={user.user_id} />
-        </Col>
-      </Row>
-    </Container>
+      <button onClick={logout}>Logout</button>
+    </div>
   );
 };
->>>>>>> dev
 
 export default Profile;

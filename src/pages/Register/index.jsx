@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-=======
+
 import { useEffect, useState } from "react";
->>>>>>> dev
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import axios from "axios";
 import { useUser } from "../../contexts/UserContext";
@@ -78,10 +74,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <form onSubmit={submitHandler}>
-<<<<<<< HEAD
-=======
         <img src={logo} />
->>>>>>> dev
         <input
           type="text"
           placeholder="First Name"
