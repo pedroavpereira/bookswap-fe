@@ -111,6 +111,7 @@ export const ChatProvider = ({ children }) => {
     };
 
     const handleReceiveMessages = (messages) => {
+      messages.sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at));
       setMessageList(messages);
       setChatIsLoading(false);
       markAsRead();
