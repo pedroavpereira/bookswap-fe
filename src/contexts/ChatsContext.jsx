@@ -60,14 +60,14 @@ export const ChatProvider = ({ children }) => {
   const markAsRead = useCallback(async () => {
     const token = localStorage.getItem("token");
 
-    if (
-      messageList.length === 0 ||
-      messageList.find(
-        (msg) => msg.user_sent !== user.user_id && msg.read === false
-      ) === undefined ||
-      !selectedRoom
-    )
-      return;
+    // if (
+    //   messageList.length === 0 ||
+    //   messageList.find(
+    //     (msg) => msg.user_sent !== user.user_id && msg.read === false
+    //   ) === undefined ||
+    //   !selectedRoom
+    // )
+    //   return;
 
     if (!token) return null;
 
@@ -87,6 +87,8 @@ export const ChatProvider = ({ children }) => {
 
       const data = await response.json();
 
+      console.log(data);
+
       setMessageList((msgs) =>
         [...msgs].map((msg) =>
           msg.user_sent === user.user_id ? msg : { ...msg, read: true }
@@ -99,7 +101,7 @@ export const ChatProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [user?.user_id, messageList, selectedRoom]);
+  }, [user?.user_id, selectedRoom]);
 
   useEffect(() => {
     if (!socket) return;
@@ -184,6 +186,7 @@ export const ChatProvider = ({ children }) => {
     setMessageList([]);
   }
 
+  console.log(rooms);
   return (
     <ChatContext.Provider
       value={{

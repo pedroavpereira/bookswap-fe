@@ -1,16 +1,49 @@
 .chat-room-flex {
   display: flex;
+  position: relative;
   flex-direction: column;
-  gap: 5px;
-  padding: 1rem 0.5rem;
+  gap: 2px;
+  max-width: 200px;
+}
+
+.chat-row {
+  display: flex;
+  justify-content: start;
+  position: relative;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1rem;
+  height: 100px;
+  max-height: 100px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.chat-row-user {
+  font-size: 2rem;
+}
+
+.message-unread {
+  font-weight: 700;
+}
+
+.unread-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #f5af38;
 }
 
 .chat-room-flex p {
   margin: 0;
 }
 
-.chat-room-flex:hover {
+.chat-row:hover {
   background-color: #eeeeee;
+  cursor: pointer;
 }
 
 .chat-room-user {
@@ -20,8 +53,9 @@
 .chat-room-message {
   font-size: 0.9rem;
   color: #7c7b7b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  white-space: nowrap; /* Prevents wrapping */
+  overflow: hidden; /* Hides overflowed text */
+  text-overflow: ellipsis; /* Adds ellipsis for overflowed text */
   max-width: 100%;
 }

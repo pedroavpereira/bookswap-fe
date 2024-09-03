@@ -3,6 +3,7 @@ import { useChats } from "../../contexts/ChatsContext";
 import ChatRoom from "../ChatRoom";
 import ChatHeader from "../ChatHeader";
 import ChatWindow from "../ChatWindow";
+import { HiMiniChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 
 function Chat() {
   const { rooms, onRoomSelected, selectedRoom, resetMessages } = useChats();
@@ -20,6 +21,15 @@ function Chat() {
   }
 
   if (rooms.length === 0) return null;
+
+  if (!isOpen)
+    return (
+      <div className="chat-open-button" onClick={toggleIsOpen}>
+        <HiMiniChatBubbleOvalLeftEllipsis className="chat-icon" />
+        <span>Chat Now</span>
+      </div>
+    );
+
   return (
     <div className="chats-container">
       <ChatHeader onCloseChat={toggleIsOpen} onCloseRoom={closeRoom} />

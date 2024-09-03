@@ -21,8 +21,10 @@
   float: left;
   margin-left: 10px;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 30px;
+  white-space: wrap;
+  overflow-wrap: break-word;
 }
 .chat-msg {
   clear: both;
@@ -30,8 +32,8 @@
 .chat-msg.self > .cm-msg-text {
   float: right;
   margin-right: 10px;
-  background: #5a5eb9;
-  color: white;
+  background: #f5af38;
+  color: black;
 }
 .cm-msg-button > ul > li {
   list-style: none;

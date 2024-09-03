@@ -216,8 +216,8 @@
 /* Info Styling            */
 /* ----------------------- */
 .info {
-  --primary: #42c0f2;
-  --secondary: #cfeffc;
+  --primary: #fff;
+  --secondary: #f19f11;
 }
 .info #icon::before {
   width: 3px;
