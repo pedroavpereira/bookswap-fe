@@ -1,0 +1,92 @@
+/* General Styling */
+.offering-page {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 10rem;
+}
+
+.product-card {
+  border-radius: 15px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #e7e7e7;
+  color: #333;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Book Details Section */
+.book-details {
+  display: flex;
+  background-color: #045943;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.book-cover {
+  width: 150px;
+  height: auto;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-info h2 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.book-info p {
+  margin: 8px 0;
+}
+
+/* Swap Details Section */
+.swap-details {
+  margin-top: 20px;
+}
+
+.swap-details h3 {
+  margin-bottom: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.swap-details p {
+  margin: 0;
+  font-size: 1em;
+  color: #555;
+}
+
+/* Map Container */
+.map-container {
+  margin-top: 20px;
+  height: 400px;
+}
+
+/* Request Swap Button */
+.request-swap-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto 0;
+  padding: 10px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: #045943;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.request-swap-button:hover {
+  background-color: #033d2e;
+}

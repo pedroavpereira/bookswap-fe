@@ -1,0 +1,63 @@
+/* Header.css */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background-color: var(--primary-colour); /* Background color for the header */
+  box-shadow: none;
+  /* position: fixed; */
+  width: 100%; /* Subtle shadow for depth */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #006400; /* Dark green color for the logo text */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo h1 {
+  color: #1b1303;
+  font-weight: bold;
+  font-size: 2.2rem;
+}
+
+.logo img {
+  height: 100px;
+  width: 100px;
+  border-radius: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px; /* Space between navigation links */
+}
+
+.navbar li {
+  margin: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #000; /* Change default link color to black */
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.navbar a:hover {
+  color: #fff; /* Change link color to white on hover */
+}
+
+.navbar a.active {
+  color: #000; /* Keep the active link color black */
+  font-weight: bold; /* Emphasize the active link */
+}
