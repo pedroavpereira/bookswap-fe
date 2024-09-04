@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { useUser } from "../../contexts/UserContext";
 import { RECOM_URL } from "../../utils/constants";
 import RecommendationCard from "../RecommendationCard";
-import BookList from "../BookList";
 
 function RecommendationsML() {
   const { user, isLoading: userLoading } = useUser();
@@ -43,39 +40,6 @@ function RecommendationsML() {
 
   console.log(recommendations);
 
-  const recommandations = [
-    {
-      book_id: 1,
-      title: "A man for all markets",
-      authors: ["Ed. O. Thorp"],
-      images: "image2.jpg",
-    },
-    {
-      book_id: 2,
-      title: "Money matters",
-      authors: ["Jack C K"],
-      images: "image2.jpg",
-    },
-    {
-      book_id: 3,
-      title: "Money matters",
-      authors: ["Jack C K"],
-      images: "image2.jpg",
-    },
-    {
-      book_id: 4,
-      title: "Money matters",
-      authors: ["Jack C K"],
-      images: "image2.jpg",
-    },
-    {
-      book_id: 5,
-      title: "Money matters",
-      authors: ["Jack C K"],
-      images: "image2.jpg",
-    },
-  ];
-
   if (loading) return null;
 
   return (
@@ -83,14 +47,15 @@ function RecommendationsML() {
       <h1>Books you might enjoy</h1>
       <div className="">
         <div className="recommendation-container">
-          {recommandations?.map((r, i) =>
+          {recommendations?.map((r, i) =>
             i <= 3 ? (
               <RecommendationCard
                 key={r.book_id}
                 id={r.book_id}
+                isbn={r.isbn}
                 title={r.title}
                 authors={r.authors}
-                images={r.images}
+                image={r?.images || r?.image}
               />
             ) : null
           )}

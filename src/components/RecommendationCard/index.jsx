@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { API_URL } from "../../utils/constants";
 
-function RecommendationCard({ book }) {
+function RecommendationCard({ image, isbn }) {
+  console.log(image);
   const [added, setAdded] = useState(false);
 
   async function createWishList() {
@@ -10,7 +11,7 @@ function RecommendationCard({ book }) {
 
     if (!token) return null;
 
-    const data = { isbn: book.isbn, radius: 10 };
+    const data = { isbn: isbn, radius: 10 };
 
     const options = {
       method: "POST",
@@ -35,19 +36,12 @@ function RecommendationCard({ book }) {
   return (
     <div className="card-recommendation-homepage">
       <span href="/" className="hero-image-container">
-        <img
-          className="hero-image"
-          src={book?.image}
-          alt="Spinning glass cube"
-        />
+        <img className="hero-image" src={image} alt="Spinning glass cube" />
       </span>
-      <main className="main-content">
-        <h2>
-          <p>{book?.title}</p>
-        </h2>
+      <main className="main-content main-content-recommendation">
         <div className="flex-row"></div>
       </main>
-      <div className="card-attribute">
+      <div>
         {!added && (
           <button
             className="action-button action-button-highlight"
@@ -61,7 +55,7 @@ function RecommendationCard({ book }) {
             className="action-button action-button-primary"
             disabled={true}
           >
-            Added to wishlist
+            Added
           </button>
         )}
       </div>
