@@ -451,6 +451,7 @@
 .action-button {
   border: none;
   min-width: fit-content;
+  line-height: 22.5px;
   width: 100%;
   padding: 0.7rem 1rem;
   border-radius: 3px;
@@ -597,7 +598,6 @@
   color: #ffffff; /* Change link color to white on hover */
 }
 
-
 .layout {
   display: flex;
   flex-direction: column;
@@ -731,11 +731,17 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(var(--translateX), var(--translateY)) rotate(var(--rotate)); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(var(--translateX), var(--translateY))
+      rotate(var(--rotate));
+  }
 }
 .footer {
-  background-color: #f5af38;  
+  background-color: #f5af38;
   padding: 20px;
   text-align: center;
 }

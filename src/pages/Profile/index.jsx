@@ -69,22 +69,19 @@ const Profile = () => {
         <Col xs="1">
           <Link
             to="/profile"
-            className="action-button action-button-primary me-2"
+            className="action-button action-button-highlight  me-2"
           >
             Profile
           </Link>
         </Col>
         <Col xs="1">
-          <Link
-            to="/swap"
-            className="action-button action-button-highlight me-2"
-          >
+          <Link to="/swap" className="action-button action-button-primary me-2">
             Swaps
           </Link>
         </Col>
         <Col xs="1">
           <button
-            className="action-button action-button-primary-outline"
+            className="action-button action-button-primary"
             onClick={logout}
           >
             Logout
