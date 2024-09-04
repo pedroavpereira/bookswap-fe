@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FullPageSpinner from "../FullPageSpinner";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+import BookSearch from "../BookSearch";
 
 const distancesAllowed = [0.5, 1, 5, 10, 15, 20];
 
@@ -12,6 +13,7 @@ function SearchForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [titleInput, setTitleInput] = useState("");
+  const [searchSelected, setSearchSelected] = useState(null);
   const [postCode, setPostCode] = useLocalStorageState("", "postcode");
   const [distance, setDistance] = useState(5);
 
@@ -31,7 +33,12 @@ function SearchForm() {
       e.preventDefault();
       setIsLoading(true);
       if (!titleInput || !postCode) return;
-      const formattedTitle = titleInput.replaceAll(" ", "+");
+
+      const title = searchSelected
+        ? searchSelected.volumeInfo.title
+        : titleInput;
+
+      const formattedTitle = title.replaceAll(" ", "+");
       const { lat, lng } = await fetchLocationFromPostCode(postCode);
       navigate(
         `/search?radius=${distance}&lat=${lat}&lng=${lng}&title=${formattedTitle}`
@@ -43,18 +50,33 @@ function SearchForm() {
     }
   }
 
+  function handleResetSelected() {
+    if (searchSelected) {
+      setSearchSelected(null);
+    }
+  }
+
   return (
     <>
       {isLoading && <FullPageSpinner />}
       <form className="searchform" onSubmit={handleSubmit}>
-        <input
-          className="searchform-input searchform-title-input"
-          type="text"
-          value={titleInput}
-          placeholder="Book title"
-          disabled={isLoading}
-          onChange={(e) => setTitleInput(e.target.value)}
-        />
+        <BookSearch
+          className="searchform-title-input"
+          query={titleInput}
+          setQuery={setTitleInput}
+          setSelected={setSearchSelected}
+          selected={searchSelected}
+          onTyping={handleResetSelected}
+        >
+          <input
+            className="w-full searchform-input searchform-title-input"
+            type="text"
+            value={titleInput}
+            placeholder="Book title"
+            disabled={isLoading}
+            onChange={(e) => setTitleInput(e.target.value)}
+          />
+        </BookSearch>
         <input
           className="searchform-input searchform-postcode-input"
           type="text"

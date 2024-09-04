@@ -13,7 +13,8 @@ const deliveryOptions = [
 
 function CollectionAddForm({ onSubmit }) {
   const [isbn, setIsbn] = useState("");
-  const [bookSelected, setBookSelected] = useState(null);
+  const [titleInput, setTitleInput] = useState("");
+  const [searchSelected, setSearchSelected] = useState(null);
   const [condition, setCondition] = useState("mint");
   const [delivery_preference, setDelivery_preference] = useState([]);
   const [isbnChecked, setIsbnChecked] = useState(false);
@@ -34,7 +35,7 @@ function CollectionAddForm({ onSubmit }) {
       setIsbn(isbn13?.identifier);
     }
 
-    setBookSelected(selected);
+    setSearchSelected(selected);
   }
 
   async function checkIsbn() {
@@ -60,10 +61,11 @@ function CollectionAddForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
     // Log form data or handle it as needed
-    if (isbnChecked && delivery_preference.length >= 1 && condition) {
+    if (isbnChecked && delivery_preference?.length >= 1 && condition) {
       onSubmit({ isbn, delivery_preference, condition });
     }
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -75,10 +77,23 @@ function CollectionAddForm({ onSubmit }) {
             </span>
           </Form.Label>
           <BookSearch
-            onTyping={handleReset}
-            selected={bookSelected}
+            query={titleInput}
+            setQuery={setTitleInput}
             setSelected={handleBookSelected}
-          />
+            selected={searchSelected}
+          >
+            {" "}
+            <Form.Control
+              className="w-full searchform-input searchform-title-input"
+              type="text"
+              value={titleInput}
+              placeholder="Book title"
+              onChange={(e) => {
+                handleReset();
+                setTitleInput(e.target.value);
+              }}
+            />
+          </BookSearch>
         </Row>
         <Row className="mb-2">
           <Col>

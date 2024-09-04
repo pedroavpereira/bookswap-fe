@@ -76,6 +76,7 @@ const Collection = () => {
               collection={col}
               onDelete={handleDeleteCollection}
               type="display"
+              onClick={() => {}}
             />
           ))}
         </BookList>
