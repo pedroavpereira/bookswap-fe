@@ -198,6 +198,8 @@ function SwapsProvider({ children }) {
     }
   }
 
+  console.log(swaps);
+
   return (
     <SwapContext.Provider
       value={{

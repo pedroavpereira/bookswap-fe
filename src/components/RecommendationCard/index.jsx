@@ -4,7 +4,6 @@ import { API_URL } from "../../utils/constants";
 
 function RecommendationCard({ image, isbn }) {
   const [added, setAdded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   async function createWishList() {
     const token = localStorage.getItem("token");
@@ -23,7 +22,6 @@ function RecommendationCard({ image, isbn }) {
     };
 
     try {
-      setIsLoading(true);
       const response = await fetch(`${API_URL}/wishlists`, options);
 
       if (response.status !== 201) return null;
@@ -32,7 +30,6 @@ function RecommendationCard({ image, isbn }) {
     } catch (err) {
       console.log(err);
     } finally {
-      setIsLoading(false);
     }
   }
 
