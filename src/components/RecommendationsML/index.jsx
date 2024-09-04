@@ -81,8 +81,8 @@ function RecommendationsML() {
   return (
     <div>
       <h1>Books you might enjoy</h1>
-      <div>
-        <BookList>
+      <div className="">
+        <div className="recommendation-container">
           {recommandations?.map((r, i) =>
             i <= 3 ? (
               <RecommendationCard
@@ -94,7 +94,7 @@ function RecommendationsML() {
               />
             ) : null
           )}
-        </BookList>
+        </div>
       </div>
     </div>
   );
