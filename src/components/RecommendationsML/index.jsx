@@ -12,6 +12,15 @@ function RecommendationsML() {
 
   useEffect(
     function () {
+      if (!user) {
+        setRecommendations([]);
+      }
+    },
+    [user]
+  );
+
+  useEffect(
+    function () {
       async function fetchRecommendations() {
         try {
           setIsLoading(true);
@@ -40,7 +49,7 @@ function RecommendationsML() {
 
   console.log(recommendations);
 
-  if (loading) return null;
+  if (loading || recommendations.length === 0) return null;
 
   return (
     <div>
