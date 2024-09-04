@@ -719,3 +719,13 @@
   width: 100%;
   margin-top: 10px;
 }
+.animated-element {
+  position: absolute;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(var(--translateX), var(--translateY)) rotate(var(--rotate)); }
+}
