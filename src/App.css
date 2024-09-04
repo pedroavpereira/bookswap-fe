@@ -96,6 +96,9 @@
 .searchform-title-input {
   flex: 2;
 }
+.w-full {
+  width: 100%;
+}
 
 .searchform-postcode-input {
   flex: 1;

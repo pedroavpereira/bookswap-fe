@@ -119,7 +119,7 @@ const OfferingPage = () => {
                   !alreadyRequested && (
                     <button
                       onClick={handleRequestSwap}
-                      className="action-button"
+                      className="action-button action-button-highlight"
                     >
                       Request Swap
                     </button>

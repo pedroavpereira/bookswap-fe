@@ -1,9 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
 
-function BookSearch({ selected, setSelected, onTyping }) {
-  const [query, setQuery] = useState("");
+function BookSearch({
+  query,
+  setQuery,
+  className = "",
+  selected = null,
+  setSelected,
+  children,
+}) {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(null);
 
@@ -32,7 +37,7 @@ function BookSearch({ selected, setSelected, onTyping }) {
 
           const data = await res.json();
 
-          setResults(data.items.slice(6));
+          setResults(data?.items?.slice(6));
         } catch (err) {
           if (err.name !== "AbortError") {
             console.log(err.message);
@@ -42,7 +47,7 @@ function BookSearch({ selected, setSelected, onTyping }) {
         }
       }
 
-      if (query.length < 3) {
+      if (query?.length < 3) {
         setResults([]);
         return;
       }
@@ -62,19 +67,20 @@ function BookSearch({ selected, setSelected, onTyping }) {
   );
 
   return (
-    <div>
-      <Form.Control
+    <div className={className}>
+      {children}
+      {/* <Form.Control
         value={query}
         onChange={(e) => {
           onTyping();
           setSelected(null);
           setQuery(e.target.value);
-        }}
-      />
+        }} 
+      />*/}
       <div className="relative">
         {/* {results?.items?.length > 0 && results.items[0]?.volumeInfo?.title} */}
         {results?.length > 0 && !isLoading && (
-          <div className="search-book-results">
+          <div className={`search-book-results`}>
             {results.map((result) => (
               <Result
                 key={result.id}
