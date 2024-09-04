@@ -32,9 +32,7 @@ function Swap() {
     (el) => el.status == "accepted" && el.completed !== true
   );
 
-  const completedSwaps = swaps?.filter(
-    (el) => el.completed === true && user.user_id !== el.user_requesting
-  );
+  const completedSwaps = swaps?.filter((el) => el.completed === true);
 
   function navigateToAccept(swap_id) {
     navigate(`/swap/accept/${swap_id}`);
