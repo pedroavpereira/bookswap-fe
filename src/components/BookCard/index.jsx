@@ -33,7 +33,7 @@ function BookCard({
               </div>
               <div className="time-left">
                 <HiClock className="small-image" />
-                <p>{Math.round(collection.distance * 100) / 100} miles away</p>
+                <p>{Math.round(collection.distance * 100) / 100} miles</p>
               </div>
             </>
           )}
@@ -61,7 +61,7 @@ function BookCard({
           )}
         </div>
       </main>
-      {type === "selection" && (
+      {type === "search" && (
         <div className="card-attribute">
           <p>
             <span>

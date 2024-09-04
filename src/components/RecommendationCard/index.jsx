@@ -3,8 +3,8 @@ import { useState } from "react";
 import { API_URL } from "../../utils/constants";
 
 function RecommendationCard({ image, isbn }) {
-  console.log(image);
   const [added, setAdded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function createWishList() {
     const token = localStorage.getItem("token");
@@ -23,6 +23,7 @@ function RecommendationCard({ image, isbn }) {
     };
 
     try {
+      setIsLoading(true);
       const response = await fetch(`${API_URL}/wishlists`, options);
 
       if (response.status !== 201) return null;
@@ -30,6 +31,8 @@ function RecommendationCard({ image, isbn }) {
       setAdded(true);
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 
