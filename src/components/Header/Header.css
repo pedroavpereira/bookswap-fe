@@ -47,17 +47,17 @@
 
 .navbar a {
   text-decoration: none;
-  color: #fff; /* Default link color */
+  color: #000; /* Change default link color to black */
   font-size: 20px;
   font-weight: bold;
   transition: color 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .navbar a:hover {
-  color: #fff; /* Dark green color on hover */
+  color: #fff; /* Change link color to white on hover */
 }
 
 .navbar a.active {
-  color: #fff; /* Dark green color for active link */
+  color: #000; /* Keep the active link color black */
   font-weight: bold; /* Emphasize the active link */
 }
