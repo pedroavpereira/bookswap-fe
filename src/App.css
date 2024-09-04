@@ -587,11 +587,16 @@
 .header-link {
   cursor: pointer;
   text-decoration: none;
-  color: #fff;
+  color: #000000; /* Set link color to black */
   font-size: 20px;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease; /* Smooth transition for color change */
 }
+
+.header-link:hover {
+  color: #ffffff; /* Change link color to white on hover */
+}
+
 
 .layout {
   display: flex;
