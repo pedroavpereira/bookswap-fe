@@ -734,3 +734,8 @@
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(var(--translateX), var(--translateY)) rotate(var(--rotate)); }
 }
+.footer {
+  background-color: #f5af38;  
+  padding: 20px;
+  text-align: center;
+}
