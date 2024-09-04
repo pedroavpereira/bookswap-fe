@@ -10,13 +10,14 @@ const CollectionsContext = createContext();
 function CollectionsProvider({ children }) {
   const { user, isLoading: userLoading } = useUser();
   const [collections, setCollections] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
+  const [isMutating, setIsMutating] = useState(false);
 
   useEffect(
     function () {
       if (!user) {
         setCollections([]);
-        setIsLoading(true);
+        setIsFetching(true);
       }
     },
     [user]
@@ -26,7 +27,8 @@ function CollectionsProvider({ children }) {
   useEffect(
     function () {
       async function fetchCollections() {
-        if (!user || userLoading || !isLoading) return null;
+        console.log("test");
+        if (!user || userLoading || !isFetching) return null;
 
         const token = localStorage.getItem("token");
 
@@ -44,18 +46,19 @@ function CollectionsProvider({ children }) {
           if (response.status !== 200) return null;
 
           const data = await response.json();
+          console.log("refetch");
 
           setCollections(data);
         } catch (err) {
           console.log(err);
         } finally {
-          setIsLoading(false);
+          setIsFetching(false);
         }
       }
 
       fetchCollections();
     },
-    [isLoading, user, userLoading]
+    [isFetching, user, userLoading]
   );
 
   //Create new Collection
@@ -74,18 +77,20 @@ function CollectionsProvider({ children }) {
     };
 
     try {
-      setIsLoading(true);
+      setIsMutating(true);
       const response = await fetch(`${API_URL}/collections`, options);
 
       if (response.status !== 201) return null;
 
       const data = await response.json();
 
+      console.log(data);
+
       setCollections((col) => [...col, data]);
     } catch (err) {
       console.log(err);
     } finally {
-      setIsLoading(false);
+      setIsMutating(false);
     }
   }
 
@@ -103,7 +108,7 @@ function CollectionsProvider({ children }) {
     };
 
     try {
-      setIsLoading(true);
+      setIsMutating(true);
       const response = await fetch(`${API_URL}/collections/${id}`, options);
 
       if (response.status !== 204) return null;
@@ -112,13 +117,18 @@ function CollectionsProvider({ children }) {
     } catch (err) {
       console.log(err);
     } finally {
-      setIsLoading(false);
+      setIsMutating(false);
     }
   }
 
   return (
     <CollectionsContext.Provider
-      value={{ collections, isLoading, createCollection, deleteCollection }}
+      value={{
+        collections,
+        isLoading: isFetching || isMutating,
+        createCollection,
+        deleteCollection,
+      }}
     >
       {children}
     </CollectionsContext.Provider>
