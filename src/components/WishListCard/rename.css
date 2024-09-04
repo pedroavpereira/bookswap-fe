@@ -195,7 +195,7 @@ img.eye {
   width: 1em;
   color: var(--var-soft-blue);
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   margin-right: 0.5em;
 }
 
