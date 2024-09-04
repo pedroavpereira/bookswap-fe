@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MapComponent from "../../components/MapComponent";
 import FullPageSpinner from "../../components/FullPageSpinner";
 import "./OfferingPage.css";
@@ -22,14 +22,6 @@ const OfferingPage = () => {
 
   const isLoading =
     swapsLoading || collectionsLoading || userLoading || loading;
-
-  console.log(
-    "offeringPage",
-    swapsLoading,
-    collectionsLoading,
-    userLoading,
-    loading
-  );
 
   const alreadyRequested = swaps?.find(
     (s) => +collection_id === s.collection_requested
@@ -75,7 +67,7 @@ const OfferingPage = () => {
     };
 
     fetchCollectionData();
-  }, [collection_id, navigate]);
+  }, [collection_id, navigate, user, userLoading]);
 
   async function handleRequestSwap() {
     createSwap(collection_id);
@@ -110,9 +102,12 @@ const OfferingPage = () => {
                 {!yourCollection &&
                   !alreadyRequested &&
                   !userHasEnoughCollections && (
-                    <button className="action-button action-button-highlight book-shadow">
+                    <Link
+                      to="/collection"
+                      className="action-button action-button-highlight book-shadow"
+                    >
                       Not enough books in your collection
-                    </button>
+                    </Link>
                   )}
                 {!yourCollection &&
                   userHasEnoughCollections &&
