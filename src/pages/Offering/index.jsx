@@ -85,8 +85,8 @@ const OfferingPage = () => {
             <div className="product-image">
               <img
                 className=" book-shadow"
-                src={bookData.book.image}
-                alt={bookData.book.title}
+                src={bookData?.book?.image}
+                alt={bookData?.book?.title}
               />
               <div className="offering-action-button">
                 {yourCollection && (
@@ -126,24 +126,24 @@ const OfferingPage = () => {
               <div className="book-attribute-container">
                 <p className="book-attribute">
                   <span className="book-attribute-hightlight">
-                    Author{bookData.book.authors.length > 1 ? "'s " : " "}:
+                    Author{bookData.book?.authors?.length > 1 ? "'s " : " "}:
                   </span>
-                  {bookData.book.authors.join(", ")}
+                  {bookData?.book.authors?.join(", ")}
                 </p>
                 <p className="book-attribute">
                   {" "}
                   <span className="book-attribute-hightlight">Condition: </span>
-                  {bookData.condition}
+                  {bookData?.condition}
                 </p>
                 <p className="book-attribute">
                   <span className="book-attribute-hightlight">Owner: </span>
-                  {userData.first_name} {userData.last_name}
+                  {userData?.first_name} {userData?.last_name}
                 </p>
                 <p className="book-attribute">
                   <span className="book-attribute-hightlight">
                     Categories:{" "}
                   </span>{" "}
-                  {bookData.book.categories.join(", ")}
+                  {bookData?.book?.categories?.join(", ")}
                 </p>
                 <p className="book-swap-preferences">
                   <span className="book-attribute-hightlight">

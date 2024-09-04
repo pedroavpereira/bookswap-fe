@@ -12,13 +12,13 @@ function SwapsProvider({ children }) {
   const navigate = useNavigate();
   const { user, isLoading: userLoading } = useUser();
   const [swaps, setSwaps] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(
     function () {
       if (!user) {
         setSwaps([]);
-        setIsLoading(true);
       }
     },
     [user]
@@ -28,7 +28,7 @@ function SwapsProvider({ children }) {
   useEffect(
     function () {
       async function fetchCollections() {
-        if (!user || userLoading || !isLoading) return null;
+        if (!user || userLoading || !isFetching) return null;
 
         const token = localStorage.getItem("token");
 
@@ -41,7 +41,7 @@ function SwapsProvider({ children }) {
           },
         };
         try {
-          setIsLoading(true);
+          setIsFetching(true);
           const response = await fetch(`${API_URL}/swaps/`, options);
 
           if (response.status !== 200) return null;
@@ -52,13 +52,13 @@ function SwapsProvider({ children }) {
         } catch (err) {
           console.log(err);
         } finally {
-          setIsLoading(false);
+          setIsFetching(false);
         }
       }
 
       fetchCollections();
     },
-    [isLoading, user, userLoading]
+    [user, userLoading, isFetching]
   );
   //Create swap
 
@@ -159,7 +159,13 @@ function SwapsProvider({ children }) {
 
       const data = await response.json();
 
-      setSwaps((swaps) => swaps.map((sw) => (sw.swap_id === id ? data : sw)));
+      setSwaps((swaps) =>
+        swaps.map((sw) =>
+          sw.swap_id === id
+            ? { ...sw, status: "rejected", completed: true }
+            : sw
+        )
+      );
     } catch (err) {
       console.log(err);
     } finally {
@@ -198,13 +204,13 @@ function SwapsProvider({ children }) {
     }
   }
 
-  console.log(swaps);
+  console.log("isFetching", isFetching);
 
   return (
     <SwapContext.Provider
       value={{
         swaps,
-        isLoading,
+        isLoading: isFetching || isLoading,
         createSwap,
         acceptSwap,
         rejectSwap,
