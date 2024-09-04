@@ -8,7 +8,8 @@ const distancesAllowed = [0.5, 1, 5, 10, 15, 20];
 
 function WishlistAddForm({ onSubmit }) {
   const [isbn, setIsbn] = useState("");
-  const [bookSelected, setBookSelected] = useState(null);
+  const [titleInput, setTitleInput] = useState("");
+  const [searchSelected, setSearchSelected] = useState(null);
   const [radius, setRadius] = useState(10);
   const [isbnChecked, setIsbnChecked] = useState(false);
   const [isbnError, setIsbnError] = useState(false);
@@ -23,7 +24,7 @@ function WishlistAddForm({ onSubmit }) {
       setIsbn(isbn13?.identifier);
     }
 
-    setBookSelected(selected);
+    setSearchSelected(selected);
   }
 
   async function checkIsbn() {
@@ -70,11 +71,23 @@ function WishlistAddForm({ onSubmit }) {
             </span>
           </Form.Label>
           <BookSearch
-            onTyping={handleReset}
-            setChecked={setIsbnChecked}
-            selected={bookSelected}
+            query={titleInput}
+            setQuery={setTitleInput}
             setSelected={handleBookSelected}
-          />
+            selected={searchSelected}
+          >
+            {" "}
+            <Form.Control
+              className="w-full searchform-input searchform-title-input"
+              type="text"
+              value={titleInput}
+              placeholder="Book title"
+              onChange={(e) => {
+                handleReset();
+                setTitleInput(e.target.value);
+              }}
+            />
+          </BookSearch>
         </Row>
         <Row className="my-2">
           <Col>

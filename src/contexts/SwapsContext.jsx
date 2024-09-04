@@ -88,7 +88,7 @@ function SwapsProvider({ children }) {
       const data = await response.json();
 
       setSwaps((swaps) => [...swaps, data]);
-      navigate("/swaps");
+      navigate("/swap");
     } catch (err) {
       console.log(err);
     } finally {
