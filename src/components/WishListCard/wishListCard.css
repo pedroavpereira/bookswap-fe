@@ -115,8 +115,8 @@ Classes
 /* LAYOUT */
 
 .card-container {
-  width: 100%;
-  max-width: 250px;
+  /* width: 100%; */
+  width: 250px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   flex-shrink: 0;
   /* margin: 2em auto; */

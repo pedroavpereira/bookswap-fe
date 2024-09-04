@@ -188,13 +188,17 @@ function SwapsProvider({ children }) {
 
       const data = await response.json();
 
-      setSwaps((swaps) => swaps.map((sw) => (sw.swap_id === id ? data : sw)));
+      setSwaps((swaps) =>
+        swaps.map((sw) => (sw.swap_id === id ? { ...sw, completed: true } : sw))
+      );
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
     }
   }
+
+  console.log(swaps);
 
   return (
     <SwapContext.Provider

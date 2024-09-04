@@ -1,5 +1,5 @@
+import RecommendationsML from "../../components/RecommendationsML";
 import SearchForm from "../../components/SearchForm";
-
 
 function HomePage() {
   return (
@@ -9,6 +9,7 @@ function HomePage() {
         <h2 className="homepage-subheader">Find Books. Swap Stories</h2>
       </div>
       <SearchForm />
+      <RecommendationsML />
     </div>
   );
 }
