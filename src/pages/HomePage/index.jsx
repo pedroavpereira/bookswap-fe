@@ -1,4 +1,5 @@
 import SearchForm from "../../components/SearchForm";
+import Recommendations from "../Recommendations";
 
 
 function HomePage() {
@@ -9,6 +10,7 @@ function HomePage() {
         <h2 className="homepage-subheader">Find Books. Swap Stories</h2>
       </div>
       <SearchForm />
+      <Recommendations/>
     </div>
   );
 }
